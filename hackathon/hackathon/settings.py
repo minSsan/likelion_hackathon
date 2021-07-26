@@ -137,3 +137,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 # 업로드된 파일을 불러올 때 media 라는 파일 경로에서 불러옴
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+SUMMERNOTE_CONFIG = {
+    'attachment_filesize_limit': 5 * 1024 * 1024
+}

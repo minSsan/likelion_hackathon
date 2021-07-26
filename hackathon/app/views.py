@@ -119,21 +119,29 @@ def profile(request, id):
 # user 마이페이지 뷰 구현 
 # -> user id 받아와서 포트폴리오 스마트 에디터 기능 작동 확인 / 반환값 형태 확인
 
-def create_portfolio_page(request, user_id): # user id 필요
+def create_portfolio(request, user_id): # user id 필요
     form = PortfolioForm()
-    context = {
-        'form':form,
-        'user_id':user_id,
-    }
-    return render(request, 'create_pf.html', context)
+    if request.method == "POST":
+        form = PortfolioForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_portfolio = form.save(commit=False)
+            new_portfolio.user_id = User.objects.get(pk=user_id)
+            new_portfolio.save()
+        return redirect('profile', user_id) # 유저 페이지 redirect
+    else:
+        context = {
+            'form':form,
+            'user_id':user_id,
+        }
+        return render(request, 'create_pf.html', context)
     # 포트폴리오 생성 페이지를 렌더링할 때 username 함께 전달 
     # => Portfolio 모델에서 username 값을 필요로 하기 때문
     #   (=어느 회원의 포트폴리오인지 구분)
 
-def create_portfolio(request, user_id):
-    form = PortfolioForm(request.POST, request.FILES)
-    if form.is_valid():
-        new_portfolio = form.save(commit=False)
-        new_portfolio.user_id = User.objects.get(pk=user_id)
-        new_portfolio.save()
-    return redirect('main.html') # 유저 페이지 redirect
+def delete_portfolio(request, user_id, pf_id):
+    pf_instance = get_object_or_404(Portfolio, pk=pf_id)
+    pf_instance.delete()
+    return redirect('profile', user_id)
+
+def update_portfolio(request, user_id, pf_id):
+    pf_instance = get_object_or_404(Portfolio, pk=pf_id)
