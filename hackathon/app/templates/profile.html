@@ -15,7 +15,7 @@
     <p>포트폴리오
         {% for pf in pfs %}
             <p>{{pf.title}}</p>
-            <p>{{pf.detail}}</p>
+            <div>{{pf.detail | safe}}</div>
         {% endfor %}
     </p>
 {% endblock %}

@@ -36,8 +36,7 @@ urlpatterns = [
     path('detail_recruit/<int:id>/', detail_recruit, name='detail_recruit'),
     path('delete_recruit/<int:id>/', delete_recruit, name='delete_recruit'),
     
-    path('create_pf_page/<int:id>', create_portfolio_page, name="create_pf_page"),
-    path('create_pf/<int:id>', create_portfolio, name="create_pf"),
+    path('create_pf/<int:user_id>', create_portfolio, name="create_pf"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

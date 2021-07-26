@@ -86,7 +86,8 @@ class User(AbstractUser):
     career = models.CharField(default='0', max_length=2, choices=CAREER_CHOICES)
     state = models.CharField(default='', max_length=9, choices=STATE_CHOICES)
     role = MultiSelectField(default='Etc', choices=ROLE_CHOICES, max_choices=4, max_length=9)
-    want = models.CharField(default='', max_length=500)
+    # want = models.CharField(default='', max_length=500)
+    # want 제거
 
 # 포트폴리오
 class Portfolio(models.Model):
