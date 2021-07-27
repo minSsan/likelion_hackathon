@@ -88,18 +88,17 @@ def update_recruit(request, id):
     
     # POST 요청
     if request.method == "POST":
-        # # 폼 생성 및 요청에 의한 데이터로 채우기
-        # recruit_update_form = RecruitForm(request.POST, request.FILES)
+        # 폼 생성 및 요청에 의한 데이터로 채우기
+        recruit_update_form = RecruitForm(request.POST, request.FILES, instance=recruit_instance)
 
-        # # 폼이 유효한가?
-        # if recruit_update_form.is_valid():
-        #     # 데이터를 요청받은 내용으로 처리
-        #     recruit_instance = recruit_update_form
-        #     recruit_instance.save()
+        # 폼이 유효한가?
+        if recruit_update_form.is_valid():
+            # 데이터를 요청받은 내용으로 처리
+            recruit_update_form.save()
         return redirect('main')
 
     else:
-        form = RecruitForm()
+        form = RecruitForm(instance=recruit_instance)
         context = {
         'form': form,
         'id': id,
@@ -111,13 +110,20 @@ def profile(request, id):
     user_instance = get_object_or_404(User, pk=id)
     pfs = Portfolio.objects.filter(user_id=id)
     context = {
+        'user_id':id,
         'obj': user_instance,
         'pfs':pfs,
     }
     return render(request, 'profile.html', context)
 
-# user 마이페이지 뷰 구현 
-# -> user id 받아와서 포트폴리오 스마트 에디터 기능 작동 확인 / 반환값 형태 확인
+def detail_portfolio(request, user_id, pf_id):
+    portfolio = get_object_or_404(Portfolio, pk=pf_id)
+    context = {
+        'pf':portfolio,
+        'user_id':user_id,
+        'pf_id':pf_id,
+    }
+    return render(request, 'detail_pf.html', context)
 
 def create_portfolio(request, user_id): # user id 필요
     form = PortfolioForm()
@@ -145,3 +151,16 @@ def delete_portfolio(request, user_id, pf_id):
 
 def update_portfolio(request, user_id, pf_id):
     pf_instance = get_object_or_404(Portfolio, pk=pf_id)
+    if request.method == "POST":
+        update_form = PortfolioForm(request.POST, request.FILES, instance=pf_instance)
+        if update_form.is_valid():
+            update_form.save()
+        return redirect('profile', user_id)
+    else:
+        update_form = PortfolioForm(instance=pf_instance)
+        context = {
+            'form':update_form,
+            'user_id':user_id,
+            'pf_id':pf_id,
+        }
+        return render(request, 'update_pf.html', context)
