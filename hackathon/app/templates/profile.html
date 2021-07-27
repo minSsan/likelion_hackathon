@@ -11,11 +11,10 @@
     <p>경력 : {{obj.get_career_display}}</p>
     <p>상태 : {{obj.get_state_display}}</p>
     <p>역할 : {{obj.get_role_display}}</p>
-    <p>원하는 것 : {{obj.want}}</p>
     <p>포트폴리오
         {% for pf in pfs %}
             <p>{{pf.title}}</p>
-            <div>{{pf.detail | safe}}</div>
+            <a href="{% url 'detail_pf' user_id pf.id %}">자세히</a>
         {% endfor %}
     </p>
 {% endblock %}
