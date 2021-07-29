@@ -1,0 +1,7 @@
+{% extends 'team_build.html' %}
+    {% block posts %}
+        {% for post in posts %}
+            <p>{{post.title}}</p>
+            <a href="{% url 'detail_recruit' post.id %}">자세히</a>
+        {% endfor %}
+    {% endblock %}

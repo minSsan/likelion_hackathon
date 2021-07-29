@@ -74,7 +74,7 @@ ROLE_CHOICES = [
     ('Developer', '개발자'),
     ('Designer', '디자이너'),
     ('Planner', '기획자'),
-    ('Etc', '그 외'),
+    ('Editor', '편집자'),
 ]
     
 # 회원 정보
@@ -100,28 +100,28 @@ class Portfolio(models.Model):
 
 # 팀원 모집 글
 class Recruit(models.Model):
-    writer = models.CharField(default='', max_length=100)
+    writer = models.CharField(default='', max_length=200)
     title = models.CharField(default='', max_length=300) # 프로젝트 한줄 설명으로 들어갈 것
     team_name = models.CharField(default='', max_length=200)
-    service = models.CharField(default='', max_length=100)
+    service = models.CharField(default='', max_length=200)
     team_members = models.CharField(
         default='1',
         blank=True,
         null=False,
-        max_length=1,
+        max_length=10,
         choices=TEAM_MEMBERS_CHOICES
         )
     service_level = models.CharField(
         default='0',
         null=False,
         blank=True,
-        max_length=1,
+        max_length=10,
         choices=LEVEL_CHOICES
         )
     founding_date = models.DateField(default=timezone.now, null=False, blank=True)
     locate = models.CharField(default='', null=False, blank=True, max_length=2, choices=LOCATE_CHOICES)
     image = models.ImageField(default='', blank=True, null=False)
     # 추후 기본 이미지로 넣을 경로 찾아서 default 에 지정 필요
-    role = MultiSelectField(default='Etc', choices=ROLE_CHOICES, max_choices=4, max_length=9)
+    role = MultiSelectField(default='', choices=ROLE_CHOICES, max_choices=4, max_length=100)
     # role = models.CharField(max_length=2, choices=ROLE_CHOICES)
     detail = models.TextField(blank=True, null=True)

@@ -1,17 +1,22 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import *
-from django.http import request
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 
+from .models import *
 from .forms import *
 
+from django.core.paginator import Paginator
+from django.db.models import Q
+
 def main(request):
+    return render(request, 'main.html')
+
+def team_build(request):
     recruit_posts = Recruit.objects.all()
     context = {
         'posts':recruit_posts,
     }
-    return render(request, 'main.html', context)
+    return render(request, 'team_build.html', context)
 
 # 로그인
 def login_view(request):
@@ -165,3 +170,13 @@ def update_portfolio(request, user_id, pf_id):
         }
         return render(request, 'update_pf.html', context)
 
+def recruit_role_search(request, input_role):
+    results = Recruit.objects.filter(Q(role__icontains=input_role)).distinct()
+    # distinct() : 중복된 객체 제외
+    paginator = Paginator(results, 10)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+    context = {
+        'posts':posts,
+    }
+    return render(request, 'recruit_role_search.html' ,context)

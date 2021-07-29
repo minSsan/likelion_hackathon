@@ -32,9 +32,12 @@ urlpatterns = [
     path('profile/<int:id>', profile, name='profile'),
 
     path('create_recruit/', create_recruit, name='create_recruit'),
-    path('update_recruit/<int:id>/', update_recruit, name='update'),
+    path('update_recruit/<int:id>/', update_recruit, name='update_recruit'),
     path('detail_recruit/<int:id>/', detail_recruit, name='detail_recruit'),
     path('delete_recruit/<int:id>/', delete_recruit, name='delete_recruit'),
+
+    path('team_build/', team_build, name='team_build'),
+    path('team_build/role_search/<str:input_role>', recruit_role_search, name='recruit_role_search'),
     
     path('profile/<int:user_id>/create_pf/', create_portfolio, name="create_pf"),
     path('profile/<int:user_id>/detail_pf/<int:pf_id>/', detail_portfolio, name='detail_pf'),

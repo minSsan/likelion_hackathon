@@ -7,7 +7,7 @@
 {% block content %}
     <h1>업데이트 페이지</h1>
     {{test}}
-    <form action="{% url 'update' id %}" method="POST" enctype="multipart/form-data">
+    <form action="{% url 'update_recruit' id %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
         <button type="submit">수정</button>
