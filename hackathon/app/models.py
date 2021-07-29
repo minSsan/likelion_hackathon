@@ -84,10 +84,8 @@ class User(AbstractUser):
     address_sido = models.CharField(default='', max_length=100)
     address_gungu = models.CharField(default='', max_length=100)
     career = models.CharField(default='0', max_length=2, choices=CAREER_CHOICES)
-    state = models.CharField(default='', max_length=9, choices=STATE_CHOICES)
+    state = models.CharField(default='', blank=True, null=False, max_length=9, choices=STATE_CHOICES)
     role = MultiSelectField(default='Etc', choices=ROLE_CHOICES, max_choices=4, max_length=9)
-    # want = models.CharField(default='', max_length=500)
-    # want 제거
 
 # 포트폴리오
 class Portfolio(models.Model):
@@ -102,6 +100,7 @@ class Portfolio(models.Model):
 
 # 팀원 모집 글
 class Recruit(models.Model):
+    writer = models.CharField(default='', max_length=100)
     title = models.CharField(default='', max_length=300) # 프로젝트 한줄 설명으로 들어갈 것
     team_name = models.CharField(default='', max_length=200)
     service = models.CharField(default='', max_length=100)
@@ -120,7 +119,7 @@ class Recruit(models.Model):
         choices=LEVEL_CHOICES
         )
     founding_date = models.DateField(default=timezone.now, null=False, blank=True)
-    locate = models.CharField(default='', max_length=2,choices=LOCATE_CHOICES)
+    locate = models.CharField(default='', null=False, blank=True, max_length=2, choices=LOCATE_CHOICES)
     image = models.ImageField(default='', blank=True, null=False)
     # 추후 기본 이미지로 넣을 경로 찾아서 default 에 지정 필요
     role = MultiSelectField(default='Etc', choices=ROLE_CHOICES, max_choices=4, max_length=9)

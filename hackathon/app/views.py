@@ -23,7 +23,7 @@ def login_view(request):
             user = authenticate(request=request, username=username, password=password)
             if user is not None:
                 login(request, user)
-            return redirect("main")
+        return redirect("main")
     else:
         form = AuthenticationForm()
         return render(request, 'login.html', {'form':form})
@@ -37,7 +37,7 @@ def logout_view(request):
 def signup_view(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             user = form.save()
             login(request, user)
         return redirect("main")
@@ -48,18 +48,18 @@ def signup_view(request):
 # 팀원 모집글 작성하기
 def create_recruit(request):
     recruits_form = RecruitForm()
-    context = {
-        'form': recruits_form,
-    }
     if request.method == "POST":
-        form = RecruitForm(request.POST, request.FILES)
-        
-        if form.is_valid():
-            new_form = form.save(commit=False)
+        recruits_form = RecruitForm(request.POST, request.FILES)
+        # 유효성 검사 통과 안 됨 => 수정 필요
+        if recruits_form.is_valid():
+            new_form = recruits_form.save(commit=False)
             new_form.writer = request.user
             new_form.save()
         return redirect('main')
     else:
+        context = {
+            'form': recruits_form,
+        }
         return render(request, 'create_recruit.html', context)
 
 # 팀원 모집글 자세히 보기
@@ -164,3 +164,4 @@ def update_portfolio(request, user_id, pf_id):
             'pf_id':pf_id,
         }
         return render(request, 'update_pf.html', context)
+

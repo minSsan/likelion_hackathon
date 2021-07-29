@@ -6,7 +6,7 @@
     </head>
     {% block content %}
         {% for post in posts %}
-        <h5>{{post.title}}</h5>
-        <a href="{% url 'detail_recruit' post.id %}">자세히</a>
+            <h5>{{post.title}}</h5>
+            <a href="{% url 'detail_recruit' post.id %}">자세히</a>
         {% endfor %}
     {% endblock %}
