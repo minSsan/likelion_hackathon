@@ -81,15 +81,15 @@ ROLE_CHOICES = [
 class User(AbstractUser):
     name = models.CharField(default='', max_length=300)
     birth_date = models.DateField(default=timezone.now)
-    address_sido = models.CharField(default='', max_length=100)
-    address_gungu = models.CharField(default='', max_length=100)
-    career = models.CharField(default='0', max_length=2, choices=CAREER_CHOICES)
-    state = models.CharField(default='', blank=True, null=False, max_length=9, choices=STATE_CHOICES)
-    role = MultiSelectField(default='Etc', choices=ROLE_CHOICES, max_choices=4, max_length=9)
+    address_sido = models.CharField(default='', max_length=200)
+    address_gungu = models.CharField(default='', max_length=200)
+    career = models.CharField(default='0', max_length=200, choices=CAREER_CHOICES)
+    state = models.CharField(default='', blank=True, null=False, max_length=200, choices=STATE_CHOICES)
+    role = MultiSelectField(default='Etc', choices=ROLE_CHOICES, max_choices=200, max_length=200)
 
 # 포트폴리오
 class Portfolio(models.Model):
-    title = models.CharField(default='', max_length=50)
+    title = models.CharField(default='', max_length=200)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     # ForiegnKey(외래키): 외부 테이블 키를 가져옴.
     # 여기서는 User(부모 테이블)라는 테이블의 키를 Portfolio(자식 테이블)에 받아옴
@@ -101,6 +101,7 @@ class Portfolio(models.Model):
 # 팀원 모집 글
 class Recruit(models.Model):
     writer = models.CharField(default='', max_length=200)
+    writer_username = models.CharField(default='', max_length=200)
     title = models.CharField(default='', max_length=300) # 프로젝트 한줄 설명으로 들어갈 것
     team_name = models.CharField(default='', max_length=200)
     service = models.CharField(default='', max_length=200)
@@ -108,20 +109,27 @@ class Recruit(models.Model):
         default='1',
         blank=True,
         null=False,
-        max_length=10,
+        max_length=200,
         choices=TEAM_MEMBERS_CHOICES
         )
     service_level = models.CharField(
         default='0',
         null=False,
         blank=True,
-        max_length=10,
+        max_length=200,
         choices=LEVEL_CHOICES
         )
     founding_date = models.DateField(default=timezone.now, null=False, blank=True)
-    locate = models.CharField(default='', null=False, blank=True, max_length=2, choices=LOCATE_CHOICES)
+    locate = models.CharField(default='', null=False, blank=True, max_length=200, choices=LOCATE_CHOICES)
     image = models.ImageField(default='', blank=True, null=False)
     # 추후 기본 이미지로 넣을 경로 찾아서 default 에 지정 필요
     role = MultiSelectField(default='', choices=ROLE_CHOICES, max_choices=4, max_length=100)
     # role = models.CharField(max_length=2, choices=ROLE_CHOICES)
     detail = models.TextField(blank=True, null=True)
+
+class Comment(models.Model):
+    recruit_id = models.ForeignKey(Recruit, on_delete=models.CASCADE, null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    user = models.TextField(max_length=100)
+    user_username = models.TextField(max_length=100)
+    content = models.TextField(max_length=200)

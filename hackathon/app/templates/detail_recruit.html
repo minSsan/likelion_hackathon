@@ -22,4 +22,29 @@
         <a href="{% url 'delete_recruit' id %}">삭제하기</a>
     {% endif %}
 
+    <h4>댓글</h4>
+    <form action="{% url 'create_comment' id %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="text"/>
+        <button type="submit">작성</button>    
+    </form>
+
+    {% for comment in comments %}
+    <h4>{{comment.user}}</h4>
+    <p>{{comment.content}} ({{comment.date}})</p>
+    {% endfor %} 
+
+    <div>
+        {% if comments.has_previous %}
+            <a href="?page=1"> = first = </a>
+            <a href="?page={{comments.previous_page_number}}"> = previous = </a>
+        {% endif %}
+        <span> {{comments.number}} </span>
+        <span> / </span>
+        <span> {{comments.paginator.num_pages}} </span>
+        {% if comments.has_next %}
+            <a href="?page={{comments.next_page_number}}"> = next = </a>
+            <a href="?page={{comments.paginator.num_pages}}"> = last = </a>
+        {% endif %}
+    </div>
 {% endblock %}

@@ -36,6 +36,8 @@ urlpatterns = [
     path('detail_recruit/<int:id>/', detail_recruit, name='detail_recruit'),
     path('delete_recruit/<int:id>/', delete_recruit, name='delete_recruit'),
 
+    path('detail_recruit/<int:id>/create_comment/', create_comment, name='create_comment'),
+
     path('team_build/', team_build, name='team_build'),
     path('team_build/role_search/<str:input_role>', recruit_role_search, name='recruit_role_search'),
     
@@ -43,6 +45,10 @@ urlpatterns = [
     path('profile/<int:user_id>/detail_pf/<int:pf_id>/', detail_portfolio, name='detail_pf'),
     path('profile/<int:user_id>/detail_pf/update/<int:pf_id>/', update_portfolio, name="update_pf"),
     path('profile/<int:user_id>/detail_pf/delete/<int:pf_id>/', delete_portfolio, name='delete_pf'),
+
+    path('user/', user, name='user'),
+    path('user/search/<str:input_role>', user_search, name='user_search'),
+    path('user/search/text/<str:input_text>', user_search_text, name='user_search_text'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,0 +1,7 @@
+{% extends 'user.html' %}
+    {% block users %}
+        {% for user in users %}
+            <p>{{user.username}}</p>
+            <a href="{% url 'profile' user.id %}">자세히</a>
+        {% endfor %}
+    {% endblock %}

@@ -55,10 +55,12 @@ def create_recruit(request):
     recruits_form = RecruitForm()
     if request.method == "POST":
         recruits_form = RecruitForm(request.POST, request.FILES)
-        # 유효성 검사 통과 안 됨 => 수정 필요
+
         if recruits_form.is_valid():
+            username = request.user
             new_form = recruits_form.save(commit=False)
-            new_form.writer = request.user
+            new_form.writer = get_object_or_404(User, username=username).name
+            new_form.writer_username = username
             new_form.save()
         return redirect('main')
     else:
@@ -70,9 +72,17 @@ def create_recruit(request):
 # 팀원 모집글 자세히 보기
 def detail_recruit(request, id):
     recruit_instance = get_object_or_404(Recruit, pk=id)
+    comments_instance = Comment.objects.filter(recruit_id=id).order_by('-id')
+
+    paginator = Paginator(comments_instance, 6)
+    page = request.GET.get('page')
+    comments = paginator.get_page(page)
+
+
     context ={
         'obj': recruit_instance,
         'id': id,
+        'comments': comments,
     }
     return render(request, 'detail_recruit.html', context)
 
@@ -109,6 +119,20 @@ def update_recruit(request, id):
         'id': id,
         }
         return render(request, 'update_recruit.html', context)
+
+# 모집글 댓글
+def create_comment(request, id):
+    username = request.user
+    new_comment = Comment()
+    new_comment.recruit_id = Recruit.objects.get(pk=id)
+    new_comment.user = get_object_or_404(User, username=username).name
+    new_comment.user_username = username
+    new_comment.content = request.POST['text']
+    new_comment.pub_date = timezone.now()
+    new_comment.save()
+    
+    return redirect('detail_recruit', id)
+
 
 # 프로필 페이지
 def profile(request, id):
@@ -170,6 +194,7 @@ def update_portfolio(request, user_id, pf_id):
         }
         return render(request, 'update_pf.html', context)
 
+# 게시글 검색 기능
 def recruit_role_search(request, input_role):
     results = Recruit.objects.filter(Q(role__icontains=input_role)).distinct()
     # distinct() : 중복된 객체 제외
@@ -179,4 +204,35 @@ def recruit_role_search(request, input_role):
     context = {
         'posts':posts,
     }
-    return render(request, 'recruit_role_search.html' ,context)
+    return render(request, 'recruit_role_search.html', context)
+
+
+# 유저 검색 기능 ( 아직 역할 검색만 )
+def user(request):
+    users = User.objects.all()
+    context = {
+        'users': users,
+    }
+    return render(request, 'user.html', context)
+
+def user_search(request, input_role):
+    results = User.objects.filter(Q(role__icontains=input_role))
+    paginator = Paginator(results, 10)
+    page = request.GET.get('page')
+    users = paginator.get_page(page)
+    context = {
+        'users':users,
+    }
+    return render(request, 'user_search.html', context)
+
+def user_search_text(request, input_text):
+
+    results = User.objects.filter((Q(name__icontains=input_text) | Q(address_sido__icontains=input_text) | Q(address_gungu__icontains=input_text) | Q(career__icontains=input_text)))
+    paginator = Paginator(results, 10)
+    print(User.objects.filter(Q(name__icontains=input_text) & Q(address_sido__icontains=input_text) & Q(address_gungu__icontains=input_text)))
+    page = request.GET.get('page')
+    users = paginator.get_page(page)
+    context = {
+        'users':users,
+    }
+    return render(request, 'user_search.html', context)
