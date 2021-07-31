@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+    <head>
+        {% load static %}
+        {% block extrahead %}
+        {% endblock %}
+    </head>
+{% block content %}
+    <p>{{pf.title}}</p>
+    <div>{{pf.detail | safe}}</div>
+    <a href="{% url 'mypage:update_pf' user_id pf_id %}">수정하기</a>
+    <a href="{% url 'mypage:delete_pf' user_id pf_id %}">삭제하기</a>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+    <head>
+        {% load static %}
+        {% block extrahead %}
+        {% endblock %}
+    </head>
+{% block content %}
+    <h1>회원가입 페이지</h1>
+    <form action="{% url 'users:signup' %}" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">회원가입</button>
+    </form>
+{% endblock %}
