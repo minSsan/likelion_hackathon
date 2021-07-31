@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+    <head>
+        {% load static %}
+        {% block extrahead %}
+        {% endblock %}
+    </head>
+{% block content %}
+    <p>이름 : {{obj.name}}</p>
+    <p>생년월일 : {{obj.birth_date}}</p>
+    <p>거주지역 : {{obj.address_sido}} {{obj.address_gungu}}</p>
+    <p>경력 : {{obj.get_career_display}}</p>
+    <p>상태 : {{obj.get_state_display}}</p>
+    <p>역할 : {{obj.get_role_display}}</p>
+    <p>포트폴리오
+        {% for pf in pfs %}
+            <p>{{pf.title}}</p>
+            <a href="{% url 'mypage:detail_pf' user_id pf.id %}">자세히</a>
+        {% endfor %}
+    </p>
+{% endblock %}
