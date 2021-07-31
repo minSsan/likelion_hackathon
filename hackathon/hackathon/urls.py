@@ -36,8 +36,8 @@ urlpatterns = [
     path('detail_recruit/<int:id>/', detail_recruit, name='detail_recruit'),
     path('delete_recruit/<int:id>/', delete_recruit, name='delete_recruit'),
 
-    path('team_build/', team_build, name='team_build'),
-    path('team_build/role_search/<str:input_role>', recruit_role_search, name='recruit_role_search'),
+    path('team_build/', RecruitListView.as_view(), name='team_build'),
+    path('team_build/<str:input_role>', recruit_role_search, name='recruit_role_search'),
     
     path('profile/<int:user_id>/create_pf/', create_portfolio, name="create_pf"),
     path('profile/<int:user_id>/detail_pf/<int:pf_id>/', detail_portfolio, name='detail_pf'),
