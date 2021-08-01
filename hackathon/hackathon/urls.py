@@ -49,6 +49,8 @@ urlpatterns = [
     path('user/', user, name='user'),
     path('user/search/<str:input_role>', user_search, name='user_search'),
     path('user/search/text/<str:input_text>', user_search_text, name='user_search_text'),
+    
+    path('chat/', include('chat.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

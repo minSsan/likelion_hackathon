@@ -1,7 +1,7 @@
 {% extends 'user.html' %}
     {% block users %}
-        {% for user in users %}
-            <p>{{user.username}}</p>
-            <a href="{% url 'profile' user.id %}">자세히</a>
+        {% for instance in users %}
+            <p>{{instance.username}}</p>
+            <a href="{% url 'profile' user.id instance.id %}">자세히</a>
         {% endfor %}
     {% endblock %}

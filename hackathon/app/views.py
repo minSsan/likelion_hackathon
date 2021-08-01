@@ -236,3 +236,5 @@ def user_search_text(request, input_text):
         'users':users,
     }
     return render(request, 'user_search.html', context)
+
+

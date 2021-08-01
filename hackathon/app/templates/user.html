@@ -20,9 +20,10 @@
         </script>
 
         {% block users %}
-            {% for user in users %}
-                <p>{{user.username}}</p>
-                <a href="{% url 'profile' user.id %}">자세히</a>
+            {% for instance in users %}
+                <p>{{instance.username}}</p>
+                <a href="{% url 'profile' instance.id %}">자세히</a>
+                <a href="{% url 'create_chat_room' user.id instance.id %}">채팅하기</a>
             {% endfor %}
         {% endblock %}
     {% endblock %}
