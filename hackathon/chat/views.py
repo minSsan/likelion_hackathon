@@ -15,16 +15,6 @@ def create_room_id(num1, num2):
         id = num2 + "id" + num1
         return id
 
-# 채팅 상대 ID 추출 함수
-def opp_id(me_id, room_id):
-    array = room_id.split("id")
-    
-    for id in array:
-        if id != me_id:
-            return id
-    
-
-
 # views
 def index(request):
     chat_list = models.ChatList.objects.filter(first_user_id=request.user.id)

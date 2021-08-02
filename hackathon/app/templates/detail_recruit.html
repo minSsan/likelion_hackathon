@@ -1,50 +1,61 @@
 {% extends 'base.html' %}
-    <head>
-        {% load static %}
-        {% block extrahead %}
-        {% endblock %}
-    </head>
+<head>
+    {% load static %}
+    {% block extrahead %}
+    {% endblock %}
+</head>
 {% block content %}
-    <p>제목 : {{obj.title}}</p>
-    <p>팀 이름 : {{obj.team_name}}</p>
-    <p>서비스 : {{obj.service}}</p>
-    <p>팀원 : {{obj.get_team_members_display}}</p>
-    <p>서비스 레벨 : {{obj.get_service_level_display}}</p>
-    <p>지역 : {{obj.get_locate_display}}</p>
-    <p>이미지 : {{obj.image}}</p>
-    <p>역할 : {{obj.get_role_display}}</p>
-    <p>세부사항 : {{obj.detail}}</p>
-    <p>글쓴이 : {{obj.writer}}</p>
+<div id="recruit-id" style="display: none;">{{obj.id}}</div>
+<p>제목 : {{obj.title}}</p>
+<p>팀 이름 : {{obj.team_name}}</p>
+<p>서비스 : {{obj.service}}</p>
+<p>팀원 : {{obj.get_team_members_display}}</p>
+<p>서비스 레벨 : {{obj.get_service_level_display}}</p>
+<p>지역 : {{obj.get_locate_display}}</p>
+<p>이미지 : {{obj.image}}</p>
+<p>역할 : {{obj.get_role_display}}</p>
+<p>세부사항 : {{obj.detail}}</p>
+<p>글쓴이 : {{obj.writer}}</p>
 
-    
-    {% if obj.writer == user.username %}
-        <a href="{% url 'update_recruit' id %}">수정하기</a>
-        <a href="{% url 'delete_recruit' id %}">삭제하기</a>
+
+{% if obj.writer == user.username %}
+<a href="{% url 'update_recruit' id %}">수정하기</a>
+<a href="{% url 'delete_recruit' id %}">삭제하기</a>
+{% endif %}
+
+<h4>댓글</h4>
+<form action="{% url 'create_comment' id %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="text"/>
+    <button type="submit">작성</button>    
+</form>
+
+{% for comment in comments %}
+<div class="comment-box" comment_id="{{comment.id}}">
+    <h4 style="display: inline">{{comment.user}}</h4>
+    <p style="font-size: 5px; display: inline;">({{comment.date}})</p>
+    {% if comment.user_username == user.username %}
+    <a href="{% url 'delete_comment' id comment.id %}">삭제하기</a>
+    <button onclick="updateBtn(this)">수정하기</button>
     {% endif %}
-
-    <h4>댓글</h4>
-    <form action="{% url 'create_comment' id %}" method="POST">
-        {% csrf_token %}
-        <input type="text" name="text"/>
-        <button type="submit">작성</button>    
-    </form>
-
-    {% for comment in comments %}
-    <h4>{{comment.user}}</h4>
-    <p>{{comment.content}} ({{comment.date}})</p>
+    <button onclick="answerBtn()">답글</button>
+    <div>{{comment.content}}</div>
     {% endfor %} 
+</div>
 
-    <div>
-        {% if comments.has_previous %}
-            <a href="?page=1"> = first = </a>
-            <a href="?page={{comments.previous_page_number}}"> = previous = </a>
-        {% endif %}
-        <span> {{comments.number}} </span>
-        <span> / </span>
-        <span> {{comments.paginator.num_pages}} </span>
+<div>
+    {% if comments.has_previous %}
+    <a href="?page=1"> = first = </a>
+    <a href="?page={{comments.previous_page_number}}"> = previous = </a>
+    {% endif %}
+    <span> {{comments.number}} </span>
+    <span> / </span>
+    <span> {{comments.paginator.num_pages}} </span>
         {% if comments.has_next %}
             <a href="?page={{comments.next_page_number}}"> = next = </a>
             <a href="?page={{comments.paginator.num_pages}}"> = last = </a>
         {% endif %}
     </div>
+
+    <script type="text/javascript" src="{% static '/app/js/detail_recruit.js' %}?ver=20200803"></script>
 {% endblock %}

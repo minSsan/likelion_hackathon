@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
@@ -7,6 +8,8 @@ from .forms import *
 
 from django.core.paginator import Paginator
 from django.db.models import Q
+
+import json
 
 def main(request):
     return render(request, 'main.html')
@@ -133,6 +136,22 @@ def create_comment(request, id):
     
     return redirect('detail_recruit', id)
 
+def update_comment(request, id, comment_id):
+    comment_instance = get_object_or_404(Comment, id=comment_id)
+    comment_instance.content = json.loads(request.body).get('text')
+    comment_instance.save()
+    
+    return redirect('detail_recruit', id)
+
+def delete_comment(request, id, comment_id):
+    # 해당 댓글 불러오기
+    comment_instance = get_object_or_404(Comment, pk=comment_id)
+
+    # 댓글 작성자랑 로그인 유저랑 같으면
+    if str(request.user) == comment_instance.user_username:
+        comment_instance.delete()
+
+    return redirect('detail_recruit', id)
 
 # 프로필 페이지
 def profile(request, id):
