@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300&display=swap');
+
+/* default style */
+body, html {
+    margin: 0;
+    padding : 0;
+    
+    font-family: 'Mulish', sans-serif;
+}
+
+a {
+    /* a태그 기본 스타일 (밑줄) 제거 */
+    text-decoration: none;
+}
+
+/* widgets style */
+/* nav bar */
+
+/* nav-container */
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #F3F6FA;
+
+    width: 100%;
+    height: 88px;
+}
+
+/* nav-wrapper */
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    width: 77vw;
+    height: 42px;
+
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+/* logo */
+
+/* url-container */
+.url-container {
+    display: flex;
+    justify-content: space-between;
+    
+    width: 256px;
+}
+
+.url-container > a {
+    /* font style */
+    color: #373F41;
+
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.url-container > a:hover {
+    color: #3C64B1;
+}
+
+/* user-container */
+.user-container > .user-name {
+    /* font style */
+    color: #000000;
+    
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 40px;
+}
+
+.btn {
+    width: 89px;
+    height: 42px;
+
+    padding: 12px 18px;
+
+    /* font style */
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.login {  
+    color: #3C64B1;
+}
+
+.signup {
+    color: #FFFFFF;
+    background: #3C64B1;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    height: 100px;
+
+    background: #9CB0D7;
+}
+
+footer > p:first-child {
+    font-size: 12px;
+    line-height: 16px;
+
+    /* Black */
+
+    color: #000000;
+}
+
+footer > p:nth-child(2) {
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+
+    /* Dark Grey */
+
+    color: #616161;
+}
