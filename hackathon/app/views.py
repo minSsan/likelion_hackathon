@@ -76,6 +76,7 @@ def create_recruit(request):
 def detail_recruit(request, id):
     recruit_instance = get_object_or_404(Recruit, pk=id)
     comments_instance = Comment.objects.filter(recruit_id=id).order_by('-id')
+    ans_comment_instance = CommentAnswer.objects.all()
 
     paginator = Paginator(comments_instance, 6)
     page = request.GET.get('page')
@@ -86,6 +87,7 @@ def detail_recruit(request, id):
         'obj': recruit_instance,
         'id': id,
         'comments': comments,
+        'ans_comments':ans_comment_instance,
     }
     return render(request, 'detail_recruit.html', context)
 
@@ -126,18 +128,29 @@ def update_recruit(request, id):
 # 모집글 댓글
 def create_comment(request, id):
     username = request.user
-    new_comment = Comment()
-    new_comment.recruit_id = Recruit.objects.get(pk=id)
+    
+    if json.loads(request.body).get('answer_comment') == 'True':
+        new_comment = CommentAnswer()
+        new_comment.comment_id = Comment.objects.get(pk=json.loads(request.body).get('comment_id'))
+        
+    else:
+        new_comment = Comment()
+        new_comment.recruit_id = Recruit.objects.get(pk=id)
+
+    new_comment.content = json.loads(request.body).get('text')
     new_comment.user = get_object_or_404(User, username=username).name
     new_comment.user_username = username
-    new_comment.content = request.POST['text']
     new_comment.pub_date = timezone.now()
     new_comment.save()
     
     return redirect('detail_recruit', id)
 
 def update_comment(request, id, comment_id):
-    comment_instance = get_object_or_404(Comment, id=comment_id)
+    if json.loads(request.body).get('answer_comment') == "False":
+        comment_instance = get_object_or_404(Comment, id=comment_id)
+    else:
+        comment_instance = get_object_or_404(CommentAnswer, id=comment_id)
+    
     comment_instance.content = json.loads(request.body).get('text')
     comment_instance.save()
     

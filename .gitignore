@@ -1,6 +1,6 @@
 # virtual environment
 myvenv/
 hackathon/db.sqlite3
-hackathon/hackathon/__pycache__
-hackathon/chat/__pycache__
-hackathon/app/__pycache__
+hackathon/hackathon/__pycache__/
+hackathon/chat/__pycache__/
+hackathon/app/__pycache__/

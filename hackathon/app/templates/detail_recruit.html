@@ -24,11 +24,7 @@
 {% endif %}
 
 <h4>댓글</h4>
-<form action="{% url 'create_comment' id %}" method="POST">
-    {% csrf_token %}
-    <input type="text" name="text"/>
-    <button type="submit">작성</button>    
-</form>
+<div><input type="text" onkeydown="submitEnter(this)"/> <button onclick="submitBtn(this)">작성</button></div>
 
 {% for comment in comments %}
 <div class="comment-box" comment_id="{{comment.id}}">
@@ -38,10 +34,26 @@
     <a href="{% url 'delete_comment' id comment.id %}">삭제하기</a>
     <button onclick="updateBtn(this)">수정하기</button>
     {% endif %}
-    <button onclick="answerBtn()">답글</button>
+    <button onclick="answerBtn(this)">답글</button>
     <div>{{comment.content}}</div>
-    {% endfor %} 
+    <div></div>
+    <div>
+        {% for ans_comment in ans_comments %}
+        {% if comment.id == ans_comment.comment_id.id %}
+        <div class="answer-comment-box" comment_id="{{ans_comment.id}}">
+            <h4 style="display: inline">{{ans_comment.user}}</h4>
+            <p style="font-size: 5px; display: inline;">({{ans_comment.date}})</p>
+            {% if ans_comment.user_username == user.username %}
+            <a href="{% url 'delete_comment' id comment.id %}">삭제하기</a>
+            <button onclick="updateBtn2(this)">수정하기</button>
+            {% endif %}
+            <div>{{ans_comment.content}}</div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div> 
 </div>
+{% endfor %}
 
 <div>
     {% if comments.has_previous %}
