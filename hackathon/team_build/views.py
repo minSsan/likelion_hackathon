@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import *
 from users.models import User
-from mypage.models import LikeRecruit
+from .models import LikeRecruit
 from .forms import *
 
 from django.views.generic import ListView
@@ -185,14 +185,15 @@ def delete_comment(request, id, comment_id):
 # 찜하기 버튼 누를 때 실행
 def create_like(request, recruit_id):
     like_object = LikeRecruit()
-    like_object.user = request.user
+    like_object.user = request.user.id
     like_object.recruit_key = Recruit.objects.get(pk=recruit_id)
     like_object.save()
     return redirect('team_build:team_build')
 
 # 찜 해제 버튼 누를 때
 def delete_like(request, recruit_id):
-    like_object = LikeRecruit.objects.filter(user=request.user, recruit_key=recruit_id)
+    like_object = LikeRecruit.objects.filter(user=request.user.id, recruit_key=recruit_id)
     # 항목이 존재하면 삭제
-    like_object.delete()
+    if like_object:
+        like_object.delete()
     return redirect('team_build:team_build')
