@@ -21,6 +21,8 @@
             {% block posts %}
                 {% for post in recruit_list %}
                     <p>{{post.title}}</p>
+                    <a href="{% url 'team_build:create_like' post.id %}">찜하기</a>
+                    <a href="{% url 'team_build:delete_like' post.id %}">찜해제</a>
                     <a href="{% url 'team_build:detail_recruit' post.id %}">자세히</a>
                 {% endfor %}
             {% endblock %}
@@ -28,6 +30,8 @@
                 {{page}}
             {% endfor %}
         </div>
-        
+        <div class="list-container">
+
+        </div>
     </div>   
     {% endblock %}
