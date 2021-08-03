@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.core.paginator import Paginator
 from django.db.models import Q
 
 from users.models import User
+from .models import LikeUser
 
 # 유저 검색 기능 ( 아직 역할 검색만 )
 def user(request):
@@ -33,3 +34,19 @@ def user_search_text(request, input_text):
         'users':users,
     }
     return render(request, 'scout/user_search.html', context)
+
+###### 찜 기능 ######
+# 찜하기 버튼 누를 때
+def create_like(request, user_id):
+    like_object = LikeUser()
+    like_object.user = request.user.id
+    like_object.user_key = User.objects.get(pk=user_id)
+    like_object.save()
+    return redirect('scout:user')
+
+# 찜 해제 버튼 누를 때
+def delete_like(request, user_id):
+    like_object = LikeUser.objects.filter(user=request.user.id, user_key=user_id)
+    if like_object:
+        like_object.delete()
+    return redirect('scout:user')

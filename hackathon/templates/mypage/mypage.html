@@ -20,4 +20,9 @@
         {{recruit.title}}
         <a href="{% url 'team_build:detail_recruit' recruit.id %}">자세히</a>
     {% endfor %}
+    <h1>내가 찜한 유저</h1>
+    {% for user in users %}
+        {{user.name}}
+        <a href="{% url 'mypf:profile' user.id %}">자세히</a>
+    {% endfor %}
 {% endblock %}

@@ -2,12 +2,14 @@
     <head>
         {% load static %}
         {% block extrahead %}
-        <link rel="stylesheet" href="../../static/css/base.css">
+        <link rel="stylesheet" href="../../../../static/css/base.css">
         {% endblock %}
     </head>
 {% block content %}
     <p>{{pf.title}}</p>
     <div>{{pf.detail | safe}}</div>
+    {% if user == pf.user_id %}
     <a href="{% url 'mypf:update_pf' user_id pf_id %}">수정하기</a>
     <a href="{% url 'mypf:delete_pf' user_id pf_id %}">삭제하기</a>
+    {% endif %}
 {% endblock %}
