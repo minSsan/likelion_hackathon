@@ -10,3 +10,7 @@
     border-left: 0;
     border-right: 0;
 }
+
+.list-container {
+    height: 1200px;
+}

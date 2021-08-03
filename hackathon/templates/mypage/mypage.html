@@ -15,4 +15,9 @@
         {{comment.content}}
         <a href="{% url 'team_build:detail_recruit' comment.recruit_id %}">게시글 보기</a>
     {% endfor %}
+    <h1>내가 찜한 글</h1>
+    {% for recruit in recruits %}
+        {{recruit.title}}
+        <a href="{% url 'team_build:detail_recruit' recruit.id %}">자세히</a>
+    {% endfor %}
 {% endblock %}
