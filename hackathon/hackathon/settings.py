@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'mypage',
+    'mypf',
+    'scout',
     'team_build',
     'users',
     'multiselectfield',

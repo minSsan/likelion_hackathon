@@ -1,0 +1,12 @@
+{% extends 'scout/user.html' %}
+<head>
+    {% block extrahead %}
+        <link rel="stylesheet" href="../../static/css/base.css">
+    {% endblock %}
+</head>
+    {% block users %}
+        {% for instance in users %}
+            <p>{{instance.username}}</p>
+            <a href="{% url 'mypf:profile' instance.id %}">자세히</a>
+        {% endfor %}
+    {% endblock %}

@@ -19,37 +19,23 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from main.views import *
-from team_build.views import *
-from mypage.views import *
-from users.views import *
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('summernote/', include('django_summernote.urls')),
-    # path('', main, name="main"),
+
     path('', include('main.urls', namespace='main')),
 
-    # path('login/', login_view, name='login'),
-    # path('logout/', logout_view, name='logout'),
-    # path('signup/', signup_view, name='signup'),
     path('users/', include('users.urls', namespace='users')),
 
-    # path('profile/<int:id>', profile, name='profile'),
-
-    # path('create_recruit/', create_recruit, name='create_recruit'),
-    # path('update_recruit/<int:id>/', update_recruit, name='update_recruit'),
-    # path('detail_recruit/<int:id>/', detail_recruit, name='detail_recruit'),
-    # path('delete_recruit/<int:id>/', delete_recruit, name='delete_recruit'),
-    # path('team_build/', RecruitListView.as_view(), name='team_build'),
-    # path('team_build/<str:input_role>', recruit_role_search, name='recruit_role_search'),
     path('recruit/', include('team_build.urls', namespace='recruit')),
     
-    # path('profile/<int:user_id>/create_pf/', create_portfolio, name="create_pf"),
-    # path('profile/<int:user_id>/detail_pf/<int:pf_id>/', detail_portfolio, name='detail_pf'),
-    # path('profile/<int:user_id>/detail_pf/update/<int:pf_id>/', update_portfolio, name="update_pf"),
-    # path('profile/<int:user_id>/detail_pf/delete/<int:pf_id>/', delete_portfolio, name='delete_pf'),
-    path('profile/', include('mypage.urls', namespace='profile')),
+    path('portfolio/', include('mypf.urls', namespace='portfolio')),
+
+    path('mypage/', include('mypage.urls', namespace='mypage')),
+
+    path('scout/', include('scout.urls', namespace='scout')),
+    
+    # path('chat/', include('chat.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

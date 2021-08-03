@@ -75,3 +75,10 @@ class Recruit(models.Model):
     role = MultiSelectField(default='', choices=ROLE_CHOICES, max_choices=4, max_length=100)
     # role = models.CharField(max_length=2, choices=ROLE_CHOICES)
     detail = models.TextField(blank=True, null=True)
+
+class Comment(models.Model):
+    recruit_id = models.ForeignKey(Recruit, on_delete=models.CASCADE, null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    user = models.TextField(max_length=100)
+    user_username = models.TextField(max_length=100)
+    content = models.TextField(max_length=200)
