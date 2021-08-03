@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import *
+from users.models import User
 from .forms import *
 
 from django.views.generic import ListView
@@ -8,6 +9,8 @@ from django.views.generic import ListView
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib import messages
+
+import json
 
 
 ###### 팀 빌딩 페이지 ######
@@ -143,3 +146,36 @@ def update_recruit(request, id):
         'id': id,
         }
         return render(request, 'team_build/update_recruit.html', context)
+
+###### 모집글 댓글 ######
+# 1. 댓글 작성
+def create_comment(request, id):
+    username = request.user
+    new_comment = Comment()
+    new_comment.recruit_id = Recruit.objects.get(pk=id)
+    new_comment.user = get_object_or_404(User, username=username).name
+    new_comment.user_username = username
+    new_comment.content = request.POST['text']
+    new_comment.pub_date = timezone.now()
+    new_comment.save()
+    
+    return redirect('detail_recruit', id)
+
+# 2. 댓글 수정
+def update_comment(request, id, comment_id):
+    comment_instance = get_object_or_404(Comment, id=comment_id)
+    comment_instance.content = json.loads(request.body).get('text')
+    comment_instance.save()
+    
+    return redirect('detail_recruit', id)
+
+# 3. 댓글 삭제
+def delete_comment(request, id, comment_id):
+    # 해당 댓글 불러오기
+    comment_instance = get_object_or_404(Comment, pk=comment_id)
+
+    # 댓글 작성자랑 로그인 유저랑 같으면
+    if str(request.user) == comment_instance.user_username:
+        comment_instance.delete()
+
+    return redirect('detail_recruit', id)

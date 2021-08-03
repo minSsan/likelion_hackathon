@@ -20,14 +20,15 @@
 
                 <li class="url-container">
                     <a href="{% url 'team_build:team_build' %}">팀 빌딩</a>
-                    <a href="">스카우트</a>
-                    <a href="{% if user.is_authenticated %} {% url 'profile:profile' user.id %} {% else %} {% url 'users:login' %} {% endif %}">마이 포트폴리오</a>
+                    <a href="{% url 'scout:user' %}">스카우트</a>
+                    <a href="{% if user.is_authenticated %} {% url 'mypf:profile' user.id %} {% else %} {% url 'users:login' %} {% endif %}">마이 포트폴리오</a>
+                    <a href="">채팅</a>
                 </li>
 
                 <li class="user-container">
                 {% if user.is_authenticated %}
                     <img src="" alt="">
-                    <a class="user-name"href="{% url 'mypage:profile' user.id %}">{{user.name}}</a>
+                    <a class="user-name"href="{% url 'mypage:mypage' user.id %}">{{user.name}}</a>
                 {% else %}
                     <a class="btn login" href="{% url 'users:login' %}">로그인</a>
                     <a class="btn signup" href="{% url 'users:signup' %}">회원가입</a>

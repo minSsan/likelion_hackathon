@@ -1,0 +1,12 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.search-container {
+    height: 16vh;
+
+    border: 1px solid #3C64B1;
+    border-left: 0;
+    border-right: 0;
+}

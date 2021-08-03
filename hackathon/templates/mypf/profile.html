@@ -2,6 +2,7 @@
     <head>
         {% load static %}
         {% block extrahead %}
+        <link rel="stylesheet" href="../../static/css/base.css">
         {% endblock %}
     </head>
 {% block content %}
@@ -14,7 +15,10 @@
     <p>포트폴리오
         {% for pf in pfs %}
             <p>{{pf.title}}</p>
-            <a href="{% url 'mypage:detail_pf' user_id pf.id %}">자세히</a>
+            <a href="{% url 'mypf:detail_pf' user_id pf.id %}">자세히</a>
         {% endfor %}
+        {% if user.id == user_id %}
+            <a href="{% url 'mypf:create_pf' user_id %}">포트폴리오 쓰기</a>
+        {% endif %}
     </p>
 {% endblock %}
