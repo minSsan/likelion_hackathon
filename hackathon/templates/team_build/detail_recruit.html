@@ -16,11 +16,57 @@
     <p>역할 : {{obj.get_role_display}}</p>
     <p>세부사항 : {{obj.detail}}</p>
     <p>글쓴이 : {{obj.writer}}</p>
-
-    
     {% if obj.writer == user.username %}
         <a href="{% url 'team_build:update_recruit' id %}">수정하기</a>
         <a href="{% url 'team_build:delete_recruit' id %}">삭제하기</a>
     {% endif %}
+
+    <h4>댓글</h4>
+    <div><input type="text" onkeydown="submitEnter(this)"/> <button onclick="submitBtn(this)">작성</button></div>
+
+    {% for comment in comments %}
+    <div class="comment-box" comment_id="{{comment.id}}">
+        <h4 style="display: inline">{{comment.user}}</h4>
+        <p style="font-size: 5px; display: inline;">({{comment.date}})</p>
+        {% if comment.user_username == user.username %}
+        <a href="{% url 'team_build:delete_comment' id comment.id 'False' %}">삭제하기</a>
+        <button onclick="updateBtn(this)">수정하기</button>
+        {% endif %}
+        <button onclick="answerBtn(this)">답글</button>
+        <div>{{comment.content}}</div>
+        <div></div>
+        <div>
+            {% for ans_comment in ans_comments %}
+            {% if comment.id == ans_comment.comment_id.id %}
+            <div class="answer-comment-box" comment_id="{{ans_comment.id}}">
+                <h4 style="display: inline">{{ans_comment.user}}</h4>
+                <p style="font-size: 5px; display: inline;">({{ans_comment.date}})</p>
+                {% if ans_comment.user_username == user.username %}
+                <a href="{% url 'team_build:delete_comment' id ans_comment.id 'True' %}">삭제하기</a>
+                <button onclick="updateBtn2(this)">수정하기</button>
+                {% endif %}
+                <div>{{ans_comment.content}}</div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div> 
+    </div>
+    {% endfor %}
+
+    <div>
+        {% if comments.has_previous %}
+        <a href="?page=1"> = first = </a>
+        <a href="?page={{comments.previous_page_number}}"> = previous = </a>
+        {% endif %}
+        <span> {{comments.number}} </span>
+        <span> / </span>
+        <span> {{comments.paginator.num_pages}} </span>
+            {% if comments.has_next %}
+                <a href="?page={{comments.next_page_number}}"> = next = </a>
+                <a href="?page={{comments.paginator.num_pages}}"> = last = </a>
+            {% endif %}
+        </div>
+
+        <script type="text/javascript" src="{% static '/js/team_build/detail_recruit.js' %}?ver=20200803"></script>
 
 {% endblock %}
