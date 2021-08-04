@@ -148,15 +148,25 @@ def update_recruit(request, id):
         }
         return render(request, 'team_build/update_recruit.html', context)
 
+
+
+
 ###### 모집글 댓글 ######
 # 1. 댓글 작성
 def create_comment(request, id):
     username = request.user
-    new_comment = Comment()
-    new_comment.recruit_id = Recruit.objects.get(pk=id)
+    
+    if json.loads(request.body).get('answer_comment') == 'True':
+        new_comment = CommentAnswer()
+        new_comment.comment_id = Comment.objects.get(pk=json.loads(request.body).get('comment_id'))
+        
+    else:
+        new_comment = Comment()
+        new_comment.recruit_id = Recruit.objects.get(pk=id)
+
+    new_comment.content = json.loads(request.body).get('text')
     new_comment.user = get_object_or_404(User, username=username).name
     new_comment.user_username = username
-    new_comment.content = request.POST['text']
     new_comment.pub_date = timezone.now()
     new_comment.save()
     
@@ -164,22 +174,32 @@ def create_comment(request, id):
 
 # 2. 댓글 수정
 def update_comment(request, id, comment_id):
-    comment_instance = get_object_or_404(Comment, id=comment_id)
+    if json.loads(request.body).get('answer_comment') == "False":
+        comment_instance = get_object_or_404(Comment, id=comment_id)
+    else:
+        comment_instance = get_object_or_404(CommentAnswer, id=comment_id)
+    
     comment_instance.content = json.loads(request.body).get('text')
     comment_instance.save()
     
     return redirect('detail_recruit', id)
 
 # 3. 댓글 삭제
-def delete_comment(request, id, comment_id):
+def delete_comment(request, id, comment_id, answer_comment):
     # 해당 댓글 불러오기
-    comment_instance = get_object_or_404(Comment, pk=comment_id)
-
+    if answer_comment == 'False':
+        comment_instance = get_object_or_404(Comment, pk=comment_id)
+    else:
+        comment_instance = get_object_or_404(CommentAnswer, pk=comment_id)
+        
     # 댓글 작성자랑 로그인 유저랑 같으면
     if str(request.user) == comment_instance.user_username:
         comment_instance.delete()
 
     return redirect('detail_recruit', id)
+
+
+
 
 ###### 찜 기능 ######
 # 찜하기 버튼 누를 때 실행

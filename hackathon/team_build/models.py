@@ -85,6 +85,13 @@ class Comment(models.Model):
     user_username = models.TextField(max_length=100)
     content = models.TextField(max_length=200)
 
+class CommentAnswer(models.Model):
+    comment_id = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    user = models.TextField(max_length=100)
+    user_username = models.TextField(max_length=100)
+    content = models.TextField(max_length=200)
+
 class LikeRecruit(models.Model):
     # 어떤 유저의 찜 정보인지 user id를 저장(request.user 값이 들어갈 것임)
     user = models.CharField(default="", max_length=200)
