@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+<head>
+    {% load static %}
+    {% block extrahead %}
+    <link rel="stylesheet" href="../../../../../static/css/base.css">
+    {% endblock %}
+</head>
+
+{% block content %}
+    <form action="{% url 'mypf:update_pf' user_id pf_id %}" method="post">
+        {% csrf_token %}
+        <table>
+            {{form.as_table}}
+        </table>
+        <button type="submit">수정</button>
+    </form>
+{% endblock %}

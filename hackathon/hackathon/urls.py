@@ -19,13 +19,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from app.views import *
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('summernote/', include('django_summernote.urls')),
-    path('', main, name="main"),
 
+<<<<<<< HEAD
     # 로그인
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
@@ -60,6 +58,21 @@ urlpatterns = [
     
     # 채팅
     path('chat/', include('chat.urls')),
+=======
+    path('', include('main.urls', namespace='main')),
+
+    path('users/', include('users.urls', namespace='users')),
+
+    path('recruit/', include('team_build.urls', namespace='recruit')),
+    
+    path('portfolio/', include('mypf.urls', namespace='portfolio')),
+
+    path('mypage/', include('mypage.urls', namespace='mypage')),
+
+    path('scout/', include('scout.urls', namespace='scout')),
+    
+    # path('chat/', include('chat.urls')),
+>>>>>>> upstream/main
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

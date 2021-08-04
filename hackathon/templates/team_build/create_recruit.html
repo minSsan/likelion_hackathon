@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+    <head>
+        {% load static %}
+        {% block extrahead %}
+        <link rel="stylesheet" href="../../static/css/base.css">
+        {% endblock %}
+    </head>
+{% block content %}
+    <form action="{% url 'team_build:create_recruit' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">생성</button>
+    </form>
+{% endblock %}

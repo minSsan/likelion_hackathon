@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+    <head>
+        {% load static %}
+        {% block extrahead %}
+        <link rel="stylesheet" href="../../static/css/base.css">
+        {% endblock %}
+    </head>
+{% block content %}
+    <h1>업데이트 페이지</h1>
+    {{test}}
+    <form action="{% url 'team_build:update_recruit' id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">수정</button>
+    </form>
+{% endblock %}

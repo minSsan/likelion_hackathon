@@ -1,0 +1,44 @@
+{% extends '../base.html' %}
+    <head>
+        {% load static %}
+        {% block extrahead %}
+        <link rel="stylesheet" href="../../static/css/base.css">
+        <link rel="stylesheet" href="../../static/css/team_build/team_build.css">
+        {% endblock %}
+    </head>
+    {% block content %}
+    <div>
+        <div class="search-box">
+            <div class="search-container">
+                <p>어떤 프로젝트를 찾으시나요?</p>
+                <div class="search-wrapper">
+                    <a href="{% url 'team_build:team_build' %}">전체</a>
+                    <a href="{% url 'team_build:recruit_role_search' 'Developer' %}">개발자</a>
+                    <a href="{% url 'team_build:recruit_role_search' 'Planner' %}">기획자</a>
+                    <a href="{% url 'team_build:recruit_role_search' 'Designer' %}">디자이너</a>
+                    <a href="{% url 'team_build:recruit_role_search' 'Editor' %}">편집자</a>
+                    <form action="" method="get">
+                        <input type="text" name="q">
+                        <button type="submit" onclick="location.href='/recruit/team_build/'">검색</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="list-container">
+            {% block posts %}
+                {% for post in recruit_list %}
+                    <p>{{post.title}}</p>
+                    <a href="{% url 'team_build:create_like' post.id %}">찜하기</a>
+                    <a href="{% url 'team_build:delete_like' post.id %}">찜해제</a>
+                    <a href="{% url 'team_build:detail_recruit' post.id %}">자세히</a>
+                {% endfor %}
+            {% endblock %}
+            <div>
+                {% for page in page_range %}
+                    <a href="">{{page}}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>   
+    {% endblock %}
