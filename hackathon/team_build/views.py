@@ -44,6 +44,7 @@ class RecruitListView(ListView):
                     Q(service__icontains=search_word) |
                     Q(detail__icontains=search_word)
                     )
+                recruit_list = recruit_list.order_by('-id')
                 return recruit_list
             else:
                 messages.error(self.request, '두 글자 이상 입력해주세요.')
@@ -77,6 +78,7 @@ class RecruitListView(ListView):
 # 2. 팀빌딩 직무 검색 기능 #
 def recruit_role_search(request, input_role):
     results = Recruit.objects.filter(Q(role__icontains=input_role)).distinct()
+    results = results.order_by('-id')
     # distinct() : 중복된 객체 제외
     paginator = Paginator(results, 5)
     page = request.GET.get('page')
