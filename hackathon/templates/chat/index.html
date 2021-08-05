@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends '../base.html' %}
     <head>
         {% load static %}
         {% block extrahead %}
@@ -10,13 +10,13 @@
         {% for chat in chat_list %}
             <div>
                 {{chat.title}}
-                <a href="{% url 'room' chat.chat_room_id %}">들어가기</a>
+                <a href="{% url 'chat:room' chat.chat_room_id %}">들어가기</a>
             </div>
         {% endfor %}
         {% for chat in chat_list2 %}
             <div>
                 {{chat.title}}
-                <a href="{% url 'room' chat.chat_room_id %}">들어가기</a>
+                <a href="{% url 'chat:room' chat.chat_room_id %}">들어가기</a>
             </div>
         {% endfor %}  
     {% endblock %}

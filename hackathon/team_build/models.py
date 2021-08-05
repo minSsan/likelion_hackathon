@@ -49,31 +49,6 @@ ROLE_CHOICES = [
     ('Planner', '기획자'),
     ('Editor', '편집자'),
 ]
-<<<<<<< HEAD:hackathon/app/models.py
-    
-# 회원 정보
-class User(AbstractUser):
-    name = models.CharField(default='', max_length=300)
-    birth_date = models.DateField(default=timezone.now)
-    address_sido = models.CharField(default='', max_length=200)
-    address_gungu = models.CharField(default='', max_length=200)
-    career = models.CharField(default='0', max_length=200, choices=CAREER_CHOICES)
-    state = models.CharField(default='', blank=True, null=False, max_length=200, choices=STATE_CHOICES)
-    role = MultiSelectField(default='Etc', choices=ROLE_CHOICES, max_choices=200, max_length=200)
-
-# 포트폴리오
-class Portfolio(models.Model):
-    title = models.CharField(default='', max_length=200)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    # ForiegnKey(외래키): 외부 테이블 키를 가져옴.
-    # 여기서는 User(부모 테이블)라는 테이블의 키를 Portfolio(자식 테이블)에 받아옴
-    detail = models.TextField(blank=True, null=True)
-    # 추후 변경 => 네이버 스마트 에디터 활용방안 고안
-    # 프론트에서 네이버 에디터에 작성된 내용이 전달되는 형태가
-    # 어떻게 되는지에 따라 필드를 달리 설정할 가능성 있음
-=======
->>>>>>> upstream/main:hackathon/team_build/models.py
-
 # 팀원 모집 글
 class Recruit(models.Model):
     writer = models.CharField(default='', max_length=200)
@@ -117,20 +92,9 @@ class CommentAnswer(models.Model):
     user_username = models.TextField(max_length=100)
     content = models.TextField(max_length=200)
 
-<<<<<<< HEAD:hackathon/app/models.py
-class ChatList(models.Model):
-    title = models.CharField(max_length=200)
-    first_user_id = models.CharField(max_length=300)
-    second_user_id = models.CharField(max_length=300)
-    chat_room_id = models.CharField(max_length=400)
-
-class ChatLog(models.Model):
-    chat_room_id = models.ForeignKey(ChatList, on_delete=models.CASCADE, null=True)
-    chat_text = models.TextField()
-=======
 class LikeRecruit(models.Model):
     # 어떤 유저의 찜 정보인지 user id를 저장(request.user 값이 들어갈 것임)
     user = models.CharField(default="", max_length=200)
     # 해당 유저가 어떤 모집글을 찜했는지 해당 모집글의 id를 저장
     recruit_key = models.ForeignKey(Recruit, on_delete=CASCADE)
->>>>>>> upstream/main:hackathon/team_build/models.py
+

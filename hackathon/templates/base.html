@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" href="../../static/css/base.css">
     {% block extrahead %}
     {% endblock %}
 </head>
@@ -22,7 +22,7 @@
                     <a href="{% url 'team_build:team_build' %}">팀 빌딩</a>
                     <a href="{% url 'scout:user' %}">스카우트</a>
                     <a href="{% if user.is_authenticated %} {% url 'mypf:profile' user.id %} {% else %} {% url 'users:login' %} {% endif %}">마이 포트폴리오</a>
-                    <a href="">채팅</a>
+                    <a href="{% if user.is_authenticated %} {% url 'chat:index' %} {% else %} {% url 'users:login' %} {% endif %}">채팅</a>
                 </li>
 
                 <li class="user-container">

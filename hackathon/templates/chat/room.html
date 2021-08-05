@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends '../base.html' %}
     <head>
         {% load static %}
         {% block extrahead %}
@@ -17,5 +17,5 @@
         <input id="chat-message-submit" type="button" value="Send">
         {{ room_name|json_script:"room-name" }}
 
-        <script type="text/javascript" src="{% static '/chat/js/chat.js' %}?ver=20200802"></script>
+        <script type="text/javascript" src="../../static/js/chat/chat.js"></script>
     {% endblock %}

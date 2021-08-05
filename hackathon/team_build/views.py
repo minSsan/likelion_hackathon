@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import *
@@ -93,7 +94,7 @@ def create_recruit(request):
         # 유효성 검사 통과 안 됨 => 수정 필요
         if recruits_form.is_valid():
             new_form = recruits_form.save(commit=False)
-            new_form.writer = request.user
+            new_form.writer = request.user.name
             new_form.save()
         return redirect('team_build:team_build')
     else:
@@ -105,9 +106,19 @@ def create_recruit(request):
 # 4-1. 팀빌딩 게시글 자세히 보기 #
 def detail_recruit(request, id):
     recruit_instance = get_object_or_404(Recruit, pk=id)
+    comments_instance = Comment.objects.filter(recruit_id=id).order_by('-id')
+    ans_comment_instance = CommentAnswer.objects.all()
+
+    paginator = Paginator(comments_instance, 6)
+    page = request.GET.get('page')
+    comments = paginator.get_page(page)
+
+
     context ={
         'obj': recruit_instance,
         'id': id,
+        'comments': comments,
+        'ans_comments':ans_comment_instance,
     }
     return render(request, 'team_build/detail_recruit.html', context)
 
@@ -170,7 +181,7 @@ def create_comment(request, id):
     new_comment.pub_date = timezone.now()
     new_comment.save()
     
-    return redirect('detail_recruit', id)
+    return HttpResponse(status=200)
 
 # 2. 댓글 수정
 def update_comment(request, id, comment_id):
@@ -182,7 +193,7 @@ def update_comment(request, id, comment_id):
     comment_instance.content = json.loads(request.body).get('text')
     comment_instance.save()
     
-    return redirect('detail_recruit', id)
+    return HttpResponse(status=200)
 
 # 3. 댓글 삭제
 def delete_comment(request, id, comment_id, answer_comment):
@@ -196,7 +207,9 @@ def delete_comment(request, id, comment_id, answer_comment):
     if str(request.user) == comment_instance.user_username:
         comment_instance.delete()
 
-    return redirect('detail_recruit', id)
+    print(id)
+
+    return HttpResponse(status=200)
 
 
 

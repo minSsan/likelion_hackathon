@@ -7,6 +7,9 @@
     {% block users %}
         {% for instance in users %}
             <p>{{instance.username}}</p>
+            <a href="{% url 'scout:create_like' instance.id %}">찜하기</a>
+            <a href="{% url 'scout:delete_like' instance.id %}">찜해제</a>
             <a href="{% url 'mypf:profile' instance.id %}">자세히</a>
+            <a href="{% url 'chat:create_chat_room' user.id instance.id %}">채팅</a>
         {% endfor %}
     {% endblock %}

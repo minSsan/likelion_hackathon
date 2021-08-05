@@ -3,70 +3,111 @@
         {% load static %}
         {% block extrahead %}
         <link rel="stylesheet" href="../../../static/css/base.css">
+        <link rel="stylesheet" href="../../../static/css/team_build/detail_recruit.css">
         {% endblock %}
     </head>
 {% block content %}
-    <p>제목 : {{obj.title}}</p>
-    <p>팀 이름 : {{obj.team_name}}</p>
-    <p>서비스 : {{obj.service}}</p>
-    <p>팀원 : {{obj.get_team_members_display}}</p>
-    <p>서비스 레벨 : {{obj.get_service_level_display}}</p>
-    <p>지역 : {{obj.get_locate_display}}</p>
-    <p>이미지 : {{obj.image}}</p>
-    <p>역할 : {{obj.get_role_display}}</p>
-    <p>세부사항 : {{obj.detail}}</p>
-    <p>글쓴이 : {{obj.writer}}</p>
+    <div id="recruit-id" style="display: none;">{{obj.id}}</div>
+    <div class="back-box">
+        <div class="title-box">
+            <div class="title .item-margin">{{obj.title}}</div>
+            <div style="font-size: 12px; display: flex; align-items: flex-end;">{{obj.writer}}</div>
+        </div>
+        <div class="overview-box item-margin">
+            <div class="overview-item">
+                <div class="small-title">팀 소개</div>
+                <p>팀이름: {{obj.team_name}}</p>
+                <p>서비스: {{obj.service}}</p>
+                <p>서비스 레벨: {{obj.get_service_level_display}}</p>
+            </div>
+            <div class="overview-item">
+                <div class="small-title">모집상세</div>
+                <p>지역: {{obj.get_locate_display}}</p>
+                <p>팀원: {{obj.get_team_members_display}}</p>
+                <p>역할: {{obj.get_role_display}}</p>
+            </div>
+        </div>
+        <div class="image-box item-margin">
+            이미지
+        </div>
+        <div class="detail-box item-margin">
+            <p>{{obj.detail}}</p>
+        </div>
+    </div>
+
     {% if obj.writer == user.username %}
         <a href="{% url 'team_build:update_recruit' id %}">수정하기</a>
         <a href="{% url 'team_build:delete_recruit' id %}">삭제하기</a>
     {% endif %}
 
-    <h4>댓글</h4>
-    <div><input type="text" onkeydown="submitEnter(this)"/> <button onclick="submitBtn(this)">작성</button></div>
-
-    {% for comment in comments %}
-    <div class="comment-box" comment_id="{{comment.id}}">
-        <h4 style="display: inline">{{comment.user}}</h4>
-        <p style="font-size: 5px; display: inline;">({{comment.date}})</p>
-        {% if comment.user_username == user.username %}
-        <a href="{% url 'team_build:delete_comment' id comment.id 'False' %}">삭제하기</a>
-        <button onclick="updateBtn(this)">수정하기</button>
-        {% endif %}
-        <button onclick="answerBtn(this)">답글</button>
-        <div>{{comment.content}}</div>
-        <div></div>
-        <div>
-            {% for ans_comment in ans_comments %}
-            {% if comment.id == ans_comment.comment_id.id %}
-            <div class="answer-comment-box" comment_id="{{ans_comment.id}}">
-                <h4 style="display: inline">{{ans_comment.user}}</h4>
-                <p style="font-size: 5px; display: inline;">({{ans_comment.date}})</p>
-                {% if ans_comment.user_username == user.username %}
-                <a href="{% url 'team_build:delete_comment' id ans_comment.id 'True' %}">삭제하기</a>
-                <button onclick="updateBtn2(this)">수정하기</button>
-                {% endif %}
-                <div>{{ans_comment.content}}</div>
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div> 
-    </div>
-    {% endfor %}
-
-    <div>
-        {% if comments.has_previous %}
-        <a href="?page=1"> = first = </a>
-        <a href="?page={{comments.previous_page_number}}"> = previous = </a>
-        {% endif %}
-        <span> {{comments.number}} </span>
-        <span> / </span>
-        <span> {{comments.paginator.num_pages}} </span>
-            {% if comments.has_next %}
-                <a href="?page={{comments.next_page_number}}"> = next = </a>
-                <a href="?page={{comments.paginator.num_pages}}"> = last = </a>
-            {% endif %}
+    <div class="back-box">
+        <div class="comment-create-box" style="padding-left: 10%; padding-right: 10%;">
+            <div class="small-profile-img"></div>
+            <input type="text" class="comment-input" onkeydown="submitEnter(this)" placeholder="댓글 입력"/>
+            <button class="comment-btn" onclick="submitBtn(this)">작성</button>
         </div>
 
-        <script type="text/javascript" src="{% static '/js/team_build/detail_recruit.js' %}?ver=20200803"></script>
+        <div class="empty"></div>
+        <div class="empty"></div>
+
+        {% for comment in comments %}
+        <div class="comment-box" comment_id="{{comment.id}}">
+            <div class="comment-item row" style="flex-grow: 1;">
+                <div class="small-profile-img"></div>
+                <div class="comment-item col">
+                    <div class="comment-item row">
+                        <div class="small-title">{{comment.user}}</div>
+                        <p style="font-size: 5px; display: inline;">({{comment.date}})</p>
+                    </div>
+                    <div class="comment-item">{{comment.content}}</div>
+                    <div class="comment-item row" style="display: flex; justify-content: flex-end;">
+                        <button class="comment-btn-small" onclick="deleteBtn1(this)" {% if comment.user_username != user.username %} style="display: none;"{% endif %}>삭제</button>
+                        <button class="comment-btn-small" onclick="updateBtn(this)" {% if comment.user_username != user.username %} style="display: none;"{% endif %}>수정</button>
+                        <button class="comment-btn-small" onclick="answerBtn(this)">답글</button>
+                    </div>
+                    <div class="comment-create-box">
+                    </div>
+                </div>
+            </div>
+            <div class="line"></div>
+                {% for ans_comment in ans_comments %}
+                {% if comment.id == ans_comment.comment_id.id %}
+                <div class="answer-comment-box" comment_id="{{ans_comment.id}}">
+                    <div class="comment-item row">
+                        <div class="small-profile-img"></div>
+                        <div class="comment-item col">
+                            <div class="comment-item row">
+                                <div class="small-title">{{ans_comment.user}}</div>
+                                <p style="font-size: 5px; display: inline;">({{ans_comment.date}})</p>
+                            </div>
+                            <div class="comment-item">{{ans_comment.content}}</div>
+                            <div class="comment-item row" style="display: flex; justify-content: flex-end;">
+                                <button class="comment-btn-small" onclick="deleteBtn2(this)" {% if ans_comment.user_username != user.username %} style="display: none;"{% endif %}>삭제</button>
+                                <button class="comment-btn-small" onclick="updateBtn2(this)" {% if ans_comment.user_username != user.username %} style="display: none;"{% endif %}>수정</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="line"></div>
+                {% endif %}
+                {% endfor %}
+        </div>
+        {% endfor %}
+
+        <div style="text-align: center;">
+            {% if comments.has_previous %}
+            <a href="?page={{comments.previous_page_number}}"> < </a>
+            {% endif %}
+            <span> {{comments.number}} </span>
+            <span> / </span>
+            <span> {{comments.paginator.num_pages}} </span>
+            {% if comments.has_next %}
+                <a href="?page={{comments.next_page_number}}"> > </a>
+            {% endif %}
+        </div>
+    </div>
+
+
+        <script type="text/javascript" src="../../../static/js/team_build/detail_recruit.js"></script>
 
 {% endblock %}
