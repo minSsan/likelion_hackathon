@@ -7,6 +7,7 @@ urlpatterns = [
     # 모집글 검색
     path('team_build/', RecruitListView.as_view(), name='team_build'),
     path('team_build/<str:input_role>', recruit_role_search, name='recruit_role_search'),
+    path('team_build/location_search/<str:input_location>', recruit_location_search, name='location_search'),
     
     # 모집글
     path('create_recruit/', create_recruit, name='create_recruit'),

@@ -1,3 +1,4 @@
+from django.core import paginator
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import *
@@ -19,7 +20,7 @@ import json
 #    팀빌딩 키워드 검색 기능 -> query 방식 #
 class RecruitListView(ListView):
     model = Recruit
-    paginate_by = 10
+    paginate_by = 5
     # 리스트를 team_build.html 템플릿으로 보낼 것임
     template_name = 'team_build/team_build.html'
     # 템플릿에서 리스트를 호출할 때 'recruit_list'로 호출
@@ -77,13 +78,24 @@ class RecruitListView(ListView):
 def recruit_role_search(request, input_role):
     results = Recruit.objects.filter(Q(role__icontains=input_role)).distinct()
     # distinct() : 중복된 객체 제외
-    paginator = Paginator(results, 10)
+    paginator = Paginator(results, 5)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
     context = {
         'posts':posts,
     }
     return render(request, 'team_build/recruit_role_search.html' ,context)
+
+# 2-1. 팀 빌딩 지역 검색 기능 #
+def recruit_location_search(request, input_location):
+    results = Recruit.objects.filter(locate=input_location).distinct()
+    paginator = Paginator(results, 5)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+    context = {
+        'posts':posts,
+    }
+    return render(request, 'team_build/recruit_location_search.html', context)
 
 # 3. 팀빌딩 글 작성 페이지, 기능 #
 def create_recruit(request):
@@ -93,7 +105,8 @@ def create_recruit(request):
         # 유효성 검사 통과 안 됨 => 수정 필요
         if recruits_form.is_valid():
             new_form = recruits_form.save(commit=False)
-            new_form.writer = request.user
+            user_obj = User.objects.get(pk=request.user.id)
+            new_form.writer = user_obj.name
             new_form.save()
         return redirect('team_build:team_build')
     else:
