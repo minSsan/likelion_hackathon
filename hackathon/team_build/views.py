@@ -32,8 +32,7 @@ class RecruitListView(ListView):
         search_word = self.request.GET.get('q','')
         
         # 검색어가 포함된 게시글 리스트를 저장할 변수
-        # id 내림차순 -> 최신순으로 나열
-        recruit_list = Recruit.objects.order_by('-id')
+        recruit_list = Recruit.objects.all()
 
         if search_word: # 만약 검색어가 존재하는 경우
             if len(search_word) > 1: # 두 글자 이상
@@ -50,6 +49,8 @@ class RecruitListView(ListView):
                 messages.error(self.request, '두 글자 이상 입력해주세요.')
         # 검색어가 없는 기본 상태일 때는, 모든 Recruit 객체 리스트를
         # recruit_list에 담아서 반환
+        # id 내림차순 -> 최신순으로 나열
+        recruit_list = recruit_list.order_by('-id')
         return recruit_list
 
     # context에 리스트뿐만 아니라, 추가적으로 정보를 더 담는 함수
