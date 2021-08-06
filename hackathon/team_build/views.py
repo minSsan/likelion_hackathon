@@ -215,21 +215,19 @@ def delete_comment(request, id, comment_id, answer_comment):
     return redirect('detail_recruit', id)
 
 
-
-
 ###### 찜 기능 ######
 # 찜하기 버튼 누를 때 실행
-def create_like(request, recruit_id):
-    like_object = LikeRecruit()
-    like_object.user = request.user.id
-    like_object.recruit_key = Recruit.objects.get(pk=recruit_id)
-    like_object.save()
-    return redirect('team_build:team_build')
-
-# 찜 해제 버튼 누를 때
-def delete_like(request, recruit_id):
+def recruit_like(request, recruit_id):
     like_object = LikeRecruit.objects.filter(user=request.user.id, recruit_key=recruit_id)
-    # 항목이 존재하면 삭제
+    # 만약 이미 찜이 되어있는 상태라면,(=찜 해제 버튼을 누른 경우)
     if like_object:
+        # 찜 해제(테이블 삭제)
         like_object.delete()
+    # 해당 테이블이 없는 경우(=찜 목록에 없는 경우, =찜하기 버튼을 누른 경우)
+    else:
+        # 찜 설정(테이블 생성)
+        like_object = LikeRecruit()
+        like_object.user = request.user.id
+        like_object.recruit_key = Recruit.objects.get(pk=recruit_id)
+        like_object.save()
     return redirect('team_build:team_build')

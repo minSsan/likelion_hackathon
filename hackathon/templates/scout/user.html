@@ -1,31 +1,115 @@
 {% extends '../base.html' %}
     <head>
         {% block extrahead %}
-            <link rel="stylesheet" href="../../static/css/base.css">
+        {% load static %}
+            <link rel="stylesheet" href="{% static 'css/base.css' %}">
+            <link rel="stylesheet" href="{% static 'css/team_build/team_build.css' %}">
+            <link rel="stylesheet" href="{% static 'css/scout/user.css' %}">
         {% endblock %}
     </head>
     {% block content %}
-        <a href="{% url 'scout:user' %}">전체</a>
-        <a href="{% url 'scout:user_search' 'Developer' %}">개발자</a>
-        <a href="{% url 'scout:user_search' 'Designer' %}">디자이너</a>
-        <a href="{% url 'scout:user_search' 'Planner' %}">기획자</a>
-        <a href="{% url 'scout:user_search' 'Editor' %}">편집자</a>
+    <div>
+        <div class="search-box">
+            <div class="search-container">
+                <p>어떤 팀원을 찾으시나요?</p>
+                <div class="search-wrapper">
+                    <a href="{% url 'scout:user' %}">전체</a>
+                    <a href="{% url 'scout:user_search' 'Developer' %}">개발자</a>
+                    <a href="{% url 'scout:user_search' 'Planner' %}">기획자</a>
+                    <a href="{% url 'scout:user_search' 'Designer' %}">디자이너</a>
+                    <a href="{% url 'scout:user_search' 'Editor' %}" style="margin-right: 0;">편집자</a>
+                    <div class="stick">|</div>
+                    <select name="" id="" onchange="location.href='/scout/search/text/'+this.value">
+                        <option value="">시/도</option>
+                        <option value="서울">서울특별시</option>
+                        <option value="부산">부산광역시</option>
+                        <option value="인천">인천광역시</option>
+                        <option value="대구">대구광역시</option>
+                        <option value="광주">광주광역시</option>
+                        <option value="대전">대전광역시</option>
+                        <option value="울산">울산광역시</option>
+                        <option value="세종">세종시</option>
+                        <option value="경기">경기도</option>
+                        <option value="강원">강원도</option>
+                        <option value="충남">충청남도</option>
+                        <option value="충북">충청북도</option>
+                        <option value="경북">경상북도</option>
+                        <option value="경남">경상남도</option>
+                        <option value="전북">전라북도</option>
+                        <option value="전남">전라남도</option>
+                        <option value="제주">제주도</option>
+                    </select>
 
-        <input type="text" name="text"/>
-        <button onclick="search()">검색</button>
+                    <div class="stick">|</div>
+
+                    <select name="" id="" onchange="location.href='/scout/search/text/'+this.value">
+                        <option value="">상태</option>
+                        <option value="SEARCHING">구직중</option>
+                        <option value="OFFERING">구인중</option>
+                        <option value="WORKING">재직중</option>
+                    </select>
+                    
+                    <form action="" method="get">
+                        <input type="text" name="input-text" placeholder="검색어를 입력하세요.">
+                        <button onclick="search()"></button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <script>
             function search() {
-                location.href = "/scout/search/text/" + document.getElementsByName("text")[0].value
+                location.href = "/scout/search/text/" + document.getElementsByName("input-text")[0].value
             }
         </script>
 
         {% block users %}
-            {% for instance in users %}
-                <p>{{instance.name}}</p>
-                <a href="{% url 'scout:create_like' instance.id %}">찜하기</a>
-                <a href="{% url 'scout:delete_like' instance.id %}">찜해제</a>
-                <a href="{% url 'mypf:profile' instance.id %}">자세히</a>
+        <div class="user-container">
+            {% for user_instance in users %}
+            <div class="user-card">
+                <div class="card-nav">
+                    <a href="">
+                        <div class="chat" style="background-image: url();"></div>
+                    </a>
+                    <a href="{% if user.is_authenticated %} {% url 'scout:user_like' user_instance.id %} {% else %} {% url 'users:login' %} {% endif %}">
+                        <div class="wish" style="background-image: url();"></div>
+                    </a>
+                </div>
+                
+                <hr>
+
+                <div class="card-content">
+                    <div class="user-img">
+                        <img src="https://via.placeholder.com/60" alt="프로필 사진">
+                    </div>
+                    
+                    <div class="user-name">
+                        {{user_instance.name}}
+                    </div>
+        
+                    <div class="user-address">
+                        {{user_instance.get_address_sido_display}}
+                    </div>
+                
+                    <div class="user-info">
+                        #{{user_instance.get_role_display}} #{{user_instance.get_state_display}}
+                    </div>
+                
+                    <p>
+                        (한줄 자기소개)
+                    </p>
+                </div>
+            </div>    
+
             {% endfor %}
         {% endblock %}
+            <div class="page-container"> 
+                <div class="page-wrapper">
+                    {% for page in page_range %}
+                        <a class="page-box" href="?page={{page}}">{{page}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
     {% endblock %}

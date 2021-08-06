@@ -3,6 +3,8 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from multiselectfield import MultiSelectField
 
+from team_build.models import LOCATE_CHOICES
+
 # User
 CAREER_CHOICES = [
     ('0','1년 미만'),
@@ -36,7 +38,7 @@ ROLE_CHOICES = [
 class User(AbstractUser):
     name = models.CharField(default='', max_length=300)
     birth_date = models.DateField(default=timezone.now)
-    address_sido = models.CharField(default='', max_length=100)
+    address_sido = models.CharField(default='', choices=LOCATE_CHOICES, max_length=100)
     address_gungu = models.CharField(default='', max_length=100)
     career = models.CharField(default='0', max_length=2, choices=CAREER_CHOICES)
     state = models.CharField(default='', blank=True, null=False, max_length=9, choices=STATE_CHOICES)
