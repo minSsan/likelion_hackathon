@@ -32,8 +32,7 @@ class RecruitListView(ListView):
         search_word = self.request.GET.get('q','')
         
         # 검색어가 포함된 게시글 리스트를 저장할 변수
-        # id 내림차순 -> 최신순으로 나열
-        recruit_list = Recruit.objects.order_by('-id')
+        recruit_list = Recruit.objects.all()
 
         if search_word: # 만약 검색어가 존재하는 경우
             if len(search_word) > 1: # 두 글자 이상
@@ -44,11 +43,14 @@ class RecruitListView(ListView):
                     Q(service__icontains=search_word) |
                     Q(detail__icontains=search_word)
                     )
+                recruit_list = recruit_list.order_by('-id')
                 return recruit_list
             else:
                 messages.error(self.request, '두 글자 이상 입력해주세요.')
         # 검색어가 없는 기본 상태일 때는, 모든 Recruit 객체 리스트를
         # recruit_list에 담아서 반환
+        # id 내림차순 -> 최신순으로 나열
+        recruit_list = recruit_list.order_by('-id')
         return recruit_list
 
     # context에 리스트뿐만 아니라, 추가적으로 정보를 더 담는 함수
@@ -77,6 +79,7 @@ class RecruitListView(ListView):
 # 2. 팀빌딩 직무 검색 기능 #
 def recruit_role_search(request, input_role):
     results = Recruit.objects.filter(Q(role__icontains=input_role)).distinct()
+    results = results.order_by('-id')
     # distinct() : 중복된 객체 제외
     paginator = Paginator(results, 5)
     page = request.GET.get('page')
@@ -212,21 +215,19 @@ def delete_comment(request, id, comment_id, answer_comment):
     return redirect('detail_recruit', id)
 
 
-
-
 ###### 찜 기능 ######
 # 찜하기 버튼 누를 때 실행
-def create_like(request, recruit_id):
-    like_object = LikeRecruit()
-    like_object.user = request.user.id
-    like_object.recruit_key = Recruit.objects.get(pk=recruit_id)
-    like_object.save()
-    return redirect('team_build:team_build')
-
-# 찜 해제 버튼 누를 때
-def delete_like(request, recruit_id):
+def recruit_like(request, recruit_id):
     like_object = LikeRecruit.objects.filter(user=request.user.id, recruit_key=recruit_id)
-    # 항목이 존재하면 삭제
+    # 만약 이미 찜이 되어있는 상태라면,(=찜 해제 버튼을 누른 경우)
     if like_object:
+        # 찜 해제(테이블 삭제)
         like_object.delete()
+    # 해당 테이블이 없는 경우(=찜 목록에 없는 경우, =찜하기 버튼을 누른 경우)
+    else:
+        # 찜 설정(테이블 생성)
+        like_object = LikeRecruit()
+        like_object.user = request.user.id
+        like_object.recruit_key = Recruit.objects.get(pk=recruit_id)
+        like_object.save()
     return redirect('team_build:team_build')

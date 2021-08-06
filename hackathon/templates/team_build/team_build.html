@@ -70,7 +70,7 @@
                             <p class="recruit-detail">{{post.detail}}</p>
                         </a>
                         
-                        <a class="recruit-like" href="{% url 'team_build:create_like' post.id %}">
+                        <a class="recruit-like" href="{% if user.is_authenticated %} {% url 'team_build:recruit_like' post.id %} {% else %} {% url 'users:login' %} {% endif %}">
                             <div style="background-image: url('../../static/img/like_icon.png');"></div>
                         </a>
                     </div>

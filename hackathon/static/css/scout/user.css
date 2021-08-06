@@ -1,0 +1,74 @@
+.user-container {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+
+    width: 77vw;
+    margin: auto;
+}
+
+.user-card {
+    background-color: #F9F9F9;
+    border: 2px solid #919191;
+    box-sizing: border-box;
+    border-radius: 15px;
+}
+
+.user-card:hover {
+    background-color: #d1def6;
+}
+
+.card-nav {
+    display: flex;
+    justify-content: flex-end;
+
+    padding-top: 13px;
+    padding-right: 19px;
+}
+
+.chat{
+    background-size: contain; 
+    width: 25px;
+    height: 25px;
+} 
+
+.wish{
+    background-size: contain; 
+    width: 25px;
+    height: 25px;
+} 
+
+hr {
+    width: 214.86px;
+    height: 0px;
+    border: 1px solid #919191;
+
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.card-content {
+    padding-left: 19px;
+    padding-right: 19px;
+}
+
+.user-img .user-name .user-address {
+    text-align: center;
+}
+
+.user-img {
+    margin-bottom: 7px;
+}
+
+.user-name { 
+    font-size: 18px;
+}
+
+.user-address { 
+    font-size: 12px;
+}
+
+.user-info {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

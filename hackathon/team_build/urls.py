@@ -21,6 +21,5 @@ urlpatterns = [
     path('detail_recruit/<int:id>/update_comment/<int:comment_id>', update_comment, name='update_comment'),
 
     # 모집글 찜
-    path('like_recruit/<int:recruit_id>', create_like, name='create_like'),
-    path('dislike_recruit/<int:recruit_id>', delete_like, name='delete_like'),
+    path('recruit_like/<int:recruit_id>', recruit_like, name="recruit_like"),
 ]
