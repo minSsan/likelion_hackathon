@@ -8,6 +8,19 @@
         {% endblock %}
     </head>
     {% block content %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message-container">                                
+                <h1>{{ message.tags}}</h1>
+                <br>
+                {{ message.message }}
+                <br><br>
+                <a href="{% url 'scout:user' %}">확인</a>
+            </div>
+        {% endfor %}
+    {% endif %}
+
     <div>
         <div class="search-box">
             <div class="search-container">
@@ -50,17 +63,17 @@
                         <option value="WORKING">재직중</option>
                     </select>
                     
-                    <form action="" method="get">
+                    <div class="form">
                         <input type="text" name="input-text" placeholder="검색어를 입력하세요.">
                         <button onclick="search()"></button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
 
         <script>
             function search() {
-                location.href = "/scout/search/text/" + document.getElementsByName("input-text")[0].value
+                location.href = "/scout/search_text/" + document.getElementsByName("input-text")[0].value
             }
         </script>
 
