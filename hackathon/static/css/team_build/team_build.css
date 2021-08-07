@@ -188,6 +188,40 @@ select {
 }
 
 
+/* ****** 경고창 ****** */
+.message-container {
+    width: 300px;
+    height: 150px;
+
+    padding: 10px;
+
+    margin: auto;
+    
+    background-color: #FFFFFF;
+    border: 2px solid #627daf;
+    border-radius: 20px;
+
+    box-shadow: 0px 0px 5px 2px #bebebe;
+
+    position: fixed;
+    top: 35%;
+    left: 40%;
+}
+
+.message-container > a {
+    display: inline-block;
+    padding: 5px;
+    margin-left: 250px;
+
+    color: #3C64B1;
+    border: 1px solid #3C64B1;
+    border-radius: 20px;
+}
+
+.message-container > a:hover {
+    color: #FFFFFF;
+    background-color: #3C64B1;
+}
 
 /* ****** recruit list ****** */
 /* 게시글 목록을 담을 컨테이너 */

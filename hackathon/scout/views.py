@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 
 from django.core.paginator import Paginator
@@ -12,7 +13,7 @@ LIST_RANGE = 12
 
 # 유저 검색 기능 ( 아직 역할 검색만 )
 def user(request):
-    users = User.objects.all()
+    users = User.objects.all().order_by('-id')
     max_index = len(users) / LIST_RANGE
 
     paginator = Paginator(users, LIST_RANGE)
@@ -27,8 +28,8 @@ def user(request):
         end_index = max_index
 
     page_range = []
-    for index in range(int(start_index), int(end_index)):
-        page_range.append(index)
+    for index in range(int(start_index), int(end_index) + 1):
+        page_range.append(index + 1)
 
     context = {
         'users': users,
@@ -37,12 +38,12 @@ def user(request):
     return render(request, 'scout/user.html', context)
 
 def user_search(request, input_role):
-    results = User.objects.filter(Q(role__icontains=input_role))
+    results = User.objects.filter(Q(role__icontains=input_role)).order_by('-id')
+    max_index = len(results) / LIST_RANGE
+
     paginator = Paginator(results, LIST_RANGE)
     page = request.GET.get('page')
     users = paginator.get_page(page)
-
-    max_index = len(users) / LIST_RANGE
 
     current_page = int(page) if page else 1
     start_index = int((current_page - 1) / PAGE_RANGE) * PAGE_RANGE
@@ -51,8 +52,8 @@ def user_search(request, input_role):
         end_index = max_index
     
     page_range = []
-    for index in range(int(start_index), int(end_index)):
-        page_range.append(index)
+    for index in range(int(start_index), int(end_index) + 1):
+        page_range.append(index + 1)
     
     context = {
         'users':users,
@@ -61,19 +62,22 @@ def user_search(request, input_role):
     return render(request, 'scout/user_search.html', context)
 
 def user_search_text(request, input_text):
-    results = User.objects.filter((
+    if len(input_text) <= 1:
+        messages.error(request, '두 글자 이상 입력해주세요.')
+
+    results = User.objects.filter(
         Q(name__icontains=input_text) | 
         Q(address_sido__icontains=input_text) | 
         Q(address_gungu__icontains=input_text) | 
         Q(career__icontains=input_text) |
         Q(state__icontains=input_text)
-        ))
+        ).order_by('-id')
+    max_index = len(results) / LIST_RANGE
+
     paginator = Paginator(results, LIST_RANGE)
-    print(User.objects.filter(Q(name__icontains=input_text) & Q(address_sido__icontains=input_text) & Q(address_gungu__icontains=input_text)))
+    # print(User.objects.filter(Q(name__icontains=input_text) & Q(address_sido__icontains=input_text) & Q(address_gungu__icontains=input_text)))
     page = request.GET.get('page')
     users = paginator.get_page(page)
-
-    max_index = len(users) / LIST_RANGE
 
     current_page = int(page) if page else 1
     start_index = int((current_page - 1) / PAGE_RANGE) * PAGE_RANGE
@@ -82,8 +86,8 @@ def user_search_text(request, input_text):
         end_index = max_index
     
     page_range = []
-    for index in range(int(start_index), int(end_index)):
-        page_range.append(index)
+    for index in range(int(start_index), int(end_index) + 1):
+        page_range.append(index + 1)
 
     context = {
         'users':users,
