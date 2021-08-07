@@ -1,12 +1,47 @@
 {% extends 'scout/user.html' %}
 <head>
     {% block extrahead %}
-        <link rel="stylesheet" href="../../static/css/base.css">
+    {% load static %}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <link rel="stylesheet" href="{% static 'css/team_build/team_build.css' %}">
+        <link rel="stylesheet" href="{% static 'css/scout/user.css' %}">
     {% endblock %}
 </head>
     {% block users %}
-        {% for instance in users %}
-            <p>{{instance.username}}</p>
-            <a href="{% url 'mypf:profile' instance.id %}">자세히</a>
+        {% for user_instance in users %}
+        <div class="user-card" onclick="location.href='/portfolio/{{user_instance.id}}'">
+            <div class="card-nav">
+                <a href="">
+                    <div class="chat" style="background-image: url('../../static/img/scout/chat.png');"></div>
+                </a>
+                <a href="{% if user.is_authenticated %} {% url 'scout:user_like' user_instance.id %} {% else %} {% url 'users:login' %} {% endif %}">
+                    <div class="wish" style="background-image: url('../../static/img/scout/like.png');"></div>
+                </a>
+            </div>
+            
+            <hr>
+
+            <img class="user-img" src="../../static/img/profile_default.png" alt="프로필 사진">
+            
+            <div class="user-name">
+                {{user_instance.name}}
+            </div>
+    
+            <div class="user-address">
+                {{user_instance.get_address_sido_display}}
+            </div>
+            
+            <div class="card-content"> 
+                <p class="user-info">
+                    <br>
+                    #{{user_instance.get_role_display}} #{{user_instance.get_state_display}}
+                    <br><br>
+                </p>
+            
+                <div class="user-intro">
+                    {{user_instance.intro}}
+                </div>
+            </div>
+        </div>
         {% endfor %}
     {% endblock %}

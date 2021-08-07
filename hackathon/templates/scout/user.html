@@ -19,7 +19,7 @@
                     <a href="{% url 'scout:user_search' 'Designer' %}">디자이너</a>
                     <a href="{% url 'scout:user_search' 'Editor' %}" style="margin-right: 0;">편집자</a>
                     <div class="stick">|</div>
-                    <select name="" id="" onchange="location.href='/scout/search/text/'+this.value">
+                    <select name="" id="" onchange="location.href='/scout/search_text/'+this.value">
                         <option value="">시/도</option>
                         <option value="서울">서울특별시</option>
                         <option value="부산">부산광역시</option>
@@ -42,10 +42,11 @@
 
                     <div class="stick">|</div>
 
-                    <select name="" id="" onchange="location.href='/scout/search/text/'+this.value">
+                    <select name="" id="" onchange="location.href='/scout/search_text/'+this.value">
                         <option value="">상태</option>
+                        <option value="ATTENDING">재학중</option>
+                        <option value="ABSENCE">휴학중</option>
                         <option value="SEARCHING">구직중</option>
-                        <option value="OFFERING">구인중</option>
                         <option value="WORKING">재직중</option>
                     </select>
                     
@@ -63,52 +64,63 @@
             }
         </script>
 
-        {% block users %}
-        <div class="users-container">
-            {% for user_instance in users %}
-            <div class="user-card">
-                <div class="card-nav">
-                    <a href="">
-                        <div class="chat" style="background-image: url();"></div>
-                    </a>
-                    <a href="{% if user.is_authenticated %} {% url 'scout:user_like' user_instance.id %} {% else %} {% url 'users:login' %} {% endif %}">
-                        <div class="wish" style="background-image: url();"></div>
-                    </a>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message-container">                                
+                    <h1>{{ message.tags}}</h1>
+                    <br>
+                    {{ message.message }}
+                    <br><br>
+                    <a href="{% url 'recruit:team_build' %}">확인</a>
                 </div>
-                
-                <hr>
+            {% endfor %}
+        {% endif %}
 
-                <div class="card-content">
-                    <div class="user-img">
-                        <img src="https://via.placeholder.com/60" alt="프로필 사진">
+        <div class="users-container">
+        {% block users %}
+            {% for user_instance in users %}
+                <div class="user-card" onclick="location.href='/portfolio/{{user_instance.id}}'">
+                    <div class="card-nav">
+                        <a href="">
+                            <div class="chat" style="background-image: url('../../static/img/scout/chat.png');"></div>
+                        </a>
+                        <a href="{% if user.is_authenticated %} {% url 'scout:user_like' user_instance.id %} {% else %} {% url 'users:login' %} {% endif %}">
+                            <div class="wish" style="background-image: url('../../static/img/scout/like.png');"></div>
+                        </a>
                     </div>
                     
+                    <hr>
+
+                    <img class="user-img" src="../../static/img/profile_default.png" alt="프로필 사진">
+                     
                     <div class="user-name">
                         {{user_instance.name}}
                     </div>
-        
+            
                     <div class="user-address">
                         {{user_instance.get_address_sido_display}}
                     </div>
-                
-                    <div class="user-info">
-                        #{{user_instance.get_role_display}} #{{user_instance.get_state_display}}
+                    
+                    <div class="card-content"> 
+                        <p class="user-info">
+                            <br>
+                            #{{user_instance.get_role_display}} #{{user_instance.get_state_display}}
+                            <br><br>
+                        </p>
+                    
+                        <div class="user-intro">
+                            {{user_instance.intro}}
+                        </div>
                     </div>
-                
-                    <p>
-                        (한줄 자기소개)
-                    </p>
                 </div>
-            </div>    
-
             {% endfor %}
         {% endblock %}
-            <div class="page-container"> 
-                <div class="page-wrapper">
-                    {% for page in page_range %}
-                        <a class="page-box" href="?page={{page}}">{{page}}</a>
-                    {% endfor %}
-                </div>
+        </div>
+        <div class="page-container"> 
+            <div class="page-wrapper">
+                {% for page in page_range %}
+                    <a class="page-box" href="?page={{page}}">{{page}}</a>
+                {% endfor %}
             </div>
         </div>
     </div>

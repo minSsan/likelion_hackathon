@@ -2,73 +2,101 @@
     display: grid;
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
 
-    width: 77vw;
-    margin: auto;
+    width: 1100px;
+    height: 1049px;
+    margin: 4.5vh auto;
 }
 
 .user-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     background-color: #F9F9F9;
-    border: 2px solid #919191;
+    border: 1px solid #919191;
     box-sizing: border-box;
     border-radius: 15px;
+
+    cursor: pointer;
 }
 
 .user-card:hover {
-    background-color: #d1def6;
+    background-color: #FFFFFF;
 }
 
 .card-nav {
     display: flex;
     justify-content: flex-end;
 
-    padding-top: 13px;
-    padding-right: 19px;
+    width: 85%;
 }
 
 .chat{
-    background-size: contain; 
-    width: 25px;
-    height: 25px;
-} 
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 23px;
+    height: 23px;
+
+    margin-right: 10px;
+}
 
 .wish{
     background-size: contain; 
+    background-repeat: no-repeat;
     width: 25px;
     height: 25px;
-} 
+}
 
-hr {
-    width: 214.86px;
-    height: 0px;
-    border: 1px solid #919191;
+.wish .active {
+    background-image: url('../../img/like_active.png');
+}
+
+.user-card > hr {
+    width: 85%;
+    height: 0;
+    background-color: #919191;
 
     margin-top: 5px;
     margin-bottom: 15px;
 }
 
 .card-content {
-    padding-left: 19px;
-    padding-right: 19px;
-}
-
-.user-img .user-name .user-address {
-    text-align: center;
+    width: 85%;
 }
 
 .user-img {
-    margin-bottom: 7px;
+    width: 58px;
+    height: 58px;
 }
 
 .user-name { 
+    font-weight: 700;
     font-size: 18px;
+
+    letter-spacing: 0.3px;
+
+    color: #000000;
 }
 
 .user-address { 
     font-size: 12px;
 }
 
-.user-info {
-    margin-top: 15px;
-    margin-bottom: 15px;
+.user-intro {
+    height: 90px;
+    font-size: 15px;
+    line-height: 18px;
+
+    overflow: hidden;
+    /* 너비가 넘어간 글자에 대해선 ... 부호로 표시 */
+    text-overflow: ellipsis;
+
+    /* 제한 줄을 여러 줄로 설정할 경우 */
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
 }

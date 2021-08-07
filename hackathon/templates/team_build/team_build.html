@@ -7,6 +7,19 @@
         {% endblock %}
     </head>
     {% block content %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message-container">                                
+                <h1>{{ message.tags}}</h1>
+                <br>
+                {{ message.message }}
+                <br><br>
+                <a href="{% url 'recruit:team_build' %}">확인</a>
+            </div>
+        {% endfor %}
+    {% endif %}
+
     <div>
         <a class="create-img" href="{% url 'team_build:create_recruit' %}">
             <div style="background-image: url('../../static/img/team_build/create_recruit_icon.png');"></div>
