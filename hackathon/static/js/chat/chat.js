@@ -18,10 +18,23 @@ window.onload = function() {
 
 chatSocket.onmessage = function(e) {
     const data = JSON.parse(e.data);
+    if (dat.username == username) {
     document.querySelector('.chat-log').innerHTML += `                        <div class="right">
     <p class="chat-box">${data.message}</p>
     <div class="chat-box-tail"></div>
 </div>`;
+    }
+    else {
+        document.querySelector('.chat-log').innerHTML += `                        <div class="left">
+        <div class="row">
+            <div class="profile-img"></div>
+            <div class="col" style="padding-left: 10px;">
+                <div class="bold">${data.username}</div>
+                <p class="chat-box">${data.message}</p>
+            </div>
+        </div>
+    </div>`
+    }
     chatLog.scrollTop = chatLog.scrollHeight;
 };
 
