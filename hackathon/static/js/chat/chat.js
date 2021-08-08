@@ -18,7 +18,7 @@ window.onload = function() {
 
 chatSocket.onmessage = function(e) {
     const data = JSON.parse(e.data);
-    if (dat.username == username) {
+    if (data.username == username) {
     document.querySelector('.chat-log').innerHTML += `                        <div class="right">
     <p class="chat-box">${data.message}</p>
     <div class="chat-box-tail"></div>
