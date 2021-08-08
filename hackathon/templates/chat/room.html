@@ -4,18 +4,69 @@
         {% block extrahead %}
         <meta charset="utf-8"/>
         <title>Chat Room</title>
+        <link rel="stylesheet" href="../../../static/css/chat/chat.css">
         {% endblock %}
     </head>
     {% block content %}
-        <div id="user-name" style="display: none;">{{user.name}}</div>
+        <div class="back-box">
+            <div class="index-box">
+                <div class="top-box index">
+                    <div>안녕하세요, <div id="user-name">{{user.name}}</div>님 !</div>
+                </div>
+                {% for chat in chat_list %}
+                    <div class="index-item" onclick="location.href='/chat/{{chat.chat_room_id}}'">
+                        <div class="profile-img"></div>
+                        <div class="chat-preview">
+                            <div style="font-weight: bold;">{{chat.opp_name}}</div>
+                            <div>{{chat.recent_chat_text}}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
 
-        <textarea id="chat-log" cols="100" rows="20" readonly>
-{% for chat_log in chat_logs %} 
-{{chat_log.chat_text}}
-{% endfor %}</textarea><br>
-        <input id="chat-message-input" type="text" size="100"><br>
-        <input id="chat-message-submit" type="button" value="Send">
+            <div class="chat-room-box">
+                <div class="top-box chat">
+                    <div class="row">
+                        <div class="profile-img"></div>
+                        <div class="col">
+                            <div class="row">
+                                <div id="name">{{opp_obj.name}}</div>
+                                <div id="location">{{opp_obj.address_sido}} {{opp_obj.address_gungu}}</div>
+                            </div>
+                            <div id="role-state"># {{opp_obj.get_role_display}}  # {{opp_obj.get_state_display}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-log">
+                    {% for chat_log in chat_logs %}
+                    {% if user == chat_log.chat_user %}
+                        <div class="right">
+                            <p class="chat-box">{{chat_log.chat_text}}</p>
+                            <div class="chat-box-tail"></div>
+                        </div>
+                    {% else %}
+                        <div class="left">
+                            <div class="row">
+                                <div class="profile-img"></div>
+                                <div class="col" style="padding-left: 10px;">
+                                    <div class="bold">{{chat_log.chat_user.name}}</div>
+                                    <p class="chat-box">{{chat_log.chat_text}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div class="chat-input-box">
+                    <input id="chat-message-input" type="text" size="100"><br>
+                    <input id="chat-message-submit" type="button" value="전송">
+                </div>
+            </div>
+        </div>
+        
+        
         {{ room_name|json_script:"room-name" }}
 
-        <script type="text/javascript" src="../../static/js/chat/chat.js"></script>
+        <script type="text/javascript" src="../../../static/js/chat/chat.js"></script>
     {% endblock %}

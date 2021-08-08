@@ -2,27 +2,39 @@
 <head>
     {% load static %}
     {% block extrahead %}
+    <link rel="stylesheet" href="../../static/css/mypage/mypage.css">
     {% endblock %}
 </head>
 {% block content %}
-    <h1>내가 쓴 글</h1>
-    {% for recruit in my_recruits %}
-        {{recruit.title}}
-        <a href="{% url 'team_build:detail_recruit' recruit.id %}">자세히</a>
-    {% endfor %}
-    <h1>내가 쓴 댓글</h1>
-    {% for comment in my_comments %}
-        {{comment.content}}
-        <a href="{% url 'team_build:detail_recruit' comment.recruit_id %}">게시글 보기</a>
-    {% endfor %}
-    <h1>내가 찜한 글</h1>
-    {% for recruit in recruits %}
-        {{recruit.title}}
-        <a href="{% url 'team_build:detail_recruit' recruit.id %}">자세히</a>
-    {% endfor %}
-    <h1>내가 찜한 유저</h1>
-    {% for user in users %}
-        {{user.name}}
-        <a href="{% url 'mypf:profile' user.id %}">자세히</a>
-    {% endfor %}
+    <div class="mypage-background-img"></div>
+
+    <div class="profile-box">
+        <div class="profile-img"></div>
+        <div class="profile-content">
+             <div class="profile-content-item" style="font-size: 17px; font-weight: bold;">{{user.name}}</div>
+             <div class="profile-content-item">생년월일 : {{user.birth_date}}</div>
+             <div class="profile-content-item">거주지 : {{user.address_sido}} {{user.address_gungu}}</div>
+        </div>
+        <div class="profile-content">
+            <div class="profile-content-item">경력 : {{user.get_career_display}}</div>
+            <div class="profile-content-item">상태 : {{user.get_state_display}}</div>
+            <div class="profile-content-item">역할 : {{user.get_role_display}}</div>
+       </div>
+    </div>
+
+    <div class="content-menu-box">
+        <button class="content-menu-btn" box_id="1" onclick="menuBtn(this)" style="background-color: rgba(228, 236, 245, 1);">내가 쓴 글 / 댓글</button>
+        <button class="content-menu-btn" box_id="2" onclick="menuBtn(this)">내가 찜한 글 / 유저</button>
+    </div>
+    
+    <div class="content-back">
+        <div class="content-box box1">
+            <h1>Box1</h1>
+        </div>
+        <div class="content-box box2" style="display: none;">
+            <h1>Box2</h1>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../../../static/js/mypage/mypage.js"></script>
 {% endblock %}

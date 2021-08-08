@@ -8,5 +8,5 @@ app_name = 'chat'
 urlpatterns = [
     path('index/', index, name='index'),
     path('<str:room_name>/', room, name='room'),
-    path('in/<str:me_id>/<str:opp_id>/', create_chat_room, name='create_chat_room'),
+    path('<str:me_id>/<str:opp_id>/', create_chat_room, name='create_chat_room'),
 ]

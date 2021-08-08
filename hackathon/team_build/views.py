@@ -95,6 +95,7 @@ def create_recruit(request):
         if recruits_form.is_valid():
             new_form = recruits_form.save(commit=False)
             new_form.writer = request.user.name
+            new_form.writer_username = request.user
             new_form.save()
         return redirect('team_build:team_build')
     else:

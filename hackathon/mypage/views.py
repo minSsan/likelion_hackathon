@@ -7,7 +7,7 @@ from team_build.models import LikeRecruit
 
 def mypage(request, user_id):
     # 내가 쓴 글, 내가 쓴 댓글 불러오기
-    my_recruits = Recruit.objects.filter(writer=request.user).order_by('-id')
+    my_recruits = Recruit.objects.filter(writer_username=request.user).order_by('-id')
     my_comments = Comment.objects.filter(user_username=request.user).order_by('-id')
     
     # 찜한 게시글 불러오기
