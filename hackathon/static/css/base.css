@@ -28,12 +28,16 @@ a {
     height: 88px;
 }
 
+.logo {
+    float: left;
+}
+
 /* nav-wrapper */
 .nav-wrapper {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    
+    justify-content: space-between;
+
     width: 77vw;
     height: 42px;
 
@@ -49,7 +53,8 @@ a {
     display: flex;
     justify-content: space-between;
     
-    width: 300px;
+    width: 280px;
+    margin-left: 10vw;
 }
 
 .url-container > a {

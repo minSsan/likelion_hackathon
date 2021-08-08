@@ -3,6 +3,8 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from multiselectfield import MultiSelectField
 
+from team_build.models import LOCATE_CHOICES
+
 # User
 CAREER_CHOICES = [
     ('0','1년 미만'),
@@ -20,8 +22,9 @@ CAREER_CHOICES = [
 
 STATE_CHOICES = [
     ('','미입력'),
+    ('ATTENDING','재학중'),
+    ('ABSENCE','휴학중'),
     ('SEARCHING','구직중'),
-    ('OFFERING','구인중'),
     ('WORKING','재직중'),
 ]
 
@@ -36,8 +39,9 @@ ROLE_CHOICES = [
 class User(AbstractUser):
     name = models.CharField(default='', max_length=300)
     birth_date = models.DateField(default=timezone.now)
-    address_sido = models.CharField(default='', max_length=100)
-    address_gungu = models.CharField(default='', max_length=100)
-    career = models.CharField(default='0', max_length=300, choices=CAREER_CHOICES)
-    state = models.CharField(default='', blank=True, null=False, max_length=300, choices=STATE_CHOICES)
-    role = MultiSelectField(default='Etc', choices=ROLE_CHOICES, max_choices=4, max_length=300)
+    address_sido = models.CharField(default='', choices=LOCATE_CHOICES, max_length=200)
+    address_gungu = models.CharField(default='', max_length=200)
+    career = models.CharField(default='0', max_length=200, choices=CAREER_CHOICES)
+    state = models.CharField(default='', blank=True, null=False, max_length=200, choices=STATE_CHOICES)
+    role = MultiSelectField(default='Etc', choices=ROLE_CHOICES, max_choices=4, max_length=200)
+    intro = models.TextField(default="", blank=True, null=False)

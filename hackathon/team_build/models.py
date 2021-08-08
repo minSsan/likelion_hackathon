@@ -51,6 +51,7 @@ ROLE_CHOICES = [
 ]
 # 팀원 모집 글
 class Recruit(models.Model):
+    # writer = models.ForeignKey(User, on_delete=CASCADE)
     writer = models.CharField(default='', max_length=200)
     writer_username = models.CharField(default='', max_length=200)
     title = models.CharField(default='', max_length=300) # 프로젝트 한줄 설명으로 들어갈 것

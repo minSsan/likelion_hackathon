@@ -1,0 +1,33 @@
+{% extends 'team_build/team_build.html' %}
+    <head>
+        {% block extrahead %}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <link rel="stylesheet" href="{% static 'css/team_build/team_build.css' %}">
+        {% endblock %}
+    </head>
+    {% block posts %}
+        {% for post in posts %}
+        <div class="recruit-post">
+            <a class="recruit-img" href="{% url 'team_build:detail_recruit' post.id %}">
+                <div style="background-image: url('../../../media/{{post.image}}');"></div>
+            </a>
+            <a class="recruit-content" href="{% url 'team_build:detail_recruit' post.id %}">
+                <div>
+                    <p class="recruit-title">{{post.title}}</p>
+                    <p class="recruit-writer">{{post.writer}}</p>
+                </div>
+                <p class="recruit-hashtag">
+                    #{{post.service}}&nbsp&nbsp&nbsp
+                    #{% for role in post.get_role_display %}{{role}}{% endfor %}&nbsp&nbsp&nbsp
+                    #{{post.get_locate_display}}
+                </p>
+                <p class="recruit-detail">{{post.detail}}</p>
+            </a>
+            
+            <a class="recruit-like" href="{% url 'team_build:recruit_like' post.id %}">
+                <div style="background-image: url('../../static/img/like_icon.png');"></div>
+            </a>
+        </div>
+        {% endfor %}
+    {% endblock %}

@@ -6,4 +6,4 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'password1', 'password2', 
         'name', 'birth_date', 'address_sido', 'address_gungu',
-        'career', 'state', 'role']
+        'career', 'state', 'role', 'intro']

@@ -7,9 +7,8 @@ urlpatterns = [
     # 유저 검색
     path('', user, name='user'),
     path('search/<str:input_role>', user_search, name='user_search'),
-    path('search/text/<str:input_text>', user_search_text, name='user_search_text'),
+    path('search_text/<str:input_text>', user_search_text, name='user_search_text'),
 
     # 유저 찜
-    path('like_user/<int:user_id>', create_like, name='create_like'),
-    path('dislike_user/<int:user_id>',delete_like, name="delete_like"),
+    path('user_like/<int:user_id>', user_like, name="user_like"),
 ]
