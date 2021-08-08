@@ -8,14 +8,14 @@
     </head>
     {% block content %}
     <div class="back-box">
-        <div class="index-box" style="border-bottom: 1px solid rgba(60, 100, 177, 1);">
-            <div class="top-box">
-                <input class="chat-user-search" placeholder="이름으로 검색"/>
+        <div class="index-box">
+            <div class="top-box index">
+                <div>안녕하세요, <div id="user-name">{{user.name}}</div>님 !</div>
             </div>
             {% for chat in chat_list %}
                 <div class="index-item" onclick="location.href='/chat/{{chat.chat_room_id}}'">
                     <div class="profile-img"></div>
-                    <div class="chat-preview" style="padding-left: 12px;">
+                    <div class="chat-preview">
                         <div style="font-weight: bold;">{{chat.opp_name}}</div>
                         <div>{{chat.recent_chat_text}}</div>
                     </div>
@@ -24,7 +24,7 @@
         </div>
         
         <div class="chat-room-box">
-            <div style="text-align: center; margin-top: 200px;">채팅이 없습니다.</div>
+            <div style="text-align: center; margin-top: 200px; margin-bottom: 300px;">채팅이 없습니다.</div>
         </div>
     </div>
     {% endblock %}

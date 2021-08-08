@@ -94,7 +94,7 @@
             {% for user_instance in users %}
                 <div class="user-card" onclick="location.href='/portfolio/{{user_instance.id}}'">
                     <div class="card-nav">
-                        <a href="">
+                        <a href="{% url 'chat:create_chat_room' user.id user_instance.id %}">
                             <div class="chat" style="background-image: url('../../static/img/scout/chat.png');"></div>
                         </a>
                         <a href="{% if user.is_authenticated %} {% url 'scout:user_like' user_instance.id %} {% else %} {% url 'users:login' %} {% endif %}">
