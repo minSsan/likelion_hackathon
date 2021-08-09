@@ -12,13 +12,7 @@
         <div class="profile-img"></div>
         <div class="profile-content">
              <div class="profile-content-item" style="font-size: 17px; font-weight: bold;">{{user.name}}</div>
-             <div class="profile-content-item">생년월일 : {{user.birth_date}}</div>
-             <div class="profile-content-item">거주지 : {{user.address_sido}} {{user.address_gungu}}</div>
-        </div>
-        <div class="profile-content">
-            <div class="profile-content-item">경력 : {{user.get_career_display}}</div>
-            <div class="profile-content-item">상태 : {{user.get_state_display}}</div>
-            <div class="profile-content-item">역할 : {{user.get_role_display}}</div>
+             <div class="profile-content-item">{{user.intro}}</div>
        </div>
     </div>
 
@@ -29,7 +23,21 @@
     
     <div class="content-back">
         <div class="content-box box1">
-            <h1>Box1</h1>
+            <div class="content-box-title">내가 쓴 글</div>
+            {% for recruit in my_recruits %}
+                <div class="content-box-item" onclick="location.href='/recruit/detail_recruit/{{recruit.id}}/'">
+                    <div class="content-box-item-img" style="background-image: url('../../media/{{recruit.image}}');"></div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="title">{{recruit.title}}</div>
+                            <div class="writer">{{recruit.writer}}</div>
+                        </div>
+                        <div class="role-location"># {{recruit.get_role_display}} # {{recruit.get_locate_display}}</div>
+                        <div class="detail">{{recruit.detail}}</div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="content-box-title">내가 쓴 댓글</div>
         </div>
         <div class="content-box box2" style="display: none;">
             <h1>Box2</h1>
