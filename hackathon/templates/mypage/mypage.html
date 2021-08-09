@@ -23,24 +23,94 @@
     
     <div class="content-back">
         <div class="content-box box1">
-            <div class="content-box-title">내가 쓴 글</div>
-            {% for recruit in my_recruits %}
-                <div class="content-box-item" onclick="location.href='/recruit/detail_recruit/{{recruit.id}}/'">
-                    <div class="content-box-item-img" style="background-image: url('../../media/{{recruit.image}}');"></div>
-                    <div class="col">
-                        <div class="row">
-                            <div class="title">{{recruit.title}}</div>
-                            <div class="writer">{{recruit.writer}}</div>
+            <div class="content-box-container">
+                <div class="content-box-title">내가 쓴 글</div>
+                {% for recruit in my_recruits %}
+                    <div class="content-box-item" onclick="location.href='/recruit/detail_recruit/{{recruit.id}}/'">
+                        <div class="content-box-item-img" style="background-image: url('../../media/{{recruit.image}}');"></div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="title">{{recruit.title}}</div>
+                                <div class="writer">{{recruit.writer}}</div>
+                            </div>
+                            <div class="role-location"># {{recruit.get_role_display}} # {{recruit.get_locate_display}}</div>
+                            <div class="detail">{{recruit.detail}}</div>
                         </div>
-                        <div class="role-location"># {{recruit.get_role_display}} # {{recruit.get_locate_display}}</div>
-                        <div class="detail">{{recruit.detail}}</div>
                     </div>
-                </div>
-            {% endfor %}
-            <div class="content-box-title">내가 쓴 댓글</div>
+                {% endfor %}
+            </div>
+            <div class="content-box-container">
+                <div class="content-box-title">내가 쓴 댓글</div>
+                {% for comment in my_comments %} 
+                    <div class="content-box-item comment" onclick="location.href='/recruit/detail_recruit/{{comment.recruit_id.id}}/'">
+                        <div class="row">
+                            <div class="comment-content">{{comment.content}}</div>
+                            <div class="comment-date">{{comment.date}}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
         <div class="content-box box2" style="display: none;">
-            <h1>Box2</h1>
+            <div class="content-box-container">
+                <div class="content-box-title">관심 글</div>
+                {% for recruit in recruits %}
+                    <div class="content-box-item" onclick="location.href='/recruit/detail_recruit/{{recruit.id}}/'">
+                        <div class="content-box-item-img" style="background-image: url('../../media/{{recruit.image}}');"></div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="title">{{recruit.title}}</div>
+                                <div class="writer">{{recruit.writer}}</div>
+                            </div>
+                            <div class="role-location"># {{recruit.get_role_display}} # {{recruit.get_locate_display}}</div>
+                            <div class="detail">{{recruit.detail}}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="content-box-container">
+                <div class="content-box-title">관심 유저</div>
+                <div class="users-container">
+                    {% for user_instance in users %}
+                    <div class="user-card" onclick="location.href='/portfolio/{{user_instance.id}}'">
+                        <div class="card-nav">
+                            <a href="{% url 'chat:create_chat_room' user.id user_instance.id %}">
+                                <div class="chat" style="background-image: url('../../static/img/scout/chat.png');"></div>
+                            </a>
+                            <a href="{% if user.is_authenticated %} {% url 'scout:user_like' user_instance.id %} {% else %} {% url 'users:login' %} {% endif %}">
+                                <div class="wish" style="background-image: url('../../static/img/scout/like.png');"></div>
+                            </a>
+                        </div>
+                        
+                        <hr>
+
+                        <img class="user-img" src="../../static/img/profile_default.png" alt="프로필 사진">
+                        
+                        <div class="user-name">
+                            {{user_instance.name}}
+                        </div>
+                
+                        <div class="user-address">
+                            {{user_instance.get_address_sido_display}}
+                        </div>
+                        
+                        <div class="card-content"> 
+                            <p class="user-info">
+                                <br>
+                                #{{user_instance.get_role_display}}
+                                <br>
+                                #{{user_instance.get_state_display}}
+                                <br>
+                            </p>
+                        
+                            <div class="user-intro">
+                                {{user_instance.intro}}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
         </div>
     </div>
 

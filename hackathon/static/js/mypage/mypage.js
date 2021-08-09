@@ -8,5 +8,5 @@ function menuBtn(e){
     e.style.backgroundColor = "rgba(228, 236, 245, 1)";
 
     let box = document.querySelector('.box' + e.getAttribute('box_id'));
-    box.style.display = "flex";
+    box.style.display = "block";
 }
