@@ -144,7 +144,7 @@ def delete_recruit(request, id):
     recruit_instance = get_object_or_404(Recruit, pk=id)
 
     # 게시글 작성자랑 로그인 유저랑 같으면
-    if str(request.user) == recruit_instance.writer:
+    if str(request.user) == recruit_instance.writer_username:
         recruit_instance.delete()
         messages.success(request, "삭제되었습니다.")
         return redirect('team_build:team_build')
