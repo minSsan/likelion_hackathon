@@ -4,6 +4,8 @@ from multiselectfield import MultiSelectField
 
 from django.db.models.deletion import CASCADE
 
+# from users.models import User
+
 
 # Recruit
 TEAM_MEMBERS_CHOICES = [
@@ -52,7 +54,7 @@ ROLE_CHOICES = [
 
 # 팀원 모집 글
 class Recruit(models.Model):
-    # writer = models.ForeignKey(User, on_delete=CASCADE)
+    # user = models.ForeignKey(User, on_delete=CASCADE, null=True)
     writer = models.CharField(default='', max_length=200)
     title = models.CharField(default='', max_length=300) # 프로젝트 한줄 설명으로 들어갈 것
     team_name = models.CharField(default='', max_length=200)
@@ -73,7 +75,12 @@ class Recruit(models.Model):
         )
     founding_date = models.DateField(default=timezone.now, null=False, blank=True)
     locate = models.CharField(default='', null=False, blank=True, max_length=2, choices=LOCATE_CHOICES)
-    image = models.ImageField(default='', blank=True, null=False)
+    image = models.ImageField(
+        default='image/team_build/none/img_default.png',
+        upload_to="image/team_build/",
+        blank=True,
+        null=False
+        )
     # 추후 기본 이미지로 넣을 경로 찾아서 default 에 지정 필요
     role = MultiSelectField(default='', choices=ROLE_CHOICES, max_choices=4, max_length=100)
     # role = models.CharField(max_length=2, choices=ROLE_CHOICES)

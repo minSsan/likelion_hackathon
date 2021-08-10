@@ -1,15 +1,32 @@
-{% extends 'base.html' %}
-    <head>
-        {% load static %}
-        {% block extrahead %}
-        <link rel="stylesheet" href="../../static/css/base.css">
-        {% endblock %}
-    </head>
-{% block content %}
-    <h1>로그인 페이지</h1>
-    <form action="{% url 'users:login' %}" method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">로그인</button>
-    </form>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/users/login.css' %}">
+    <title>로그인</title>
+</head>
+<body>
+    <img class="login-img" src="../../static/img/users/login-banner.jpg" alt="">
+
+    <div class="login-container">
+        <div>
+            <a href="{% url 'main:main' %}">
+                <img class="logo" src="../../static/img/logo.png" alt="">
+            </a>
+            <h2 class="login-title">로그인</h2>
+            <form class="login-form" action="{% url 'users:login' %}" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <p>{{field.label}}</p>
+                {{field}}
+            {% endfor %}
+                <button class="login btn" type="submit">로그인</button>
+                <button class="logout btn" type="button" onclick="location.href='/users/signup/'">회원가입</button>
+            </form>
+        </div>    
+    </div> 
+</body>
+</html>

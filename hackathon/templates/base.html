@@ -15,7 +15,9 @@
         <nav class="nav-container">
             <ul class="nav-wrapper">
                 <li class="logo">
-                    <a href="{% url 'main:main' %}">LOGO</a>
+                    <a href="{% url 'main:main' %}">
+                        <div class="logo-img" style="background-image: url('../static/img/logo.png');"></div>
+                    </a>
                 </li>
 
                 <li class="url-container">
@@ -24,14 +26,22 @@
                     <a href="{% if user.is_authenticated %} {% url 'mypf:profile' user.id %} {% else %} {% url 'users:login' %} {% endif %}">마이 포트폴리오</a>
                 </li>
 
-                <li class="user-container">
-                {% if user.is_authenticated %}
-                    <img src="" alt="">
+                <li class="{% if user.is_authenticated %} user-container {% endif %}">
+                    <a href="{% if user.is_authenticated %} '' {% else %} {% url 'users:login' %} {% endif %}">    
+                        {% if user.is_anonymous %}
+                        <div class="chat-img anonymous"></div>
+                        {% else %}
+                        <div class="chat-img"></div>
+                        {% endif %}
+                    </a>
+                    {% if user.is_authenticated %}
+                    <div class="profile-img"></div>
                     <a class="user-name"href="{% url 'mypage:mypage' user.id %}">{{user.name}}</a>
-                {% else %}
+                    <a clas="logout" href="{% url 'users:logout' %}">로그아웃</a>
+                    {% else %}
                     <a class="btn login" href="{% url 'users:login' %}">로그인</a>
                     <a class="btn signup" href="{% url 'users:signup' %}">회원가입</a>
-                {% endif %}
+                    {% endif %}
                 </li>
             </ul>
             

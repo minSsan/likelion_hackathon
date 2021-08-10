@@ -1,4 +1,4 @@
-from django.core import paginator
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import *
@@ -74,6 +74,11 @@ class RecruitListView(ListView):
         page_range = paginator.page_range[start_index:end_index]
         context['page_range'] = page_range
 
+        if self.request.user.id:
+            context['user_instance'] = User.objects.get(pk=self.request.user.id)
+        else:
+            context['user_instance'] = None
+
         return context
 
 # 2. 팀빌딩 직무 검색 기능 #
@@ -105,10 +110,10 @@ def create_recruit(request):
     recruits_form = RecruitForm()
     if request.method == "POST":
         recruits_form = RecruitForm(request.POST, request.FILES)
-        # 유효성 검사 통과 안 됨 => 수정 필요
         if recruits_form.is_valid():
             new_form = recruits_form.save(commit=False)
             user_obj = User.objects.get(pk=request.user.id)
+            # user = user_obj
             new_form.writer = user_obj.name
             new_form.save()
         return redirect('team_build:team_build')
@@ -186,7 +191,7 @@ def create_comment(request, id):
     new_comment.pub_date = timezone.now()
     new_comment.save()
     
-    return redirect('detail_recruit', id)
+    return HttpResponse(status=200)
 
 # 2. 댓글 수정
 def update_comment(request, id, comment_id):
@@ -198,7 +203,7 @@ def update_comment(request, id, comment_id):
     comment_instance.content = json.loads(request.body).get('text')
     comment_instance.save()
     
-    return redirect('detail_recruit', id)
+    return HttpResponse(status=200)
 
 # 3. 댓글 삭제
 def delete_comment(request, id, comment_id, answer_comment):
@@ -212,8 +217,10 @@ def delete_comment(request, id, comment_id, answer_comment):
     if str(request.user) == comment_instance.user_username:
         comment_instance.delete()
 
-    return redirect('detail_recruit', id)
+    print(id)
 
+    return HttpResponse(status=200)
+    
 
 ###### 찜 기능 ######
 # 찜하기 버튼 누를 때 실행

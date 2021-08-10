@@ -18,6 +18,7 @@ class Migration(migrations.Migration):
             name='Portfolio',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('image', models.ImageField(blank=True, default='', upload_to='')),
                 ('title', models.CharField(default='', max_length=50)),
                 ('detail', models.TextField(blank=True, null=True)),
                 ('user_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),

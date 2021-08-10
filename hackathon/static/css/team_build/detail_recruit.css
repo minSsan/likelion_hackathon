@@ -1,0 +1,141 @@
+html {
+    background-color: rgba(248, 248, 248, 1);
+}
+.empty {
+    margin: 1%;
+}
+.line {
+    background-color: rgb(235, 235, 235);
+    width: 100%;
+    height: 1px;
+    margin: 10px;
+}
+.row {
+    display: flex;
+    flex-direction: row;
+}
+.col {
+    display: flex;
+    flex-direction: column;
+}
+.back-box {
+    background-color: white;
+    margin-top: 20px;
+    margin-left: 12%;
+    margin-right: 12%;
+    padding: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-direction: column;
+}
+.title-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.item-margin {
+    margin-top: 2%;
+    margin-bottom: 1%;
+}
+.title {
+    font-size: 28px;
+    font-weight: bold;
+    color: rgba(74, 85, 104, 1)
+}
+.overview-box {
+    display: flex;
+    flex-direction: row;
+    border-top: 1px rgba(74, 85, 104, 1) solid;
+    border-bottom: 1px rgba(74, 85, 104, 1) solid;
+    padding: 2%;
+}
+.overview-item {
+    width: 100%;
+}
+.overview-item > p {
+    font-size: 13px;
+}
+.small-title {
+    font-weight: bold;
+    font-size: 17px;
+}
+.image-box {
+    width: 500px;
+    height: 300px;
+    /* background-color: rgb(216, 216, 216); */
+    text-align: center;
+    text-justify: center;
+    margin-left: auto;
+    margin-right: auto;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.detail-box {
+}
+
+.comment-create-box {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-items: stretch;
+
+}
+.comment-input {
+    flex-grow: 1;
+    font-size: 17px;
+    padding: 6px;
+    margin-left: 2%;
+    margin-right: 2%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px black solid;
+}
+#comment-edit {
+    border: none;
+    border-bottom: 2px black solid;
+    font-size: 16px;
+    width: 100%;
+}
+#comment-edit:focus {
+    outline: none;
+}
+.comment-input:focus {
+    outline:none;
+    font-size: 17px;
+    padding: 6px;
+}
+.comment-btn {
+    border: none;
+    width: 50px;
+    height: 40px;
+    background-color: rgba(196, 196, 196, 1);
+}
+.comment-btn:hover {
+    opacity: 0.7;
+}
+.comment-btn-small {
+    border: none;
+    width: 40px;
+    height: 30px;
+    background-color: rgba(196, 196, 196, 1);
+    margin: 1px;
+}
+.comment-btn-small:hover {
+    opacity: 0.7;
+}
+.small-profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    background-color: rgba(196, 196, 196, 1);
+}
+.comment-item {
+    flex-grow: 1;
+    margin: 5px;
+}
+.answer-comment-box {
+    padding-left: 60px;
+}
