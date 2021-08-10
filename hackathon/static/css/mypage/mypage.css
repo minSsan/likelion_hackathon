@@ -1,0 +1,267 @@
+.row {
+    display: flex;
+    flex-direction: row;
+}
+.col {
+    display: flex;
+    flex-direction: column;
+}
+.mypage-background-img {
+    width: 100%;
+    height: 200px;
+    opacity: 0.8;;
+    background-image: url("../../img/mypage/background_img.jpg");
+}
+.profile-box {
+    position: relative;
+    top: -100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 10px;
+    width: 70%;
+    height: 200px;
+    border-bottom: 1px rgb(172, 172, 172) solid;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.profile-box > .profile-img {
+    width: 180px;
+    height: 180px;
+    /* background-color: rgb(143, 143, 143); */
+    border-radius: 100%;
+    margin-right: 10px;
+}
+.profile-content {
+    display: flex;
+    flex-direction: column;
+}
+.profile-content-item {
+    margin: 10px;
+}
+
+.content-menu-box {
+    position: relative;
+    top: -80px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+}
+.content-menu-btn {
+    font-size: 20px;
+    margin-right: 7px;
+    border: none;
+    width: 200px;
+    height: 40px;
+    background-color: rgb(243, 243, 243);
+}
+.content-menu-btn:hover {
+    cursor: pointer;
+}
+.content-back {
+    margin-top: -80px;
+    background-color: rgba(228, 236, 245, 1);
+    padding-top: 1%;
+    padding-bottom: 3%;
+}
+
+.content-box-container {
+    width: 68%;
+    height: 420px;
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.content-item {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 15px;
+    border: 1px gray solid;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 내가 쓴 글/댓글 css */
+.content-box-title {
+    font-weight: bold;
+    border-bottom: 3px solid black;
+}
+.content-box-item {
+    border: 1px solid gray;
+    border-radius: 20px;
+    height: 100px;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    padding: 1%;
+}
+.content-box-item:hover {
+    opacity: 0.5;
+}
+/* 게시글, 댓글 */
+
+/* 게시글 */
+.content-box-item > .col > .row {
+    display: flex;
+    align-items: flex-end;
+}
+.content-box-item > .col > .row > .title {
+    font-size: 20px;
+    margin-right: 3%;
+}
+.content-box-item > .col > .row > .writer {
+    font-size: 11px;
+}
+.content-box-item > .col > .role-location {
+    font-size: 12px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+.content-box-item > .col > .detail {
+    font-size: 13px;
+    width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.content-box-item-img {
+    float: left;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 10vw;
+}
+/* 게시글 */
+
+/* 댓글 */
+.content-box-item.comment {
+    border-radius: 10px;
+    height: 42px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 1%;
+}
+.content-box-item.comment > .row {
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.comment-content {
+    width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.comment-date {
+    font-size: 11px;
+}
+/* 댓글 */
+
+/* 찜한 유저 */
+.users-container {
+    float: left;
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+.user-card {
+    margin: 1%;
+    margin-top: 3%;
+    width: 237px;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #F9F9F9;
+    border: 1px solid #919191;
+    box-sizing: border-box;
+    border-radius: 15px;
+
+    cursor: pointer;
+}
+
+.user-card:hover {
+    background-color: #FFFFFF;
+}
+
+.card-nav {
+    display: flex;
+    justify-content: flex-end;
+
+    width: 85%;
+}
+
+.chat{
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 23px;
+    height: 23px;
+
+    margin-right: 10px;
+}
+
+.wish{
+    background-size: contain; 
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+}
+
+.wish .active {
+    background-image: url('../../img/like_active.png');
+}
+
+.user-card > hr {
+    width: 85%;
+    height: 0;
+    background-color: #919191;
+
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.card-content {
+    width: 85%;
+}
+
+.user-img {
+    width: 58px;
+    height: 58px;
+}
+
+.user-name { 
+    font-weight: 700;
+    font-size: 18px;
+
+    letter-spacing: 0.3px;
+
+    color: #000000;
+}
+
+.user-address { 
+    font-size: 12px;
+}
+
+.user-intro {
+    height: 90px;
+    font-size: 15px;
+    line-height: 18px;
+
+    overflow: hidden;
+    /* 너비가 넘어간 글자에 대해선 ... 부호로 표시 */
+    text-overflow: ellipsis;
+
+    /* 제한 줄을 여러 줄로 설정할 경우 */
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+}

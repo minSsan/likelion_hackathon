@@ -3,26 +3,41 @@ let answer_comment = "False" // 답글 여부
 
 function updateEnter(e) {
     if (event.keyCode == 13) {
-        e.parentNode.parentNode.childNodes[7].click();
+        console.log(e.parentNode.parentNode.childNodes[5].childNodes[3])
+        e.parentNode.parentNode.childNodes[5].childNodes[3].click();
     }
 }
 function submitEnter(e) {
     if (event.keyCode == 13) {
-        e.parentNode.childNodes[2].click();
+        e.parentNode.childNodes[5].click();
     }
+}
+
+// 댓글 삭제
+function deleteBtn1(e) {
+    fetch("delete_comment/" + e.parentNode.parentNode.parentNode.parentNode.getAttribute('comment_id') + "/False").then(res => {
+        if(res.status == 200) window.location.reload();
+        else alert('삭제안됨');
+    })
+}
+function deleteBtn2(e) {
+    fetch("delete_comment/" + e.parentNode.parentNode.parentNode.parentNode.getAttribute('comment_id') + "/True").then(res => {
+        if(res.status == 200) window.location.reload();
+        else alert('삭제안됨');
+    })
 }
 
 // 댓글 수정
 function updateBtn(e) {
-    if (e.innerHTML == "수정하기") {
-        e.innerHTML = "저장하기";
-        e.parentNode.childNodes[11].innerHTML = `<input id="comment-edit" type=text" onkeydown="updateEnter(this)" value="${e.parentNode.childNodes[11].innerHTML}"/>`;
+    if (e.innerHTML == "수정") {
+        e.innerHTML = "저장";
+        e.parentNode.parentNode.childNodes[3].innerHTML = `<input id="comment-edit" type=text" onkeydown="updateEnter(this)" value="${e.parentNode.parentNode.childNodes[3].innerHTML}"/>`;
     }
     else {
-        text = e.parentNode.childNodes[11].childNodes[0].value;
+        text = e.parentNode.parentNode.childNodes[3].childNodes[0].value;
         answer_comment = "False"
 
-        fetch("/detail_recruit/" + id + "/update_comment/" + e.parentNode.getAttribute('comment_id'), { 
+        fetch("/recruit/detail_recruit/" + id + "/update_comment/" + e.parentNode.parentNode.parentNode.parentNode.getAttribute('comment_id'), { 
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -33,8 +48,8 @@ function updateBtn(e) {
             })
         }).then(res => {
             if (res.status == 200) {
-                e.innerHTML = "수정하기";
-                e.parentNode.childNodes[11].innerHTML = text
+                e.innerHTML = "수정";
+                e.parentNode.parentNode.childNodes[3].innerHTML = text
             }
             else {
                 alert('수정안됨');
@@ -45,16 +60,15 @@ function updateBtn(e) {
 
 // 대댓글 수정
 function updateBtn2(e) {
-    console.log(e.parentNode.childNodes)
-    if (e.innerHTML == "수정하기") {
-        e.innerHTML = "저장하기";
-        e.parentNode.childNodes[9].innerHTML = `<input id="comment-edit" type=text" onkeydown="updateEnter(this)" value="${e.parentNode.childNodes[9].innerHTML}"/>`;
+    if (e.innerHTML == "수정") {
+        e.innerHTML = "저장";
+        e.parentNode.parentNode.childNodes[3].innerHTML = `<input id="comment-edit" type=text" onkeydown="updateEnter(this)" value="${e.parentNode.parentNode.childNodes[3].innerHTML}"/>`;
     }
     else {
-        text = e.parentNode.childNodes[9].childNodes[0].value;
+        text = e.parentNode.parentNode.childNodes[3].childNodes[0].value;
         answer_comment = "True"
 
-        fetch("/detail_recruit/" + id + "/update_comment/" + e.parentNode.getAttribute('comment_id'), { 
+        fetch("/recruit/detail_recruit/" + id + "/update_comment/" + e.parentNode.parentNode.parentNode.parentNode.getAttribute('comment_id'), { 
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -65,8 +79,8 @@ function updateBtn2(e) {
             })
         }).then(res => {
             if (res.status == 200) {
-                e.innerHTML = "수정하기";
-                e.parentNode.childNodes[9].innerHTML = text
+                e.innerHTML = "수정";
+                e.parentNode.parentNode.childNodes[3].innerHTML = text
                 answer_comment = "False"
             }
             else {
@@ -78,17 +92,20 @@ function updateBtn2(e) {
 
 // 답글(대댓글) 버튼
 function answerBtn(e) {
-    e.parentNode.childNodes[13].innerHTML = `<input id="commit-answer" type="text" onkeydown="submitEnter(this)"/> <button onclick="submitBtn(this)">작성</button>`;
+    console.log(e.parentNode.parentNode.childNodes[7])
+    e.parentNode.parentNode.childNodes[7].innerHTML = `            <div class="small-profile-img"></div>
+    <input type="text" class="comment-input" onkeydown="submitEnter(this)" placeholder="댓글 입력"/>
+    <button class="comment-btn" onclick="submitBtn(this)">작성</button>`;
     answer_comment = "True";
 }
 
 // 댓글, 대댓글 작성 버튼
 function submitBtn(e) {
-    console.log(e.parentNode.childNodes[0].value)
-    text = e.parentNode.childNodes[0].value;
-    comment_id = e.parentNode.parentNode.getAttribute('comment_id')
+    console.log(e.parentNode.childNodes)
+    text = e.parentNode.childNodes[3].value;
+    comment_id = e.parentNode.parentNode.parentNode.parentNode.getAttribute('comment_id')
 
-    fetch("/detail_recruit/" + id + "/create_comment/", { 
+    fetch("/recruit/detail_recruit/" + id + "/create_comment/", { 
         method: "POST",
         headers: {
             "Content-Type": "application/json",

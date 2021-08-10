@@ -115,19 +115,17 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-import os
 
 STATIC_URL = '/static/'
 
@@ -138,14 +136,27 @@ STATICFILES_DIRS = (
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# 업로드된 파일을 media 파일에 저장
-
 MEDIA_URL = '/media/'
 # 업로드된 파일을 불러올 때 media 라는 파일 경로에서 불러옴
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# 업로드된 파일을 media 파일에 저장
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 SUMMERNOTE_CONFIG = {
     'attachment_filesize_limit': 5 * 1024 * 1024
+}
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ASGI_APPLICATION = 'hackathon.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
 }

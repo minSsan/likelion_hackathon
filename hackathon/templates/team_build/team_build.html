@@ -4,6 +4,15 @@
         {% block extrahead %}
         <link rel="stylesheet" href="../../static/css/base.css">
         <link rel="stylesheet" href="../../static/css/team_build/team_build.css">
+        <style>
+            .logo-img {
+                background-image: url('../../static/img/logo.png');
+            }
+
+            .profile-img {
+                background-image: url('{% if user_instance %}../../media/{{user_instance.image}} {% else %} ../../media/users/none/profile_default.png {% endif %}');
+            }
+        </style>
         {% endblock %}
     </head>
     {% block content %}
@@ -68,7 +77,9 @@
                 {% for post in recruit_list %}
                     <div class="recruit-post">
                         <a class="recruit-img" href="{% url 'team_build:detail_recruit' post.id %}">
-                            <div style="background-image: url('../../media/{{post.image}}');"></div>
+                            <div 
+                            style="background-image: url('../../media/{{post.image}}');" 
+                            ></div>
                         </a>
                         <a class="recruit-content" href="{% url 'team_build:detail_recruit' post.id %}">
                             <div>

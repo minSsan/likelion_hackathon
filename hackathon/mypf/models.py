@@ -4,6 +4,7 @@ from users.models import User
 # 포트폴리오
 class Portfolio(models.Model):
     title = models.CharField(default='', max_length=50)
+    image = models.ImageField(default='', upload_to="image/mypf/", blank=True, null=False)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     # ForiegnKey(외래키): 외부 테이블 키를 가져옴.
     # 여기서는 User(부모 테이블)라는 테이블의 키를 Portfolio(자식 테이블)에 받아옴

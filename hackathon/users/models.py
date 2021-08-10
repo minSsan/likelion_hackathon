@@ -37,6 +37,7 @@ ROLE_CHOICES = [
 
 # 회원 정보
 class User(AbstractUser):
+    image = models.ImageField(default="image/users/none/profile_default.png", upload_to="image/users" , blank=True, null=False)
     name = models.CharField(default='', max_length=300)
     birth_date = models.DateField(default=timezone.now)
     address_sido = models.CharField(default='', choices=LOCATE_CHOICES, max_length=200)

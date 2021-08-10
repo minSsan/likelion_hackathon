@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+.logo-img {
+    background-image: url('../../img/logo.png');
+}
+
 /* 글쓰기 아이콘 -> fixed */
 .create-img {
     position: fixed;
@@ -328,6 +332,10 @@ select {
 
     background-size: contain;
     background-repeat: no-repeat;
+}
+
+.recruit-like .active > div {
+    background-image: url('../../img/like_active.png');
 }
 
 /* ****** 페이지 넘김 버튼 ****** */

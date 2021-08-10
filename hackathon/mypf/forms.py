@@ -6,7 +6,7 @@ from .models import *
 class PortfolioForm(forms.ModelForm):
     class Meta:
         model = Portfolio
-        fields = ['title', 'detail']
+        fields = ['title', 'image', 'detail']
         widgets = {
             'detail': SummernoteWidget(),
         }

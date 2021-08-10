@@ -6,6 +6,10 @@ from users.models import User
 from team_build.models import LikeRecruit
 
 def mypage(request, user_id):
+    current_user = None
+    if request.user.is_authenticated:
+        current_user = User.objects.get(pk=request.user.id)
+    
     # 내가 쓴 글, 내가 쓴 댓글 불러오기
     my_recruits = Recruit.objects.filter(writer=request.user).order_by('-id')
     my_comments = Comment.objects.filter(user_username=request.user).order_by('-id')
@@ -26,6 +30,7 @@ def mypage(request, user_id):
     users = list(dict.fromkeys(users))
 
     context = {
+        'current_user':current_user,
         'my_recruits':my_recruits,
         'my_comments':my_comments,
         'recruits':recruits,
