@@ -24,6 +24,12 @@
     </div>
 
     <div class="detail-container">
+        {% if user == pf.user_id %}
+        <div class="btn-container" style="width: 100%;">
+            <a class="pf-btn delete" href="{% url 'mypf:delete_pf' user_id pf_id %}">삭제</a>
+            <a class="pf-btn update" href="{% url 'mypf:update_pf' user_id pf_id %}">수정</a>
+        </div>
+        {% endif %}
         <p class="detail-title">{{pf.title}}</p>
         <hr>
         <div class="detail-content">
@@ -31,9 +37,4 @@
         </div>
     </div>
 </div>
-
-    {% if user == pf.user_id %}
-    <a href="{% url 'mypf:update_pf' user_id pf_id %}">수정하기</a>
-    <a href="{% url 'mypf:delete_pf' user_id pf_id %}">삭제하기</a>
-    {% endif %}
 {% endblock %}
