@@ -1,0 +1,27 @@
+.detail-container {
+    width: 80%;
+    margin: 40px auto;
+}
+
+.detail-title {
+    font-size: 30px;
+    line-height: 40px;
+    /* or 133% */
+
+    letter-spacing: 0.2px;
+
+    color: #000000;
+}
+
+.detail-container > hr {
+    width: 50px;
+    height: 0;
+
+    margin: 10px 0;
+
+    border: 2px solid #FDD33F;
+}
+
+.detail-content {
+    margin: 50px 0;
+}
