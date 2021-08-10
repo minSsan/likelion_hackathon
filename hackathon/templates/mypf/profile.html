@@ -3,22 +3,88 @@
         {% load static %}
         {% block extrahead %}
         <link rel="stylesheet" href="../../static/css/base.css">
+        <link rel="stylesheet" href="../../static/css/mypf/profile.css">
+        <style>
+            .profile-img {
+                background-image: url('{% if user.is_authenticated %} ../../media/{{user_instance.image}} {% endif %}');
+            }
+        </style>
         {% endblock %}
     </head>
 {% block content %}
-    <p>이름 : {{obj.name}}</p>
-    <p>생년월일 : {{obj.birth_date}}</p>
-    <p>거주지역 : {{obj.address_sido}} {{obj.address_gungu}}</p>
-    <p>경력 : {{obj.get_career_display}}</p>
-    <p>상태 : {{obj.get_state_display}}</p>
-    <p>역할 : {{obj.get_role_display}}</p>
-    <p>포트폴리오
-        {% for pf in pfs %}
-            <p>{{pf.title}}</p>
-            <a href="{% url 'mypf:detail_pf' user_id pf.id %}">자세히</a>
-        {% endfor %}
-        {% if user.id == user_id %}
-            <a href="{% url 'mypf:create_pf' user_id %}">포트폴리오 쓰기</a>
-        {% endif %}
-    </p>
+<div>
+    <img class="profile-back" src="../../static/img/mypage/background_img.jpg">
+    <div class="profile-container">
+        <img src="../../media/{{obj.image}}"alt="프로필 사진">
+        
+        <div class="name-container">
+            <p>{{obj.name}}</p>
+        </div>
+    </div>
+
+    <div class="info-container">
+        <div class="spec">
+            <div>
+                <div class="spec-title">
+                    <p>PORFILE</p>
+                    <a href=""></a>
+                </div>
+                
+                <strong>생년월일 </strong>{{obj.birth_date}} <br>
+                <strong>거주지역 </strong>{{obj.address_sido}} {{obj.address_gungu}} <br>
+                <strong>직무 </strong>{{obj.get_role_display}} <br>
+                <strong>경력 </strong>{{obj.get_career_display}}
+            </div>
+            <div>
+                <div class="spec-title">
+                    <p>FIELD</p>
+                    <a href=""></a>
+                </div>    
+                
+                <strong>#{{obj.get_role_display}}</strong>
+            </div>
+        </div>
+
+        <div class="portfolio">
+            <div class="spec-title">
+                <p>포트폴리오 게시물 리스트</p>
+                {% if user.id == user_id %}
+                <a href="{% url 'mypf:create_pf' user_id %}">
+                    <img src="../../static/img/mypf/edit_icon.png" alt="">
+                </a>
+                {% endif %}
+            </div>
+
+
+            <div class="pf-list">
+                <div class="pf-page previous">
+                {% if pfs.has_previous %}
+                    <a href="?page={{pfs.previous_page_number}}">
+                        <div></div>
+                    </a>
+                {% endif %}
+                </div>
+            {% for pf in pfs %}
+                <a href="{% url 'mypf:detail_pf' user_id pf.id %}">
+                    <div class="pf">
+                        {% if pf.image %}
+                        <img class="pf-img" src="../../media/{{pf.image}}" alt="">
+                        {% else %}
+                        <div class="pf-img" src="" alt=""></div>
+                        {% endif %}
+                        <p>{{pf.title}}</p>
+                    </div>
+                </a>
+            {% endfor %}
+                <div class="pf-page next">
+                {% if pfs.has_next %}
+                    <a href="?page={{pfs.next_page_number}}">
+                        <div></div>
+                    </a>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

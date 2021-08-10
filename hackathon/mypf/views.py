@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
+from django.core.paginator import Paginator
+
 from mypf.models import *
 from users.models import User
 from .forms import *
@@ -7,11 +9,18 @@ from .forms import *
 ###### 마이페이지 ######
 # 1. 마이페이지 불러오기 #
 def profile(request, id):
-    user_instance = get_object_or_404(User, pk=id)
-    pfs = Portfolio.objects.filter(user_id=id)
+    user_instance = User.objects.get(pk=request.user.id)
+    user = get_object_or_404(User, pk=id)
+
+    pfs = Portfolio.objects.filter(user_id=id).order_by('-id')
+    paginator = Paginator(pfs, 4)
+    page = request.GET.get('page')
+    pfs = paginator.get_page(page)
+
     context = {
+        'user_instance': user_instance,
         'user_id':id,
-        'obj': user_instance,
+        'obj': user,
         'pfs':pfs,
     }
     return render(request, 'mypf/profile.html', context)
@@ -19,8 +28,10 @@ def profile(request, id):
 # 2. 포트폴리오 #
 # 2-1. 포트폴리오 상세보기 # 
 def detail_portfolio(request, user_id, pf_id):
+    user_instance = User.objects.get(pk=request.user.id)
     portfolio = get_object_or_404(Portfolio, pk=pf_id)
     context = {
+        'user_instance':user_instance,
         'pf':portfolio,
         'user_id':user_id,
         'pf_id':pf_id,

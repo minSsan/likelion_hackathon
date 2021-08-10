@@ -30,6 +30,14 @@ a {
     float: left;
 }
 
+.logo-img {
+    width: 116px;
+    height: 32px;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
 /* nav-wrapper */
 .nav-wrapper {
     display: flex;
@@ -52,10 +60,19 @@ a {
     justify-content: space-between;
     
     width: 280px;
-    margin-left: 10vw;
+    /* margin-left: 10vw; */
+    margin: 0 5% 0 10%;
 }
 
 .url-container > a {
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+
     /* font style */
     color: #373F41;
 
@@ -69,7 +86,46 @@ a {
 }
 
 /* user-container */
+.user-container {
+    display: flex;
+    align-items: center;
+}
+
+.chat-img {
+    width: 23px;
+    height: 23px;
+    margin-right: 20px;
+
+    background-image: url('../img/nav_chat.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.anonymous {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.profile-img {
+    width: 24px;
+    height: 24px;
+    margin-right: 7px;
+
+    border-radius: 50%;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .user-container > .user-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+
     /* font style */
     color: #000000;
     
@@ -97,6 +153,9 @@ a {
 .signup {
     color: #FFFFFF;
     background: #3C64B1;
+}
+
+.logout {
 }
 
 footer {

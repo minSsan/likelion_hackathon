@@ -75,6 +75,11 @@ class RecruitListView(ListView):
         page_range = paginator.page_range[start_index:end_index]
         context['page_range'] = page_range
 
+        if self.request.user.id:
+            context['user_instance'] = User.objects.get(pk=self.request.user.id)
+        else:
+            context['user_instance'] = None
+
         return context
 
 # 2. 팀빌딩 직무 검색 기능 #
@@ -106,7 +111,6 @@ def create_recruit(request):
     recruits_form = RecruitForm()
     if request.method == "POST":
         recruits_form = RecruitForm(request.POST, request.FILES)
-        # 유효성 검사 통과 안 됨 => 수정 필요
         if recruits_form.is_valid():
             new_form = recruits_form.save(commit=False)
             new_form.writer = request.user.name
@@ -225,8 +229,7 @@ def delete_comment(request, id, comment_id, answer_comment):
 
     print(id)
 
-    return HttpResponse(status=200)
-
+    return HttpResponse(status=200)    
 
 ###### 찜 기능 ######
 # 찜하기 버튼 누를 때 실행

@@ -13,6 +13,11 @@ LIST_RANGE = 12
 
 # 유저 검색 기능 ( 아직 역할 검색만 )
 def user(request):
+    if request.user.id:
+        user_instance = User.objects.get(pk=request.user.id)
+    else:
+        user_instance = None
+
     users = User.objects.all().order_by('-id')
     max_index = len(users) / LIST_RANGE
 
@@ -32,6 +37,7 @@ def user(request):
         page_range.append(index + 1)
 
     context = {
+        'current_user':user_instance,
         'users': users,
         'page_range':page_range,
     }

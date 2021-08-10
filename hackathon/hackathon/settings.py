@@ -148,11 +148,11 @@ STATICFILES_DIRS = (
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# 업로드된 파일을 media 파일에 저장
-
 MEDIA_URL = '/media/'
 # 업로드된 파일을 불러올 때 media 라는 파일 경로에서 불러옴
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# 업로드된 파일을 media 파일에 저장
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 

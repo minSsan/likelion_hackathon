@@ -25,10 +25,11 @@
     flex-direction: row;
     align-items: center;
 }
-.profile-img {
+
+.profile-box > .profile-img-big {
     width: 180px;
     height: 180px;
-    background-color: rgb(143, 143, 143);
+    /* background-color: rgb(143, 143, 143); */
     border-radius: 100%;
     margin-right: 10px;
 }
