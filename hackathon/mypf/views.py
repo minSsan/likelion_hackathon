@@ -28,8 +28,10 @@ def profile(request, id):
 # 2. 포트폴리오 #
 # 2-1. 포트폴리오 상세보기 # 
 def detail_portfolio(request, user_id, pf_id):
+    user_instance = User.objects.get(pk=request.user.id)
     portfolio = get_object_or_404(Portfolio, pk=pf_id)
     context = {
+        'user_instance':user_instance,
         'pf':portfolio,
         'user_id':user_id,
         'pf_id':pf_id,
