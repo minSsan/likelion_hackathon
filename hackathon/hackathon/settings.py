@@ -145,7 +145,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 SUMMERNOTE_CONFIG = {
-    'attachment_filesize_limit': 5 * 1024 * 1024
+    'attachment_filesize_limit': 5 * 1024 * 1024,
+    'summernote': {
+        'width':'100%',
+    },
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
