@@ -196,8 +196,7 @@ def create_comment(request, id):
         new_comment.recruit_id = Recruit.objects.get(pk=id)
 
     new_comment.content = json.loads(request.body).get('text')
-    new_comment.user = get_object_or_404(User, username=username).name
-    new_comment.user_username = username
+    new_comment.user = get_object_or_404(User, username=username)
     new_comment.pub_date = timezone.now()
     new_comment.save()
     
@@ -227,7 +226,6 @@ def delete_comment(request, id, comment_id, answer_comment):
     if str(request.user) == comment_instance.user_username:
         comment_instance.delete()
 
-    print(id)
 
     return HttpResponse(status=200)    
 

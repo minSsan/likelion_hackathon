@@ -56,10 +56,12 @@
         {% for comment in comments %}
         <div class="comment-box" comment_id="{{comment.id}}">
             <div class="comment-item row" style="flex-grow: 1;">
-                <div class="small-profile-img"></div>
+                <div class="small-profile-img">
+                    <img src="../../../media/{{comment.user.image}}">
+                </div>
                 <div class="comment-item col">
                     <div class="comment-item row">
-                        <div class="small-title">{{comment.user}}</div>
+                        <div class="small-title">{{comment.user.name}}</div>
                         <p style="font-size: 5px; display: inline;">({{comment.date}})</p>
                     </div>
                     <div class="comment-item">{{comment.content}}</div>
@@ -77,10 +79,12 @@
                 {% if comment.id == ans_comment.comment_id.id %}
                 <div class="answer-comment-box comment-item" comment_id="{{ans_comment.id}}">
                     <div class="comment-item row">
-                        <div class="small-profile-img"></div>
+                        <div class="small-profile-img">
+                            <img src="../../../media/{{comment.user.image}}">
+                        </div>
                         <div class="comment-item col">
                             <div class="comment-item row">
-                                <div class="small-title">{{ans_comment.user}}</div>
+                                <div class="small-title">{{ans_comment.user.name}}</div>
                                 <p style="font-size: 5px; display: inline;">({{ans_comment.date}})</p>
                             </div>
                             <div class="comment-item">{{ans_comment.content}}</div>

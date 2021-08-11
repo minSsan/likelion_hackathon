@@ -2,9 +2,12 @@ from django.db import models
 from django.utils import timezone
 from multiselectfield import MultiSelectField
 
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname('users'))))
+from users.models import *
+
 from django.db.models.deletion import CASCADE
 
-# from users.models import User
 
 
 # Recruit
@@ -89,15 +92,13 @@ class Recruit(models.Model):
 class Comment(models.Model):
     recruit_id = models.ForeignKey(Recruit, on_delete=models.CASCADE, null=True)
     date = models.DateTimeField(auto_now_add=True)
-    user = models.TextField(max_length=100)
-    user_username = models.TextField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     content = models.TextField(max_length=200)
 
 class CommentAnswer(models.Model):
     comment_id = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True)
     date = models.DateTimeField(auto_now_add=True)
-    user = models.TextField(max_length=100)
-    user_username = models.TextField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     content = models.TextField(max_length=200)
 
 class LikeRecruit(models.Model):
