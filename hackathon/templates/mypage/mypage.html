@@ -6,7 +6,10 @@
     <link rel="stylesheet" href="../../static/css/mypage/mypage.css">
     <style>
         .profile-img {
-            background-image: url('../../media/{{current_user.iamge}}');
+            background-image: url('../../media/{{user.image}}');
+        }
+        .profile-img-big {
+            background-image: url('../../media/{{user.image}}');
         }
     </style>
     {% endblock %}
@@ -15,7 +18,9 @@
     <div class="mypage-background-img"></div>
 
     <div class="profile-box">
-        <div class="profile-img-big"></div>
+        <div class="profile-img-big">
+            <img src="../../media/{{user.image}}">
+        </div>
         <div class="profile-content">
              <div class="profile-content-item" style="font-size: 17px; font-weight: bold;">{{user.name}}</div>
              <div class="profile-content-item">{{user.intro}}</div>
