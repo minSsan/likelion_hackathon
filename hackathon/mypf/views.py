@@ -40,9 +40,9 @@ def detail_portfolio(request, user_id, pf_id):
 
 # 2-2. 포트폴리오 작성하기 #
 def create_portfolio(request, user_id): # user id 필요
-    form = PortfolioForm()
+    form = CustomPortfolioForm()
     if request.method == "POST":
-        form = PortfolioForm(request.POST, request.FILES)
+        form = CustomPortfolioForm(request.POST, request.FILES)
         if form.is_valid():
             new_portfolio = form.save(commit=False)
             new_portfolio.user_id = User.objects.get(pk=user_id)
@@ -68,12 +68,12 @@ def delete_portfolio(request, user_id, pf_id):
 def update_portfolio(request, user_id, pf_id):
     pf_instance = get_object_or_404(Portfolio, pk=pf_id)
     if request.method == "POST":
-        update_form = PortfolioForm(request.POST, request.FILES, instance=pf_instance)
+        update_form = CustomPortfolioForm(request.POST, request.FILES, instance=pf_instance)
         if update_form.is_valid():
             update_form.save()
         return redirect('mypf:profile', user_id)
     else:
-        update_form = PortfolioForm(instance=pf_instance)
+        update_form = CustomPortfolioForm(instance=pf_instance)
         context = {
             'form':update_form,
             'user_id':user_id,

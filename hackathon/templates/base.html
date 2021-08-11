@@ -37,7 +37,7 @@
                     {% if user.is_authenticated %}
                     <div class="profile-img"></div>
                     <a class="user-name"href="{% url 'mypage:mypage' user.id %}">{{user.name}}</a>
-                    <a clas="logout" href="{% url 'users:logout' %}">로그아웃</a>
+                    <a class="logout" href="{% url 'users:logout' %}">로그아웃</a>
                     {% else %}
                     <a class="btn login" href="{% url 'users:login' %}">로그인</a>
                     <a class="btn signup" href="{% url 'users:signup' %}">회원가입</a>

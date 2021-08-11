@@ -3,6 +3,42 @@
     margin: 40px auto;
 }
 
+.pf-btn {
+    float: right;
+
+    padding: 5px;
+
+    border: 1px solid;
+    border-radius: 3px;
+}
+
+.update {
+    margin-right: 6px;
+    border-color: #3C64B1;
+    color: #3C64B1
+}
+
+.update:hover {
+    color: #FFFFFF;
+    background-color: #3C64B1;
+}
+
+.delete {
+    border-color: #ED1C24;
+    color: #ED1C24;
+}
+
+.delete:hover {
+    color: #FFFFFF;
+    background-color: #ED1C24;
+}
+
+.btn-container::after {
+    content: "";
+    display: block;
+    clear: right;
+}
+
 .detail-title {
     font-size: 30px;
     line-height: 40px;
