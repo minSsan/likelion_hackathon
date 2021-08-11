@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300&display=swap');
+
+/* default style */
+body, html {
+    margin: 0;
+    padding : 0;
+    
+    font-family: 'Mulish', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.signup-container {
+    margin: 100px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup-container > div {
+    height: 584px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    display: inline-block;
+    margin: auto;
+}
+
+.logo > img {
+    width: 160px;
+    height: 50px;
+
+    object-fit: cover;
+}
+
+.signup-title {
+    margin: auto;
+
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 35px;
+
+    /* 900 */
+
+    color: #1A202C;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 1000px;
+    height: 650px;
+
+    margin: 40px 0;
+    margin-left: 150px;
+}
+
+form > div {
+    width: 354px;
+    height: 20px;
+
+    margin: 40px 0;
+}
+
+.input-title {
+    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #4A5568;
+}
+
+input {
+    background: none;
+    border: 1px solid #E5E5E5;
+    outline: none;
+
+    border-radius: 5px;
+
+    display: inline-block;
+    width: 100%;
+
+    padding: 5%;
+}
+
+.image-input1 {
+    background: none;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    padding: 0;
+}
+
+.role-input2 {
+    list-style: none;
+    display: flex;
+}
+
+.role-input2 > li > label {
+    width: 71px;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+
+.role-input2 > li > label > input {
+    padding: 0;
+    margin: 0;
+    margin-right: 5px;
+    width: auto;
+}
+
+.intro-input3 {
+    width: 250px;
+    height: 100px;
+}
+
+select {
+    width: 110%;
+    padding: 5% 3%;
+    border: 1px solid #E5E5E5;
+    background: url('../../img/users/arrow.png') no-repeat 97% 50%/15px auto;
+    border-radius: 0px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+}
+
+textarea {
+    background: none;
+    border: 1px solid #E5E5E5;
+    outline: none;
+
+    border-radius: 5px;
+
+    display: inline-block;
+    width: 100%;
+    height: 15%;
+
+    padding: 0 5%;
+    margin-bottom: 5%;
+
+    margin-left: 0px;
+    padding-left: 20px;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+/* 자동완성 및 입력시 배경 제거 */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100px white inset;
+}
+
+.btn {
+    width: 347px;
+    height: 50px;
+    border: none;
+    
+    background: #3C64B1;
+    border-radius: 5px;
+
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #FFFFFF;
+
+    cursor: pointer;
+}
+
+.signup {
+    margin: 300px 0 0 0;
+}
