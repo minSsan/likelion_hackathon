@@ -133,7 +133,6 @@
 
 .pf-list {
     width: 90%;
-    margin: auto;
 
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -141,25 +140,19 @@
     gap: 2%;
 }
 
-.pf-page {
-    width: 5%;
-    overflow: visible;
-}
-
-.previous {
-    float: left;
-}
-
-.next {
-    float: right;
+.pf-box {
+    margin: auto;
+    display: flex;
 }
 
 .pf-btn {
-    width: 68px;
-    height: 68px;
+    width: 4.7vw;
+    height: 4.7vw;
 
     background-repeat: no-repeat;
     background-size: contain;
+
+    margin-top: 100%;
 }
 
 .pf {
