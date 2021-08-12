@@ -175,8 +175,6 @@ a {
 
 footer {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
 
     width: 100%;
@@ -185,22 +183,32 @@ footer {
     background: #9CB0D7;
 }
 
-footer > p:first-child {
-    font-size: 12px;
-    line-height: 16px;
+footer > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    /* Black */
-
-    color: #000000;
+    float: left;
+    height: 100%;
+    text-align: center;
 }
 
-footer > p:nth-child(2) {
-    font-weight: bold;
+footer > div:first-child {
+    width: 15%;
+}
+
+footer > div:nth-child(2) {
+    width: 70%;
+
     font-size: 12px;
     line-height: 16px;
-    text-align: center;
 
-    /* Dark Grey */
+    color: #F5F5F5;
+}
 
-    color: #616161;
+footer > div > img {
+    margin: auto;
+    width: 103px;
+    height: 29px;
+    object-fit: contain;
 }

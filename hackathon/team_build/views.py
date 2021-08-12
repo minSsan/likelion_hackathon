@@ -14,13 +14,16 @@ from django.contrib import messages
 
 import json
 
+PAGE_RANGE = 5
+
+LIST_RANGE = 5
 
 ###### 팀 빌딩 페이지 ######
 # 1. 팀빌딩 메인 
 #    팀빌딩 키워드 검색 기능 -> query 방식 #
 class RecruitListView(ListView):
     model = Recruit
-    paginate_by = 5
+    paginate_by = LIST_RANGE
     # 리스트를 team_build.html 템플릿으로 보낼 것임
     template_name = 'team_build/team_build.html'
     # 템플릿에서 리스트를 호출할 때 'recruit_list'로 호출
@@ -58,7 +61,7 @@ class RecruitListView(ListView):
         context = super().get_context_data(**kwargs)
         paginator = context['paginator']
         # 페이지 이동 버튼에서 최대 5개의 페이지만 띄울 것임
-        page_num_range = 5
+        page_num_range = PAGE_RANGE
         max_index = len(paginator.page_range)
 
         # 현재 페이지 정보를 불러옴
@@ -75,38 +78,78 @@ class RecruitListView(ListView):
         context['page_range'] = page_range
 
         if self.request.user.id:
-            context['user_instance'] = User.objects.get(pk=self.request.user.id)
+            context['current_user'] = User.objects.get(pk=self.request.user.id)
         else:
-            context['user_instance'] = None
+            context['current_user'] = None
 
         return context
 
 # 2. 팀빌딩 직무 검색 기능 #
-def recruit_role_search(request, input_role):
-    results = Recruit.objects.filter(Q(role__icontains=input_role)).distinct()
+def recruit_search(request, search_word):
+    if request.user.id:
+        current_user = User.objects.get(pk=request.user.id)
+    else:
+        current_user = None
+
+    results = Recruit.objects.filter(
+        Q(role__icontains=search_word) |
+        Q(locate__icontains=search_word) |
+
+        Q(title__icontains=search_word) | 
+        Q(writer__icontains=search_word) |
+        Q(team_name__icontains=search_word) |
+        Q(service__icontains=search_word) |
+        Q(detail__icontains=search_word)
+        ).distinct()
+    max_index = len(results) / LIST_RANGE
+
     results = results.order_by('-id')
     # distinct() : 중복된 객체 제외
     paginator = Paginator(results, 5)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
+
+    current_page = int(page) if page else 1
+    start_index = int((current_page - 1) / PAGE_RANGE) * PAGE_RANGE
+    end_index = start_index + PAGE_RANGE
+    if end_index >= max_index:
+        end_index = max_index
+
+    page_range = []
+    for index in range(int(start_index), int(end_index) + 1):
+        page_range.append(index + 1)
+
     context = {
+        'current_user':current_user,
         'posts':posts,
+        'page_range':page_range,
     }
-    return render(request, 'team_build/recruit_role_search.html' ,context)
+    return render(request, 'team_build/recruit_search.html' ,context)
 
 # 2-1. 팀 빌딩 지역 검색 기능 #
-def recruit_location_search(request, input_location):
-    results = Recruit.objects.filter(locate=input_location).distinct()
-    paginator = Paginator(results, 5)
-    page = request.GET.get('page')
-    posts = paginator.get_page(page)
-    context = {
-        'posts':posts,
-    }
-    return render(request, 'team_build/recruit_location_search.html', context)
+# def recruit_location_search(request, input_location):
+#     if request.user.id:
+#         current_user = User.objects.get(pk=request.user.id)
+#     else:
+#         current_user = None
+
+#     results = Recruit.objects.filter(locate=input_location).distinct()
+#     paginator = Paginator(results, 5)
+#     page = request.GET.get('page')
+#     posts = paginator.get_page(page)
+#     context = {
+#         'current_user':current_user,
+#         'posts':posts,
+#     }
+#     return render(request, 'team_build/recruit_location_search.html', context)
 
 # 3. 팀빌딩 글 작성 페이지, 기능 #
 def create_recruit(request):
+    if request.user.id:
+        current_user = User.objects.get(pk=request.user.id)
+    else:
+        current_user = None
+
     recruits_form = RecruitForm()
     if request.method == "POST":
         recruits_form = RecruitForm(request.POST, request.FILES)
@@ -119,14 +162,21 @@ def create_recruit(request):
         return redirect('team_build:team_build')
     else:
         context = {
+            'current_user':current_user,
             'form': recruits_form,
         }
         return render(request, 'team_build/create_recruit.html', context)
 
 # 4-1. 팀빌딩 게시글 자세히 보기 #
 def detail_recruit(request, id):
+    if request.user.id:
+        current_user = User.objects.get(pk=request.user.id)
+    else:
+        current_user = None
+
     recruit_instance = get_object_or_404(Recruit, pk=id)
     context ={
+        'current_user':current_user,
         'obj': recruit_instance,
         'id': id,
     }
@@ -148,6 +198,11 @@ def delete_recruit(request, id):
 
 # 4-3. 팀빌딩 게시글 수정하기 #
 def update_recruit(request, id):
+    if request.user.id:
+        current_user = User.objects.get(pk=request.user.id)
+    else:
+        current_user = None
+
     recruit_instance = get_object_or_404(Recruit, pk=id)
     
     # POST 요청
@@ -164,8 +219,9 @@ def update_recruit(request, id):
     else:
         form = RecruitForm(instance=recruit_instance)
         context = {
-        'form': form,
-        'id': id,
+            'current_user':current_user,
+            'form': form,
+            'id': id,
         }
         return render(request, 'team_build/update_recruit.html', context)
 
