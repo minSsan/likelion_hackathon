@@ -44,6 +44,10 @@ def user(request):
     return render(request, 'scout/user.html', context)
 
 def user_search(request, input_role):
+    current_user = None
+    if request.user.id:
+        current_user = User.objects.get(pk=request.user.id)
+    
     results = User.objects.filter(Q(role__icontains=input_role)).order_by('-id')
     max_index = len(results) / LIST_RANGE
 
@@ -62,6 +66,7 @@ def user_search(request, input_role):
         page_range.append(index + 1)
     
     context = {
+        'current_user':current_user,
         'users':users,
         'page_range':page_range,
     }

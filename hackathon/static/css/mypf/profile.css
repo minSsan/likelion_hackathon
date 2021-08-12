@@ -132,32 +132,34 @@
 }
 
 .pf-list {
-    width: 100%;
+    width: 90%;
     margin: auto;
 
     display: grid;
-    grid-template-columns: 1fr 7fr 7fr 7fr 7fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(1, 1fr);
     gap: 2%;
 }
 
 .pf-page {
+    width: 5%;
     overflow: visible;
 }
 
-.pf-page > a > div {
-    width: 68px;
-    height: 68px;
-
-    background-color: #000000;
-}
-
 .previous {
-    margin-right: -50px;
+    float: left;
 }
 
 .next {
-    margin-left: -50px;
+    float: right;
+}
+
+.pf-btn {
+    width: 68px;
+    height: 68px;
+
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .pf {

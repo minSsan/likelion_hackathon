@@ -9,6 +9,10 @@
             .logo-img {
                 background-image: url('{% static "img/logo.png" %}');
             }
+
+            .profile-img {
+                background-image: url('{% if user.is_anonymous %} ../../media/image/users/none/profile_default.png {% else %} ../../media/{{current_user.image}} {% endif %}');
+            }
         </style>
     {% endblock %}
 </head>
