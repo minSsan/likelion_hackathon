@@ -36,6 +36,10 @@ def opp_id(my_id, chat_room_id):
 
 # views
 def index(request):
+    current_user = None
+    if request.user.id:
+        current_user = User.objects.get(pk=request.user.id)
+
     # 챗방목록+챗목록 = 챗목록에서 . 필터를 한다
     chat_list = ChatList.objects.filter(
         # first_user_id가 리퀘스트 유저이거나 second_user_id가 리퀘스트 유저인 챗방을
@@ -64,12 +68,16 @@ def index(request):
         a.recent_chat_text = a.chat_log_list[0].chat_text
 
     context = {
+        'current_user':current_user,
         'chat_list': chat_list,
     }
     return render(request, 'chat/index.html', context)
 
 # 채팅방 입장 (index.html 에서 사용), 채팅 로그 남기기(room.html에서 사용)
 def room(request, room_name):
+    current_user = None
+    if request.user.id:
+        current_user = User.objects.get(pk=request.user.id)
 
     chat_list = ChatList.objects.filter(Q(first_user_id=request.user.id) | Q(second_user_id=request.user.id)).prefetch_related(Prefetch('related_chat', queryset=ChatLog.objects.order_by('-id'), to_attr='chat_log_list'))
 
@@ -96,6 +104,7 @@ def room(request, room_name):
         opp_obj = get_object_or_404(User, id=opp_id(request.user.id, room_name))
 
         context = {
+            'current_user':current_user,
             'room_name': room_name,
             'chat_logs': chat_log, 
             'chat_list': chat_list,

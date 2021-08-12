@@ -13,7 +13,7 @@
     </head>
 {% block content %}
 <div>
-    <img class="profile-back" src="../../static/img/mypage/background_img.jpg">
+    <img class="profile-back" src="{% if obj.id == user.id %}../../static/img/mypf/back_img.png {% else %}../../static/img/profile_back.png {% endif %}">
     <div class="profile-container">
         <img src="../../media/{{obj.image}}"alt="프로필 사진">
         

@@ -9,7 +9,9 @@ from .forms import *
 ###### 마이페이지 ######
 # 1. 마이페이지 불러오기 #
 def profile(request, id):
-    user_instance = User.objects.get(pk=request.user.id)
+    user_instance = None
+    if request.user.id:
+        user_instance = User.objects.get(pk=request.user.id)
     user = get_object_or_404(User, pk=id)
 
     pfs = Portfolio.objects.filter(user_id=id).order_by('-id')
@@ -28,7 +30,7 @@ def profile(request, id):
 # 2. 포트폴리오 #
 # 2-1. 포트폴리오 상세보기 # 
 def detail_portfolio(request, user_id, pf_id):
-    user_instance = User.objects.get(pk=request.user.id)
+    user_instance = User.objects.get(pk=user_id)
     portfolio = get_object_or_404(Portfolio, pk=pf_id)
     context = {
         'user_instance':user_instance,
