@@ -5,6 +5,11 @@
         <meta charset="utf-8"/>
         <title>Chat Room</title>
         <link rel="stylesheet" href="../../../static/css/chat/chat.css">
+        <style>
+            .profile-img {
+                background-image: url('../../media/{{current_user.image}}');
+            }
+        </style>
         {% endblock %}
     </head>
     {% block content %}
@@ -15,7 +20,7 @@
                 </div>
                 {% for chat in chat_list %}
                     <div class="index-item" onclick="location.href='/chat/{{chat.chat_room_id}}'">
-                        <div class="profile-img"></div>
+                        <div class="chat-profile-img"></div>
                         <div class="chat-preview">
                             <div style="font-weight: bold;">{{chat.opp_name}}</div>
                             <div>{{chat.recent_chat_text}}</div>
@@ -27,7 +32,7 @@
             <div class="chat-room-box">
                 <div class="top-box chat">
                     <div class="row">
-                        <div class="profile-img"></div>
+                        <div class="chat-profile-img"></div>
                         <div class="col">
                             <div class="row">
                                 <div id="name">{{opp_obj.name}}</div>
@@ -47,7 +52,7 @@
                     {% else %}
                         <div class="left">
                             <div class="row">
-                                <div class="profile-img"></div>
+                                <div class="chat-profile-img"></div>
                                 <div class="col" style="padding-left: 10px;">
                                     <div class="bold">{{chat_log.chat_user.name}}</div>
                                     <p class="chat-box">{{chat_log.chat_text}}</p>
