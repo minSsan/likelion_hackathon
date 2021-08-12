@@ -1,0 +1,30 @@
+{% extends '../base.html' %}
+    <head>
+        {% load static %}
+        {% block extrahead %}
+        <title>Chating List</title>
+        <link rel="stylesheet" href="../../../static/css/chat/chat.css">
+        {% endblock %}
+    </head>
+    {% block content %}
+    <div class="back-box">
+        <div class="index-box">
+            <div class="top-box index">
+                <div>안녕하세요, <div id="user-name">{{user.name}}</div>님 !</div>
+            </div>
+            {% for chat in chat_list %}
+                <div class="index-item" onclick="location.href='/chat/{{chat.chat_room_id}}'">
+                    <div class="profile-img"></div>
+                    <div class="chat-preview">
+                        <div style="font-weight: bold;">{{chat.opp_name}}</div>
+                        <div>{{chat.recent_chat_text}}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="chat-room-box">
+            <div style="text-align: center; margin-top: 200px; margin-bottom: 300px;">채팅이 없습니다.</div>
+        </div>
+    </div>
+    {% endblock %}

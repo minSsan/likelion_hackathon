@@ -1,4 +1,5 @@
 from django.http.response import HttpResponse, HttpResponseRedirect
+from django.core import paginator
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import *
@@ -155,9 +156,8 @@ def create_recruit(request):
         recruits_form = RecruitForm(request.POST, request.FILES)
         if recruits_form.is_valid():
             new_form = recruits_form.save(commit=False)
-            user_obj = User.objects.get(pk=request.user.id)
-            # user = user_obj
-            new_form.writer = user_obj.name
+            new_form.writer = request.user.name
+            new_form.writer_username = request.user
             new_form.save()
         return redirect('team_build:team_build')
     else:
@@ -175,10 +175,20 @@ def detail_recruit(request, id):
         current_user = None
 
     recruit_instance = get_object_or_404(Recruit, pk=id)
+    comments_instance = Comment.objects.filter(recruit_id=id).order_by('-id')
+    ans_comment_instance = CommentAnswer.objects.all()
+
+    paginator = Paginator(comments_instance, 6)
+    page = request.GET.get('page')
+    comments = paginator.get_page(page)
+
+
     context ={
         'current_user':current_user,
         'obj': recruit_instance,
         'id': id,
+        'comments': comments,
+        'ans_comments':ans_comment_instance,
     }
     return render(request, 'team_build/detail_recruit.html', context)
 
@@ -188,7 +198,7 @@ def delete_recruit(request, id):
     recruit_instance = get_object_or_404(Recruit, pk=id)
 
     # 게시글 작성자랑 로그인 유저랑 같으면
-    if str(request.user) == recruit_instance.writer:
+    if str(request.user) == recruit_instance.writer_username:
         recruit_instance.delete()
         messages.success(request, "삭제되었습니다.")
         return redirect('team_build:team_build')
@@ -242,8 +252,7 @@ def create_comment(request, id):
         new_comment.recruit_id = Recruit.objects.get(pk=id)
 
     new_comment.content = json.loads(request.body).get('text')
-    new_comment.user = get_object_or_404(User, username=username).name
-    new_comment.user_username = username
+    new_comment.user = get_object_or_404(User, username=username)
     new_comment.pub_date = timezone.now()
     new_comment.save()
     
@@ -273,10 +282,8 @@ def delete_comment(request, id, comment_id, answer_comment):
     if str(request.user) == comment_instance.user_username:
         comment_instance.delete()
 
-    print(id)
 
-    return HttpResponse(status=200)
-    
+    return HttpResponse(status=200)    
 
 ###### 찜 기능 ######
 # 찜하기 버튼 누를 때 실행

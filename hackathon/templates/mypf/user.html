@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+    <head>
+        {% block extrahead %}
+        {% endblock %}
+    </head>
+    {% block content %}
+        <a href="{% url 'user' %}">전체</a>
+        <a href="{% url 'user_search' 'Developer' %}">개발자</a>
+        <a href="{% url 'user_search' 'Designer' %}">디자이너</a>
+        <a href="{% url 'user_search' 'Planner' %}">기획자</a>
+        <a href="{% url 'user_search' 'Editor' %}">편집자</a>
+
+        <input type="text" name="text"/>
+        <button onclick="search()">검색</button>
+
+        <script>
+            function search() {
+                location.href = "/user/search/text/" + document.getElementsByName("text")[0].value
+            }
+        </script>
+
+        {% block users %}
+            {% for instance in users %}
+                <p>{{instance.username}}</p>
+                <a href="{% url 'profile' instance.id %}">자세히</a>
+                <a href="{% url 'create_chat_room' user.id instance.id %}">채팅하기</a>
+            {% endfor %}
+        {% endblock %}
+    {% endblock %}

@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     {% load static %}
+    <link rel="shortcut icon" href="../static/img/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../static/css/base.css">
+    <title>The Moa - 더 모아</title>
+    <link rel="stylesheet" href="../../../static/css/base.css">
     {% block extrahead %}
     {% endblock %}
 </head>
@@ -16,7 +17,7 @@
             <ul class="nav-wrapper">
                 <li class="logo">
                     <a href="{% url 'main:main' %}">
-                        <div class="logo-img" style="background-image: url('../static/img/logo.png');"></div>
+                        <div class="logo-img" style="background-image: url('../../../static/img/logo.png');"></div>
                     </a>
                 </li>
 
@@ -27,7 +28,7 @@
                 </li>
 
                 <li class="{% if user.is_authenticated %} user-container {% endif %}">
-                    <a href="{% if user.is_authenticated %} '' {% else %} {% url 'users:login' %} {% endif %}">    
+                    <a href="{% if user.is_authenticated %} {% if user.is_authenticated %} {% url 'chat:index' %} {% else %} {% url 'users:login' %} {% endif %} {% else %} {% url 'users:login' %} {% endif %}">    
                         {% if user.is_anonymous %}
                         <div class="chat-img anonymous"></div>
                         {% else %}

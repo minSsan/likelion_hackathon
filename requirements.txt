@@ -1,0 +1,6 @@
+channels==3.0.4
+channels-redis==3.3.0
+Django==3.2.5
+django-multiselectfield==0.1.12
+django-summernote==0.8.11.6
+Pillow==8.3.1

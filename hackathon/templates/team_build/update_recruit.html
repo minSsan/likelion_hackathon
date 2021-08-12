@@ -2,15 +2,31 @@
     <head>
         {% load static %}
         {% block extrahead %}
-        <link rel="stylesheet" href="../../static/css/base.css">
+        <link rel="stylesheet" href="../../../static/css/base.css">
+        <link rel="stylesheet" href="../../../static/css/team_build/create_recruit.css">
         {% endblock %}
     </head>
 {% block content %}
-    <h1>업데이트 페이지</h1>
-    {{test}}
-    <form action="{% url 'team_build:update_recruit' id %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">수정</button>
-    </form>
+    <div class="recruit-back-box">
+        <div class="recruit-info-title">모집글 작성</div>
+        <form action="{% url 'team_build:update_recruit' id %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.label == '이미지:' %} 
+                    <div style="margin-bottom: 10px;">{{field.label}}</div>
+                    <div>{{field}}</div>
+                    <label class="recruit-image-btn" for="id_image">파일 선택</label>
+                    <br>
+                    <br>
+                {% else %}
+                    <div>{{field.label}}</div>
+                    <div>{{field}}</div>
+                    <br>
+                {% endif %}
+            {% endfor %}
+            <div class="recruit-submit-box">
+                <button class="recruit-submit" type="submit">저장</button>
+            </div>
+        </form>
+    </div>
 {% endblock %}

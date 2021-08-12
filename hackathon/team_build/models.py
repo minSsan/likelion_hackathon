@@ -2,9 +2,12 @@ from django.db import models
 from django.utils import timezone
 from multiselectfield import MultiSelectField
 
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname('users'))))
+from users.models import *
+
 from django.db.models.deletion import CASCADE
 
-# from users.models import User
 
 
 # Recruit
@@ -51,11 +54,11 @@ ROLE_CHOICES = [
     ('Planner', '기획자'),
     ('Editor', '편집자'),
 ]
-
 # 팀원 모집 글
 class Recruit(models.Model):
     # user = models.ForeignKey(User, on_delete=CASCADE, null=True)
     writer = models.CharField(default='', max_length=200)
+    writer_username = models.CharField(default='', max_length=200)
     title = models.CharField(default='', max_length=300) # 프로젝트 한줄 설명으로 들어갈 것
     team_name = models.CharField(default='', max_length=200)
     service = models.CharField(default='', max_length=200)
@@ -63,14 +66,14 @@ class Recruit(models.Model):
         default='1',
         blank=True,
         null=False,
-        max_length=10,
+        max_length=200,
         choices=TEAM_MEMBERS_CHOICES
         )
     service_level = models.CharField(
         default='0',
         null=False,
         blank=True,
-        max_length=10,
+        max_length=200,
         choices=LEVEL_CHOICES
         )
     founding_date = models.DateField(default=timezone.now, null=False, blank=True)
@@ -89,15 +92,13 @@ class Recruit(models.Model):
 class Comment(models.Model):
     recruit_id = models.ForeignKey(Recruit, on_delete=models.CASCADE, null=True)
     date = models.DateTimeField(auto_now_add=True)
-    user = models.TextField(max_length=100)
-    user_username = models.TextField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     content = models.TextField(max_length=200)
 
 class CommentAnswer(models.Model):
     comment_id = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True)
     date = models.DateTimeField(auto_now_add=True)
-    user = models.TextField(max_length=100)
-    user_username = models.TextField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     content = models.TextField(max_length=200)
 
 class LikeRecruit(models.Model):
@@ -105,3 +106,4 @@ class LikeRecruit(models.Model):
     user = models.CharField(default="", max_length=200)
     # 해당 유저가 어떤 모집글을 찜했는지 해당 모집글의 id를 저장
     recruit_key = models.ForeignKey(Recruit, on_delete=CASCADE)
+
