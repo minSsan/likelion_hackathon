@@ -3,6 +3,15 @@
         {% load static %}
         {% block extrahead %}
         <link rel="stylesheet" href="../../static/css/base.css">
+        <style>
+            .logo-img {
+                background-image: url('../../../static/img/logo.png');
+            }
+
+            .profile-img {
+                background-image: url('{% if current_user %}../../../media/{{current_user.image}} {% else %} ../../media/users/none/profile_default.png {% endif %}');
+            }
+        </style>
         {% endblock %}
     </head>
 {% block content %}

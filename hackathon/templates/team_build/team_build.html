@@ -10,7 +10,7 @@
             }
 
             .profile-img {
-                background-image: url('{% if user_instance %}../../media/{{user_instance.image}} {% else %} ../../media/users/none/profile_default.png {% endif %}');
+                background-image: url('{% if current_user %}../../media/{{current_user.image}} {% else %} ../../media/users/none/profile_default.png {% endif %}');
             }
         </style>
         {% endblock %}
@@ -30,7 +30,7 @@
     {% endif %}
 
     <div>
-        <a class="create-img" href="{% url 'team_build:create_recruit' %}">
+        <a class="create-img" href="{% if user.is_authenticated %} {% url 'team_build:create_recruit' %} {% else %} {% url 'users:login' %} {% endif %}">
             <div style="background-image: url('../../static/img/team_build/create_recruit_icon.png');"></div>
         </a>
         <div class="search-box">
@@ -43,7 +43,7 @@
                     <a href="{% url 'team_build:recruit_role_search' 'Designer' %}">디자이너</a>
                     <a href="{% url 'team_build:recruit_role_search' 'Editor' %}" style="margin-right: 0;">편집자</a>
                     <div class="stick">|</div>
-                    <select name="" id="" onchange="location.href='/recruit/team_build/location_search/'+this.value">
+                    <select name="" id="" onchange="location.href='/recruit/'+this.value">
                         <option value="">시/도</option>
                         <option value="서울">서울특별시</option>
                         <option value="부산">부산광역시</option>

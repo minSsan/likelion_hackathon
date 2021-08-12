@@ -84,7 +84,7 @@
                                 <div class="chat" style="background-image: url('../../static/img/scout/chat.png');"></div>
                             </a>
                             <a href="{% if user.is_authenticated %} {% url 'scout:user_like' user_instance.id %} {% else %} {% url 'users:login' %} {% endif %}">
-                                <div class="wish" style="background-image: url('../../static/img/scout/like.png');"></div>
+                                <div class="wish" style="background-image: url('../../static/img/like_active.png');"></div>
                             </a>
                         </div>
                         
