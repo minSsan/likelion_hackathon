@@ -13,6 +13,10 @@
             .profile-img {
                 background-image: url('{% if user.is_anonymous %} ../../media/image/users/none/profile_default.png {% else %} ../../media/{{current_user.image}} {% endif %}');
             }
+
+            .footer-img {
+                background-image: url('{% static "img/footer_logo.png" %}');
+            }
         </style>
     {% endblock %}
 </head>
