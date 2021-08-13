@@ -75,8 +75,8 @@
                     </div>
                     <div class="comment-item">{{comment.content}}</div>
                     <div class="comment-item row" style="display: flex; justify-content: flex-end;">
-                        <button class="comment-btn-small" onclick="deleteBtn1(this)" {% if comment.user_username != user.username %} style="display: none;"{% endif %}>삭제</button>
-                        <button class="comment-btn-small" onclick="updateBtn(this)" {% if comment.user_username != user.username %} style="display: none;"{% endif %}>수정</button>
+                        <button class="comment-btn-small" onclick="deleteBtn1(this)" {% if comment.user.username != user.username %} style="display: none;"{% endif %}>삭제</button>
+                        <button class="comment-btn-small" onclick="updateBtn(this)" {% if comment.user.username != user.username %} style="display: none;"{% endif %}>수정</button>
                         <button class="comment-btn-small" onclick="answerBtn(this)">답글</button>
                     </div>
                     <div class="comment-create-box">
@@ -98,8 +98,8 @@
                             </div>
                             <div class="comment-item">{{ans_comment.content}}</div>
                             <div class="comment-item row" style="display: flex; justify-content: flex-end;">
-                                <button class="comment-btn-small" onclick="deleteBtn2(this)" {% if ans_comment.user_username != user.username %} style="display: none;"{% endif %}>삭제</button>
-                                <button class="comment-btn-small" onclick="updateBtn2(this)" {% if ans_comment.user_username != user.username %} style="display: none;"{% endif %}>수정</button>
+                                <button class="comment-btn-small" onclick="deleteBtn2(this)" {% if ans_comment.user.username != user.username %} style="display: none;"{% endif %}>삭제</button>
+                                <button class="comment-btn-small" onclick="updateBtn2(this)" {% if ans_comment.user.username != user.username %} style="display: none;"{% endif %}>수정</button>
                             </div>
                         </div>
                     </div>
