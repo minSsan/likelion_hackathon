@@ -12,6 +12,9 @@
             .profile-img {
                 background-image: url('{% if current_user %}../../../media/{{current_user.image}} {% else %} ../../media/users/none/profile_default.png {% endif %}');
             }
+            .footer-img {
+                background-image: url('../../../static/img/footer_logo.png');
+            }
         </style>
         {% endblock %}
     </head>

@@ -29,14 +29,13 @@
 .profile-box > .profile-img-big {
     width: 180px;
     height: 180px;
-    /* background-color: rgb(216, 216, 216); */
-    /* background-image: url('../../../../media/profile_default.png'); */
-    border-radius: 100%;
     margin-right: 10px;
 }
 .profile-img-big > img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
 }
 .profile-content {
     display: flex;
@@ -69,7 +68,7 @@
 .content-back {
     margin-top: -80px;
     background-color: rgba(228, 236, 245, 1);
-    padding-top: 1%;
+    padding-top: 2%;
     padding-bottom: 3%;
 }
 
@@ -178,6 +177,7 @@
 }
 
 .user-card {
+    padding-top: 1%;
     margin: 1%;
     margin-top: 3%;
     width: 237px;
@@ -241,6 +241,10 @@
 .user-img {
     width: 58px;
     height: 58px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
 }
 
 .user-name { 

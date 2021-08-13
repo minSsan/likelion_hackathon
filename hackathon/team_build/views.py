@@ -92,16 +92,7 @@ def recruit_search(request, search_word):
     else:
         current_user = None
 
-    results = Recruit.objects.filter(
-        Q(role__icontains=search_word) |
-        Q(locate__icontains=search_word) |
-
-        Q(title__icontains=search_word) | 
-        Q(writer__icontains=search_word) |
-        Q(team_name__icontains=search_word) |
-        Q(service__icontains=search_word) |
-        Q(detail__icontains=search_word)
-        ).distinct()
+    results = Recruit.objects.filter(Q(role__icontains=search_word) | Q(locate__icontains=search_word)).distinct()
     max_index = len(results) / LIST_RANGE
 
     results = results.order_by('-id')

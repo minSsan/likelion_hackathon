@@ -8,9 +8,6 @@
         .profile-img {
             background-image: url('../../media/{{user.image}}');
         }
-        .profile-img-big {
-            background-image: url('../../media/{{user.image}}');
-        }
     </style>
     {% endblock %}
 </head>
@@ -95,8 +92,12 @@
                         
                         <hr>
 
+                        {% if user_instance.image %}
+                        <img class="user-img" src="../../media/{{user_instance.image}}" alt="프로필 사진">
+                        {% else %}
                         <img class="user-img" src="../../static/img/profile_default.png" alt="프로필 사진">
-                        
+                        {% endif %}
+
                         <div class="user-name">
                             {{user_instance.name}}
                         </div>

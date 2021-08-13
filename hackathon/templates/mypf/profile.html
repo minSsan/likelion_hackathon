@@ -55,14 +55,15 @@
                 {% endif %}
             </div>
 
+            {% if pfs %}
             <div class="pf-box">
-                <div class="pf-page previous">
                 {% if pfs.has_previous %}
-                    <a href="?page={{pfs.previous_page_number}}">
-                        <div class="pf-btn" style="background-image: url('../../static/img/mypf/pf_prev.png');"></div>
-                    </a>
+                <a href="?page={{pfs.previous_page_number}}">
+                    <div class="pf-btn2 previous" style="background-image: url('../../static/img/mypf/pf_prev.png');"></div>
+                </a>
+                {% else %}
+                <div class="pf-btn2"></div>
                 {% endif %}
-                </div>
 
                 <div class="pf-list">
                 {% for pf in pfs %}
@@ -76,18 +77,19 @@
                             <p>{{pf.title}}</p>
                         </div>
                     </a>
-                {% endfor %}
-                </div>
-                
-                <div class="pf-page next">
-                {% if pfs.has_next %}
-                    <a href="?page={{pfs.next_page_number}}">
-                        <div class="pf-btn" style="background-image: url('../../static/img/mypf/pf_next.png')"></div>
-                    </a>
-                {% endif %}
+                {% endfor %}  
                 </div>
 
-            </div>  
+                {% if pfs.has_next %}
+                    <a href="?page={{pfs.next_page_number}}">
+                        <div class="pf-btn2 next" style="background-image: url('../../static/img/mypf/pf_next.png')"></div>
+                    </a>
+                {% else %}
+                <div class="pf-btn2"></div>
+                {% endif %}
+
+            </div>
+            {% endif %}  
         </div>
     </div>
 </div>

@@ -204,9 +204,11 @@ footer > div:nth-child(2) {
     color: #F5F5F5;
 }
 
-footer > div > img {
+.footer-img {
     margin: auto;
     width: 103px;
     height: 29px;
-    object-fit: contain;
+
+    background-size: contain;
+    background-repeat: no-repeat;
 }
