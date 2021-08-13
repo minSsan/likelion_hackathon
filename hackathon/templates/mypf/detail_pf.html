@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="../../../../static/css/base.css">
         <style>
             .profile-img {
-                background-image: url('{% if user.is_authenticated %} ../../media/{{user_instance.image}} {% endif %}');
+                background-image: url('{% if user.is_authenticated %} ../../../media/{{user_instance.image}} {% endif %}');
             }
         </style>
         {% endblock %}
