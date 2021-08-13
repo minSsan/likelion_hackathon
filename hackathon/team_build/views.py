@@ -279,7 +279,7 @@ def delete_comment(request, id, comment_id, answer_comment):
         comment_instance = get_object_or_404(CommentAnswer, pk=comment_id)
         
     # 댓글 작성자랑 로그인 유저랑 같으면
-    if str(request.user) == comment_instance.user_username:
+    if str(request.user) == comment_instance.user.username:
         comment_instance.delete()
 
 

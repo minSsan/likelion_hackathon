@@ -15,13 +15,13 @@ function submitEnter(e) {
 
 // 댓글 삭제
 function deleteBtn1(e) {
-    fetch("delete_comment/" + e.parentNode.parentNode.parentNode.parentNode.getAttribute('comment_id') + "/False").then(res => {
+    fetch("/recruit/detail_recruit/" + id + "/delete_comment/" + e.parentNode.parentNode.parentNode.parentNode.getAttribute('comment_id') + "/False").then(res => {
         if(res.status == 200) window.location.reload();
         else alert('삭제안됨');
     })
 }
 function deleteBtn2(e) {
-    fetch("delete_comment/" + e.parentNode.parentNode.parentNode.parentNode.getAttribute('comment_id') + "/True").then(res => {
+    fetch("/recruit/detail_recruit/" + id + "/delete_comment/" + e.parentNode.parentNode.parentNode.parentNode.getAttribute('comment_id') + "/True").then(res => {
         if(res.status == 200) window.location.reload();
         else alert('삭제안됨');
     })

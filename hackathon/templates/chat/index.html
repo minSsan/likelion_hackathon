@@ -19,7 +19,9 @@
             </div>
             {% for chat in chat_list %}
                 <div class="index-item" onclick="location.href='/chat/{{chat.chat_room_id}}'">
-                    <div class="chat-profile-img"></div>
+                    <div class="chat-profile-img">
+                        <img src="../../../media/profile_default.png">
+                    </div>
                     <div class="chat-preview">
                         <div style="font-weight: bold;">{{chat.opp_name}}</div>
                         <div>{{chat.recent_chat_text}}</div>

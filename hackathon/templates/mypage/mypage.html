@@ -37,7 +37,7 @@
             <div class="content-box-container">
                 <div class="content-box-title">내가 쓴 글</div>
                 {% for recruit in my_recruits %}
-                    <div class="content-box-item" onclick="location.href='/recruit/detail_recruit/{{recruit.id}}/'">
+                    <div class="content-box-item" onclick="location.href='/recruit/{{recruit.id}}/'">
                         <div class="content-box-item-img" style="background-image: url('../../media/{{recruit.image}}');"></div>
                         <div class="col">
                             <div class="row">
@@ -53,7 +53,7 @@
             <div class="content-box-container">
                 <div class="content-box-title">내가 쓴 댓글</div>
                 {% for comment in my_comments %} 
-                    <div class="content-box-item comment" onclick="location.href='/recruit/detail_recruit/{{comment.recruit_id.id}}/'">
+                    <div class="content-box-item comment" onclick="location.href='/recruit/{{comment.recruit_id.id}}/'">
                         <div class="row">
                             <div class="comment-content">{{comment.content}}</div>
                             <div class="comment-date">{{comment.date}}</div>
@@ -66,7 +66,7 @@
             <div class="content-box-container">
                 <div class="content-box-title">관심 글</div>
                 {% for recruit in recruits %}
-                    <div class="content-box-item" onclick="location.href='/recruit/detail_recruit/{{recruit.id}}/'">
+                    <div class="content-box-item" onclick="location.href='/recruit/{{recruit.id}}/'">
                         <div class="content-box-item-img" style="background-image: url('../../media/{{recruit.image}}');"></div>
                         <div class="col">
                             <div class="row">
