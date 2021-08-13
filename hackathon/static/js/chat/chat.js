@@ -27,7 +27,7 @@ chatSocket.onmessage = function(e) {
     else {
         document.querySelector('.chat-log').innerHTML += `                        <div class="left">
         <div class="row">
-            <div class="profile-img"></div>
+            <div class="chat-profile-img"></div>
             <div class="col" style="padding-left: 10px;">
                 <div class="bold">${data.username}</div>
                 <p class="chat-box">${data.message}</p>
