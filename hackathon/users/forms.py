@@ -11,6 +11,8 @@ class RegisterForm(UserCreationForm):
         'intro']
 
 class CustomRegisterForm(UserCreationForm):
+    password1 = forms.CharField(max_length=16, widget = forms.PasswordInput(attrs={'class':'password1-input1', 'placeholder':'8글자 이상. 숫자로만 입력할 수 없음'}))
+    password2 = forms.CharField(max_length=16, widget = forms.PasswordInput(attrs={'class':'password2-input1', 'placeholder':'비밀번호 재입력'}))
     class Meta:
         model = User
         fields = ['name', 'image', 'username', 'password1', 'password2',
@@ -18,9 +20,9 @@ class CustomRegisterForm(UserCreationForm):
         'career', 'state', 'role', 'intro']
 
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'id-input1', 'placeholder': ''}),
-            'password1': forms.PasswordInput(attrs={'class':'password1-input1', 'placeholder':'비밀번호'}), 
-            'password2': forms.PasswordInput(attrs={'class':'password2-input1', 'placeholder':'비밀번호 재입력'}),
+            'username': forms.TextInput(attrs={'class': 'id-input1', 'placeholder': '150 글자 이하의 문자, 숫자 및 @ / . / + / - / _ 조합'}),
+            # 'password1': forms.PasswordInput(attrs={'class':'password1-input1', 'placeholder':'8글자 이상. 숫자로만 입력할 수 없음'}), 
+            # 'password2': forms.PasswordInput(attrs={'class':'password2-input1', 'placeholder':'비밀번호 재입력'}),
             'image': forms.ClearableFileInput(attrs={'class': 'image-input1', 'placeholder': ''}), 
             'name': forms.TextInput(attrs={'class': 'name-input1', 'placeholder': ''}), 
             'birth_date': forms.DateInput(attrs={'class': 'birthday-input1', 'placeholder': ''}), 
@@ -46,6 +48,11 @@ class CustomRegisterForm(UserCreationForm):
             'role': '희망포지션',
             'intro': '한줄소개'
         }
+
+        # def __init__(self, *args, **kwargs):
+        #     super(CustomRegisterForm, self).__init__(*args, **kwargs)
+        #     self.fields['password1'].widget = forms.PasswordInput(attrs={'class':'password1-input1', 'placeholder':'8글자 이상. 숫자로만 입력할 수 없음'})
+        #     self.fields['password2'].widget = forms.PasswordInput(attrs={'class':'password2-input1', 'placeholder':'비밀번호 재입력'})
 
 
 class LoginForm(AuthenticationForm):
