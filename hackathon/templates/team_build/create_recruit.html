@@ -3,6 +3,7 @@
         {% load static %}
         {% block extrahead %}
         <link rel="stylesheet" href="../../static/css/base.css">
+        <link rel="stylesheet" href="../../../static/css/team_build/create_recruit.css">
         <style>
             .logo-img {
                 background-image: url('../../../static/img/logo.png');
@@ -10,6 +11,9 @@
 
             .profile-img {
                 background-image: url('{% if current_user %}../../../media/{{current_user.image}} {% else %} ../../media/users/none/profile_default.png {% endif %}');
+            }
+            .footer-img {
+                background-image: url('../../../static/img/footer_logo.png');
             }
         </style>
         {% endblock %}
