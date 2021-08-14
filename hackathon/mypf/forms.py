@@ -17,7 +17,7 @@ class CustomPortfolioForm(forms.ModelForm):
         model = Portfolio
         fields = ['title', 'image', 'detail']
         widgets = {
-            'title': forms.TextInput(attrs={'class':'title-input', 'placeholder':'모집목적에 맞는 제목을 써주세요.'}),
+            'title': forms.TextInput(attrs={'class':'title-input', 'placeholder':'제목을 입력해주세요.'}),
             'image': forms.FileInput(),
             'detail': SummernoteWidget(),
         }
