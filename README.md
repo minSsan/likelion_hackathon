@@ -1,4 +1,4 @@
-# likelion_hackathon
+# likelion_hackathon (2021.07.19 - 2021.08.13)
 
 * ### 로컬 서버에서 실행하는 경우
 
