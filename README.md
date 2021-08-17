@@ -1,5 +1,19 @@
 # likelion_hackathon (2021.07.19 - 2021.08.13)
 
+**기획** 
+> 임연수[(깃허브)](https://github.com/ylim2548)<br>
+> 최은선[(깃허브)](https://github.com/thisissilverline)
+
+**UI/UX 디자인**
+> 김송하[(깃허브)](https://github.com/kimsongha)
+
+**로고 디자인**
+> 임연수
+
+**개발**
+> 박민선[(깃허브)](https://github.com/minSsan) <br>
+> 양재호[(깃허브)](https://github.com/Jae12ho)
+
 * ### 로컬 서버에서 실행하는 경우
 
   실행 전 터미널 창에서 아래 명령어들을 입력하여 설치를 진행해야 합니다. (장고 설치 과정은 생략) <br>
@@ -24,6 +38,8 @@
 > 
 > 2. 깔끔한 디자인
 > The Moa는 Figma와 Adobe Photoshop을 활용하여 감각적인 로고와 기능들이 한눈에 들어오는 UI 디자인을 선보입니다
+> > UI/UX 디자인(Figma) <br>
+> > https://www.figma.com/file/US0twIL0eeR6oRxeGc2XvD/%EB%A9%8B%EC%82%AC_%ED%95%B4%EC%BB%A4%ED%86%A4
 > 
 > 3. 이용 간편한 기능들
 > > <strong>마이 포트폴리오</strong> <br>
@@ -46,4 +62,4 @@
 ### 배포 페이지: http://themoa.kro.kr:8000/ 
 > <strong>(체험판 ID: cu | PASSWORD: cucucucu)</strong> <br>
 > 비로그인시 몇몇 서비스 이용에 제약이 있기 때문에, 로그인 후 이용해야 모든 서비스를 체험할 수 있습니다.
-> ##### 디자인(Figma): https://www.figma.com/file/US0twIL0eeR6oRxeGc2XvD/%EB%A9%8B%EC%82%AC_%ED%95%B4%EC%BB%A4%ED%86%A4
+> 
